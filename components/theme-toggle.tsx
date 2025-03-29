@@ -1,5 +1,6 @@
 "use client"
 
+import { motion } from "motion/react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 
@@ -15,7 +16,9 @@ export default function ThemeToggle() {
   }
 
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
       aria-label="Toggle theme"
@@ -51,6 +54,6 @@ export default function ThemeToggle() {
           />
         </svg>
       )}
-    </button>
+    </motion.button>
   )
 }
