@@ -17,10 +17,10 @@ export default function ThemeToggle() {
 
   return (
     <motion.button
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
+      whileHover={{ scale: 1.2 }}
+      whileTap={{ scale: 0.8 }}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+      className="rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-800"
       aria-label="Toggle theme"
     >
       {theme === "dark" ? (
@@ -30,7 +30,7 @@ export default function ThemeToggle() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-5 h-5"
+          className="w-7 h-7"
         >
           <path
             strokeLinecap="round"
@@ -45,7 +45,7 @@ export default function ThemeToggle() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-5 h-5"
+          className="w-7 h-7"
         >
           <path
             strokeLinecap="round"
