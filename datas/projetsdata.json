@@ -1,0 +1,38 @@
+[
+  {
+    "projectName": "Car Rental",
+    "projectDescription": "Front-End d'un site de réservation de voiture, projet personnel",
+    "technosImg": ["FaReact", "SiTypescript", "SiTailwindcss"],
+    "technos": ["React", "TypeScript", "TailwindCSS"],
+    "gitLink": "https://github.com/Pir4a/car-rent-website",
+    "liveLink": "https://car-rent-website-six.vercel.app",
+    "projectImg": "/static/carrental.png"
+  },
+  {
+    "projectName": "Kasa (OC)",
+    "projectDescription": "Front-End d'un site de réservation de biens immobiliers, projet de formation OpenClassrooms",
+    "technosImg": ["FaReact", "FaSass"],
+    "technos": ["React", "SaSS"],
+    "gitLink": "https://github.com/Pir4a/OpenClassrooms-projet-4.git",
+    "liveLink": "https://open-classrooms-projet-4.vercel.app/",
+    "projectImg": "/static/Kasa.png"
+  },
+  {
+    "projectName": "Mon Vieux Grimoire (OC)",
+    "projectDescription": "Back-End d'un site de notation de livre en NodeJs, projet de formation OpenClassrooms",
+    "technosImg": ["FaNodeJs", "FaDatabase"],
+    "technos": ["NodeJS", "MongoDB"],
+    "gitLink": "https://github.com/Pir4a/OpenClassrooms-p5",
+    "liveLink": "https://github.com/Pir4a/OpenClassrooms-p5",
+    "projectImg": "/static/grimoire.png"
+  },
+  {
+    "projectName": "Zyzz Gym",
+    "technosImg": ["FaReact", "SiTypescript", "SiTailwindcss"],
+    "projectDescription": "Front-End d'un site de salle de sport (projet personnel)",
+    "technos": ["React", "TypeScript", "TailwindCSS"],
+    "gitLink": "https://github.com/Pir4a/gym-website.git",
+    "liveLink": "https://gym-website-ashy.vercel.app/",
+    "projectImg": "/static/ZyzzGymm.png"
+  }
+]

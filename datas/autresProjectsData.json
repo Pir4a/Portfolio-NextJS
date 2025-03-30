@@ -1,0 +1,36 @@
+[
+  {
+    "title": "Crypto Website",
+    "description": "Projet en JavaScript, site de visualisation du marché de la cryptomonnaie. Le but était d'apprendre à utiliser les données d'une API ainsi que Tailwind.",
+    "link": "https://krypto-app-xi.vercel.app/",
+    "code": "https://github.com/Pir4a/KryptoApp",
+    "tech": ["JavaScript", "HTML", "Tailwind", "API"]
+  },
+  {
+    "title": "Space Tourism",
+    "description": "Projet en React, surtout axé sur le CSS, pour Front End Mentor (site donnant des projets pour progresser).",
+    "link": "https://space-tourism-website-ivory-ten.vercel.app/",
+    "tech": ["React", "TypeScript", "CSS"]
+  },
+  {
+    "title": "Formulaire à plusieurs étapes",
+    "description": "Projet en React (Front End Mentor), m'a permis d'apprendre la logique derrière un formulaire à plusieurs étapes ainsi que les props.",
+    "link": "https://multi-step-form-nu-six.vercel.app/",
+    "code": "https://github.com/Pir4a/multi-stepForm",
+    "tech": ["JavaScript", "HTML", "Tailwind"]
+  },
+  {
+    "title": "Pierre Feuille Ciseaux",
+    "description": "Projet en React (Front End Mentor), m'a permis d'apprendre une logique simple, et de commencer à comprendre React.",
+    "link": "https://rock-paper-scissors-sigma-orcin.vercel.app/",
+    "code": "https://github.com/Pir4a/RockPaperScissors",
+    "tech": ["React", "TypeScript", "CSS"]
+  },
+  {
+    "title": "Calculateur d'âge",
+    "description": "Projet en JavaScript (Front End Mentor), m'a permis d'approfondir ma connaissance en JS et en algorithmes.",
+    "link": "https://agecalculator-green.vercel.app/",
+    "code": "https://github.com/Pir4a/agecalculator/",
+    "tech": ["JavaScript", "HTML", "CSS"]
+  }
+]

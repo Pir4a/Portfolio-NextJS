@@ -5,10 +5,10 @@ import CursorGlow from "../../components/CursorGlow"
 
 export default function Home() {
   return (
-    <div className="bg-gray-50 dark:bg-black lg:px-[10%]">
+    <div className="bg-gray-100 dark:bg-black lg:px-[10%]">
       <CursorGlow />
       <Header />
-      <div className="dark:bg-black bg-gray-50">
+      <div className="dark:bg-black bg-gray-100">
         <main>
           <Hero />
           <Profil />

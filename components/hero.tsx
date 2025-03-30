@@ -15,7 +15,7 @@ export default function Hero() {
   }, [])
 
   return (
-    <div className="flex text-center flex-col gap-6 xl:text-start items-center xl:items-start justify-center h-[70dvh] px-[6%] xl:max-w-[50%]">
+    <div className="flex text-center flex-col gap-10 xl:gap-6 xl:text-start items-center xl:items-start justify-center h-[70dvh] px-[6%] xl:max-w-[50%]">
       <AnimatePresence mode="wait">
         <motion.h1
           key={language}
@@ -38,7 +38,7 @@ export default function Hero() {
           className="text-2xl"
         >
           <motion.span
-            className="font-bold bg-gradient-to-r from-purple-900 via-purple-800 to-purple-900 dark:from-purple-600 dark:via-purple-400 dark:to-purple-600 bg-clip-text text-transparent bg-[length:300%_auto]"
+            className="font-bold bg-gradient-to-r from-purple-950 via-cyan-950 to-purple-950 dark:from-purple-600 dark:via-cyan-700 dark:to-purple-600 bg-clip-text text-transparent bg-[length:300%_auto]"
             animate={{
               backgroundPosition: ["0% center", "100% center", "0% center"],
             }}
