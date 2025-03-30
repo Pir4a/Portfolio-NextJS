@@ -27,7 +27,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="flex items-center rounded-b-lg justify-between py-3 px-1 xl:py-4 xl:px-8 bg-white/80 dark:bg-black/80 backdrop-blur-md text-gray-800 dark:text-gray-100 sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-800/50">
+      <header className="flex items-center rounded-b-lg justify-between py-3 px-1 xl:py-4 xl:px-8 bg-white/60 dark:bg-black/60 backdrop-blur-lg text-gray-800 dark:text-gray-100 sticky top-0 z-50 border-b border-gray-300/50 dark:border-gray-800/50">
         <Logo text="DEDU Stéphane" />
 
         <ul className="hidden xl:flex items-center xl:gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -35,7 +35,7 @@ export default function Header() {
             <li key={item.label}>
               <Link
                 href={item.href}
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium"
+                className="text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium"
               >
                 {item.label}
               </Link>

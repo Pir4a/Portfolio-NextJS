@@ -38,7 +38,7 @@ export default function Hero() {
           className="text-2xl"
         >
           <motion.span
-            className="font-bold bg-gradient-to-r from-purple-950 via-cyan-950 to-purple-950 dark:from-purple-600 dark:via-cyan-700 dark:to-purple-600 bg-clip-text text-transparent bg-[length:300%_auto]"
+            className="font-bold bg-gradient-to-r from-pink-800 via-cyan-950 to-pink-800 dark:from-pink-600 dark:via-cyan-700 dark:to-pink-600 bg-clip-text text-transparent bg-[length:300%_auto]"
             animate={{
               backgroundPosition: ["0% center", "100% center", "0% center"],
             }}
