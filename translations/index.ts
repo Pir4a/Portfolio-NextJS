@@ -8,9 +8,9 @@ export const translations = {
     },
     hero: {
       greeting: "Bonjour, je m'appelle Stéphane",
-      role: "Développeur FullStack.",
+      role: "Développeur FullStack",
       description:
-        "Je suis passionné par la création de sites web et le développement de logiciels.",
+        "Passionné par la création de sites web et le développement de logiciels.",
     },
   },
   en: {
@@ -22,7 +22,7 @@ export const translations = {
     },
     hero: {
       greeting: "Hello, I'm Stéphane",
-      role: "FullStack Developer.",
+      role: "FullStack Developer",
       description:
         "I'm passionate about creating websites and software development.",
     },

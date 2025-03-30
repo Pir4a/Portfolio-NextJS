@@ -5,7 +5,7 @@ import { useLanguage } from "../contexts/LanguageContext"
 import { translations } from "../translations"
 import { useEffect, useState } from "react"
 import { BsGithub, BsLinkedin } from "react-icons/bs"
-
+import HeroButton from "./herobutton"
 export default function Hero() {
   const { language } = useLanguage()
   const [mounted, setMounted] = useState(false)
@@ -62,12 +62,20 @@ export default function Hero() {
                 transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
                 className="flex items-center pt-4 p-2 gap-4"
               >
-                <BsGithub className="w-8 h-8 cursor-pointer hover:scale-120 transition-all duration-200" />
-                <BsLinkedin className="w-8 h-8 cursor-pointer hover:scale-120 transition-all duration-200" />
+                <a href="https://github.com/Pir4a" target="_blank" className="">
+                  <BsGithub className="w-8 h-8 cursor-pointer hover:scale-120 transition-all duration-200" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/st%C3%A9phane-dedu-14579a266/"
+                  target="_blank"
+                  className=""
+                >
+                  <BsLinkedin className="w-8 h-8 cursor-pointer hover:scale-120 transition-all duration-200" />
+                </a>
               </motion.span>
             </AnimatePresence>
             <AnimatePresence mode="wait">
-              <motion.div
+              <motion.span
                 key={language}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -75,21 +83,15 @@ export default function Hero() {
                 transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
                 className="flex gap-4 pt-4"
               >
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-6 py-3 bg-gray-900 cursor-pointer dark:bg-white text-white dark:text-black rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-200"
-                >
-                  CV
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-6 py-3 border-2 cursor-pointer border-gray-900 dark:border-white text-gray-900 dark:text-white rounded-lg font-medium hover:bg-gray-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-200"
-                >
-                  Contact
-                </motion.button>
-              </motion.div>
+                <HeroButton
+                  text="CV"
+                  className="bg-gray-900 px-6 py-3 dark:bg-white text-white dark:text-black transition-all duration-200"
+                />
+                <HeroButton
+                  text="Contact"
+                  className="border-2 px-6 py-3 border-gray-900 dark:border-white text-gray-900 dark:text-white rounded-lg font-medium hover:bg-gray-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-200"
+                />
+              </motion.span>
             </AnimatePresence>
           </span>
         </motion.p>
