@@ -5,7 +5,7 @@ import { useTheme } from "next-themes"
 export default function logo({ text }: { text?: string }) {
   const { theme } = useTheme()
   return (
-    <span className="flex items-center gap-4 text-lg font-bold dark:text-white text-black">
+    <span className="flex items-center px-2 lg:px-4 gap-4 text-lg font-bold dark:text-white text-black">
       <img
         src={theme === "dark" ? "/stephanelogo.png" : "/stephanelogolight.png"}
         alt="logo"
