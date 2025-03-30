@@ -6,6 +6,12 @@ export const translations = {
       projects: "Projets",
       contact: "Contact",
     },
+    hero: {
+      greeting: "Bonjour, je m'appelle Stéphane",
+      role: "Développeur FullStack.",
+      description:
+        "Je suis passionné par la création de sites web et le développement de logiciels.",
+    },
   },
   en: {
     menu: {
@@ -13,6 +19,12 @@ export const translations = {
       skills: "Skills",
       projects: "Projects",
       contact: "Contact",
+    },
+    hero: {
+      greeting: "Hello, I'm Stéphane",
+      role: "FullStack Developer.",
+      description:
+        "I'm passionate about creating websites and software development.",
     },
   },
 } as const
