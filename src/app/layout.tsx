@@ -1,21 +1,11 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+
 import "./globals.css"
 import Providers from "../../components/providers"
 import { M_PLUS_Rounded_1c } from "next/font/google"
 
 const mPlusRounded1c = M_PLUS_Rounded_1c({
   weight: ["100", "300", "400", "500", "700", "900"],
-  subsets: ["latin"],
-})
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-})
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
 })
 
@@ -31,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={` ${mPlusRounded1c.className} antialiased`}>
+      <body className={` ${mPlusRounded1c.className}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -20,7 +20,8 @@ export default function ThemeToggle() {
       whileHover={{ scale: 1.2 }}
       whileTap={{ scale: 0.8 }}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-800"
+      className="rounded-lg p-4 dark:bg-[#F9CA7D] dark:hover:bg-[#E8923E] bg-nicepurple hover:bg-nicedarkpurple
+        cursor-pointer"
       aria-label="Toggle theme"
     >
       {theme === "dark" ? (
@@ -29,7 +30,7 @@ export default function ThemeToggle() {
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
-          stroke="currentColor"
+          stroke="black"
           className="w-7 h-7"
         >
           <path
@@ -44,7 +45,7 @@ export default function ThemeToggle() {
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
-          stroke="currentColor"
+          stroke="white"
           className="w-7 h-7"
         >
           <path
