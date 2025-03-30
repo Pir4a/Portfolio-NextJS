@@ -27,10 +27,10 @@ export default function Header() {
 
   return (
     <>
-      <header className="flex items-center justify-between py-3 px-1 lg:py-4 lg:px-8 bg-white/80 dark:bg-black/80 backdrop-blur-md text-gray-800 dark:text-gray-100 sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-800/50">
+      <header className="flex items-center rounded-b-lg justify-between py-3 px-1 xl:py-4 xl:px-8 bg-white/80 dark:bg-black/80 backdrop-blur-md text-gray-800 dark:text-gray-100 sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-800/50">
         <Logo text="DEDU Stéphane" />
 
-        <ul className="hidden lg:flex items-center lg:gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <ul className="hidden xl:flex items-center xl:gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           {menuItems.map((item) => (
             <li key={item.label}>
               <Link
@@ -44,7 +44,7 @@ export default function Header() {
         </ul>
 
         <div className="flex items-center gap-8 px-2">
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden xl:flex items-center gap-2">
             <span
               className={`text-sm font-medium transition-colors ${
                 language === "fr"
@@ -83,7 +83,7 @@ export default function Header() {
           </div>
           <ThemeToggle />
           <button
-            className="lg:hidden flex items-center justify-center py-2 px-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="xl:hidden flex items-center justify-center py-2 px-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X /> : <MenuIcon />}
@@ -100,7 +100,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden fixed inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-md z-40"
+              className="xl:hidden fixed inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-md z-40"
             >
               <div className="flex flex-col h-full">
                 <div className="flex justify-end p-4">
