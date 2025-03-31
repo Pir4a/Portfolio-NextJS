@@ -52,7 +52,7 @@ export default function Hero() {
             {translations[language].hero.role}
           </motion.span>
           <br /> {translations[language].hero.description}
-          <span className="flex justify-center lg:justify-start items-center pt-4 p-2 gap-4">
+          <span className="flex justify-center xl:justify-start items-center pt-4 p-2 gap-4">
             <AnimatePresence mode="wait">
               <motion.span
                 key={language}

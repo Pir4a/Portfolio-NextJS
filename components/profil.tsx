@@ -21,7 +21,8 @@ export default function Profil() {
   return (
     <div
       ref={containerRef}
-      className="dark:bg-black max-h-[30dvh] bg-cyan-50 flex flex-col mt-[20dvh] h-screen relative"
+      className="dark:bg-black z-40 max-h-[30dvh] bg-cyan-50 flex flex-col mt-[20dvh] h-screen "
+      id="profile"
     >
       {/* Top border line */}
       <motion.div
@@ -31,17 +32,26 @@ export default function Profil() {
 
       {/* Content container */}
       <motion.div
-        className="max-w-2xl pt-2 mx-auto px-4 relative"
+        className="max-w-2xl pt-2 mx-auto px-4 "
         style={{ opacity, y }}
       >
         <div className="text-lg leading-relaxed">
-          <p className="mb-4">{translations[language].profil.title}</p>
+          <motion.p
+            key={language}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+            className="mb-4"
+          >
+            {translations[language].profil.title}
+          </motion.p>
         </div>
       </motion.div>
 
       {/* Bottom border line */}
       <motion.div
-        className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-pink-500 to-transparent"
+        className=" w-full h-[2px] bg-gradient-to-r from-transparent via-pink-500 to-transparent"
         style={{ opacity }}
       />
     </div>

@@ -19,10 +19,10 @@ export default function Header() {
   }, [])
 
   const menuItems = [
-    { href: "/", label: translations[language].menu.profile },
-    { href: "/", label: translations[language].menu.skills },
-    { href: "/", label: translations[language].menu.projects },
-    { href: "/", label: translations[language].menu.contact },
+    { href: "/#profile", label: translations[language].menu.profile },
+    { href: "/#skills", label: translations[language].menu.skills },
+    { href: "/#projects", label: translations[language].menu.projects },
+    { href: "/#contact", label: translations[language].menu.contact },
   ]
 
   return (

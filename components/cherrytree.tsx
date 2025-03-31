@@ -269,7 +269,7 @@ const Cherrytree: React.FC = () => {
       </AnimatePresence>
       <canvas
         ref={canvasRef}
-        className={`max-w-[100%] min-h-[110dvh] pl-30 absolute top-0 cursor-pointer transition-opacity duration-500 ${
+        className={`hidden xl:block max-w-[100%] min-h-[110dvh] pl-30 absolute top-0 cursor-pointer transition-opacity duration-500 ${
           isLoading ? "opacity-0" : "opacity-100"
         }`}
       />

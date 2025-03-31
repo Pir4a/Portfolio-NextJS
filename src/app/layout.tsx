@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={` ${mPlusRounded1c.className} antialiased overflow-x-hidden`}
+        className={` ${mPlusRounded1c.className} antialiased overflow-x-hidden scroll-smooth`}
       >
         <Providers>
           <LanguageProvider>{children}</LanguageProvider>
