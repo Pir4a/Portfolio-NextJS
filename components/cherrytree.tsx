@@ -19,6 +19,21 @@ const Cherrytree: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = "hidden"
+      document.body.style.overflowX = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+      document.body.style.overflowX = "hidden"
+    }
+
+    return () => {
+      document.body.style.overflow = "unset"
+      document.body.style.overflowX = "hidden"
+    }
+  }, [isLoading])
+
+  useEffect(() => {
     if (!canvasRef.current) return
 
     // Scene setup
