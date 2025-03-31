@@ -8,6 +8,7 @@ import Petals from "../../components/petals"
 import { useScroll } from "motion/react"
 import { useMotionValueEvent } from "motion/react"
 import { useState } from "react"
+import Competences from "../../components/competences"
 export default function Home() {
   const { scrollY } = useScroll()
   const [scrollYValue, setScrollYValue] = useState(0)
@@ -28,6 +29,7 @@ export default function Home() {
             <Petals />
           </div>
           <Profil scrollYValue={scrollYValue} />
+          <Competences scrollYValue={scrollYValue} />
         </main>
       </div>
     </div>
