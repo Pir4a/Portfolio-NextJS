@@ -1,58 +1,57 @@
 "use client"
 
-import Hero from "./hero"
-import { useEffect, useRef, useState } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+} from "framer-motion"
 import { translations } from "../translations"
 import { useLanguage } from "../contexts/LanguageContext"
+import { useState, useEffect } from "react"
 
-export default function Profil() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  })
+export default function Profil({ scrollYValue }: { scrollYValue: number }) {
   const { language } = useLanguage()
-
-  const lineProgress = useTransform(scrollYProgress, [0, 1], ["0%", "300%"])
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 1], [0, 1, 0])
-  const y = useTransform(scrollYProgress, [0, 0.2, 1], [50, 0, -50])
 
   return (
     <div
-      ref={containerRef}
-      className="dark:bg-black z-40 max-h-[30dvh] bg-cyan-50 flex flex-col mt-[20dvh] h-screen "
+      className="dark:bg-black z-40 max-h-[50dvh] bg-cyan-50 flex flex-col mt-[22dvh] h-screen relative"
       id="profile"
     >
+      {/* profile a gauche et texte a droite vienne et rebondissent un peu */}
       {/* Top border line */}
-      <motion.div
-        className="w-full h-[2px] bg-gradient-to-r from-transparent via-pink-500 to-transparent"
-        style={{ opacity }}
-      />
-
+      <span className="w-full h-[2px] bg-gradient-to-r from-transparent via-pink-400 to-transparent" />
       {/* Content container */}
-      <motion.div
-        className="max-w-2xl pt-2 mx-auto px-4 "
-        style={{ opacity, y }}
-      >
-        <div className="text-lg leading-relaxed">
-          <motion.p
-            key={language}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
-            className="mb-4"
-          >
-            {translations[language].profil.title}
-          </motion.p>
-        </div>
-      </motion.div>
 
-      {/* Bottom border line */}
-      <motion.div
-        className=" w-full h-[2px] bg-gradient-to-r from-transparent via-pink-500 to-transparent"
-        style={{ opacity }}
+      <div className="text-lg leading-relaxed flex justify-center  xl:justify-between xl:items-top h-full xl:px-[6%]">
+        {scrollYValue > 170 && (
+          <>
+            <motion.p
+              key={language}
+              initial={{ opacity: 0, x: -300, y: 40 }}
+              animate={{ opacity: 1, x: [-300, 300, 200] }}
+              exit={{ opacity: 0, x: -300 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+              className={`pt-10 xl:pt-20 text-5xl font-bold`}
+            >
+              {translations[language].profil.title}
+            </motion.p>
+            <motion.p
+              key={language + null}
+              initial={{ opacity: 0, x: 300 }}
+              animate={{ opacity: 1, x: [1000, -180, -100], y: 40 }}
+              exit={{ opacity: 0, x: 300 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+              className=" pt-10 xl:pt-20 w-full xl:w-1/2 text-2xl font-bold "
+            >
+              {translations[language].profil.description}
+            </motion.p>
+          </>
+        )}
+      </div>
+      <button
+        onClick={() => console.log(scrollYValue)}
+        className="w-20 h-20 bg-red-500 cursor-pointer"
       />
     </div>
   )
