@@ -1,6 +1,6 @@
 [
   {
-    "projectName": "Ce Portfolio",
+    "projectName": "Portfolio",
     "projectDescription": "Il s'agit de mon projet le plus abouti à ce jour. Ce portfolio est développé avec Next.js, TailwindCSS et Three.js pour offrir une expérience utilisateur fluide et immersive. Il présente mes compétences, mes projets et mon parcours de manière dynamique et interactive. J'ai utilisé Three.js pour intégrer des animations 3D et améliorer l'esthétique globale du site. Ce projet reflète mon savoir-faire en développement front-end avancé et mon souci du détail en termes d'UI/UX design.",
     "projectDescriptionEN": "This is my most advanced project to date. This portfolio is built using Next.js, TailwindCSS, and Three.js to provide a smooth and immersive user experience. It showcases my skills, projects, and journey in a dynamic and interactive way. I utilized Three.js to integrate 3D animations and enhance the overall aesthetics of the site. This project highlights my expertise in advanced front-end development and my attention to detail in UI/UX design.",
     "technosImg": ["SiNextdotjs", "SiTailwindcss", "SiThreeDotJs"],
