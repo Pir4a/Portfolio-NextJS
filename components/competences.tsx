@@ -46,7 +46,9 @@ function Competences({ scrollYValue }: { scrollYValue: number }) {
               animate={{ opacity: 1, x: [-300, 150, 100] }}
               exit={{ opacity: 0, x: -300 }}
               transition={{ duration: 0.25, ease: "easeOut", delay: 0.1 }}
-              className="pt-10 xl:pt-20 text-6xl font-light tracking-tight text-gray-200"
+              className={`pt-10 xl:pt-20 text-6xl font-light tracking-tight text-gray-200 ${
+                language === "fr" ? "" : "pl-28"
+              }`}
             >
               {translations[language].skills.title}
             </motion.p>
