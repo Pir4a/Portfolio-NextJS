@@ -20,7 +20,8 @@ export const translations = {
     skills: {
       title: "Compétences",
       languages: "Langages",
-      frameworks: "Frameworks & Outils",
+      frameworks: "Frameworks",
+      tools: "Outils",
     },
   },
   en: {
@@ -44,7 +45,8 @@ export const translations = {
     skills: {
       title: "Skills",
       languages: "Languages",
-      frameworks: "Frameworks & Tools",
+      frameworks: "Frameworks",
+      tools: "Tools",
     },
   },
 } as const

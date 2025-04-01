@@ -16,7 +16,9 @@ function TextCard({ children, className = "" }: TextCardProps) {
       <div className="absolute inset-0 rounded-lg border border-pink-500/10 shadow-[0_0_10px_rgba(236,72,153,0.1)]"></div>
 
       {/* Content */}
-      <div className="relative z-10 text-gray-400">{children}</div>
+      <div className="relative z-10 text-gray-800  dark:text-gray-400">
+        {children}
+      </div>
     </div>
   )
 }

@@ -7,15 +7,38 @@ import Cherrytree from "../../components/cherrytree"
 import Petals from "../../components/petals"
 import { useScroll } from "motion/react"
 import { useMotionValueEvent } from "motion/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Competences from "../../components/competences"
 export default function Home() {
   const { scrollY } = useScroll()
   const [scrollYValue, setScrollYValue] = useState(0)
+  const [deviceWidth, setDeviceWidth] = useState(0)
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrollYValue(latest)
-  })
+  useEffect(() => {
+    // Function to update device width
+    const updateWidth = () => {
+      setDeviceWidth(window.innerWidth)
+    }
+
+    // Set initial width
+    updateWidth()
+
+    // Add event listener for window resize
+    window.addEventListener("resize", updateWidth)
+
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener("resize", updateWidth)
+    }
+  }, [])
+
+  deviceWidth < 1024
+    ? useMotionValueEvent(scrollY, "change", (latest) => {
+        setScrollYValue(1500)
+      })
+    : useMotionValueEvent(scrollY, "change", (latest) => {
+        setScrollYValue(latest)
+      })
   return (
     <div className="bg-cyan-100 dark:bg-black lg:px-[10%]  w-[100dvw]">
       <CursorGlow />
@@ -28,8 +51,8 @@ export default function Home() {
             <Cherrytree />
             <Petals />
           </div>
-          <Profil scrollYValue={scrollYValue} />
-          <Competences scrollYValue={scrollYValue} />
+          <Profil scrollYValue={scrollYValue} deviceWidth={deviceWidth} />
+          <Competences scrollYValue={scrollYValue} deviceWidth={deviceWidth} />
         </main>
       </div>
     </div>

@@ -15,7 +15,7 @@ export default function Hero() {
   }, [])
 
   return (
-    <div className="flex text-center flex-col gap-10 xl:gap-6 xl:text-start items-center xl:items-start justify-center h-[70dvh] px-[6%] xl:min-w-[50%] xl:max-w-[50%]">
+    <div className="flex text-center flex-col gap-10 xl:gap-6 xl:text-start items-center xl:items-start justify-center min-h-[100dvh] xl:min-h-[70dvh] px-4 xl:px-[6%] xl:min-w-[50%] xl:max-w-[50%]">
       <AnimatePresence mode="wait">
         <motion.h1
           key={language}
