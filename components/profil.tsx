@@ -31,7 +31,15 @@ export default function Profil({
       id="profile"
     >
       {/* Top border line */}
-      <span className="w-full h-[2px] bg-gradient-to-r from-transparent via-pink-400 to-transparent" />
+      {scrollYValue > 150 && (
+        <motion.span
+          className="w-full h-[2px] bg-gradient-to-r from-transparent via-pink-300/60 to-transparent"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        />
+      )}
       {/* Content container */}
 
       <div className="text-lg leading-relaxed flex flex-col xl:flex-row items-center justify-center w-[full] xl:w-full xl:justify-between xl:items-top h-full xl:px-[6%]">
@@ -51,7 +59,7 @@ export default function Profil({
               }}
               exit={{ opacity: 0, ...(deviceWidth >= 1280 ? { x: -300 } : {}) }}
               transition={{ duration: 0.5, ease: "circOut", delay: 0.1 }}
-              className={`pt-10 xl:pt-0 text-6xl font-light tracking-tight text-gray-800 dark:text-gray-200 ${
+              className={`pt-10 xl:pt-0 text-6xl font-light tracking-tight text-gray-800 xl:min-w-[30%] dark:text-gray-200 ${
                 deviceWidth < 1280 ? "text-center" : "text-left"
               }`}
             >

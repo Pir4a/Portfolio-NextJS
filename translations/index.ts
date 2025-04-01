@@ -23,6 +23,9 @@ export const translations = {
       frameworks: "Frameworks",
       tools: "Outils",
     },
+    projects: {
+      title: "Projets",
+    },
   },
   en: {
     menu: {
@@ -47,6 +50,9 @@ export const translations = {
       languages: "Languages",
       frameworks: "Frameworks",
       tools: "Tools",
+    },
+    projects: {
+      title: "Projects",
     },
   },
 } as const

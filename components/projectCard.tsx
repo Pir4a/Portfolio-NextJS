@@ -1,11 +1,9 @@
-import React from "react"
-
-interface TextCardProps {
+interface ProjectCardProps {
   children: React.ReactNode
   className?: string
 }
 
-function TextCard({ children, className = "" }: TextCardProps) {
+function ProjectCard({ children, className = "" }: ProjectCardProps) {
   return (
     <div
       className={`relative p-6 rounded-lg bg-[#0A0A0A] border border-pink-300/60 dark:border-[#1A1A1A] dark:shadow-[0_0_20px_rgba(0,0,0,0.4)] shadow-[0_0_20px_rgba(0,0,0,0.1)] ${className}`}
@@ -23,4 +21,4 @@ function TextCard({ children, className = "" }: TextCardProps) {
   )
 }
 
-export default TextCard
+export default ProjectCard

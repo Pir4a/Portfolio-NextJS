@@ -13,6 +13,7 @@ import {
   FaNpm,
   FaReact,
   FaSass,
+  FaCode,
 } from "react-icons/fa"
 import { RiNextjsFill, RiTailwindCssLine } from "react-icons/ri"
 import { SiTypescript, SiThreedotjs } from "react-icons/si"
@@ -33,13 +34,14 @@ const frameworks = [
   { Icon: RiNextjsFill, key: "next", label: "Next.js" },
   { Icon: RiTailwindCssLine, key: "tailwind", label: "Tailwind CSS" },
   { Icon: SiThreedotjs, key: "threejs", label: "Three.js" },
-  { Icon: FaGithub, key: "github", label: "GitHub" },
 ]
 
 const tools = [
   { Icon: FaFigma, key: "figma", label: "Figma" },
   { Icon: FaGit, key: "git", label: "Git" },
   { Icon: FaNpm, key: "npm", label: "npm" },
+  { Icon: FaGithub, key: "github", label: "GitHub" },
+  { Icon: FaCode, key: "vscode", label: "VSCode" },
 ]
 
 function Competences({
@@ -51,9 +53,9 @@ function Competences({
 }) {
   const { language } = useLanguage()
   return (
-    <div className="dark:bg-black pt-30 xl:pt-0 z-40 min-h-[50dvh] xl:max-h-[70dvh] bg-cyan-100 flex flex-col overflow-x-hidden">
-      <div className="dark:bg-black bg-cyan-100 text-lg leading-relaxed flex flex-col xl:flex-row xl:justify-between xl:gap-10 xl:items-top h-full px-4 xl:px-[0%] gap-10 xl:pr-[13%]">
-        {scrollYValue > 800 && (
+    <div className="dark:bg-black pb-14 pt-40 xl:pt-0 z-40 min-h-[50dvh] xl:max-h-[70dvh] bg-cyan-100 flex flex-col overflow-x-hidden">
+      <div className="dark:bg-black bg-cyan-100 text-lg leading-relaxed flex flex-col xl:flex-row  xl:gap-10 xl:items-top h-full px-4 xl:px-[0%] gap-10 ">
+        {scrollYValue > 650 && (
           <>
             <motion.p
               key={`${language}-${deviceWidth}`}
@@ -65,15 +67,18 @@ function Competences({
                 opacity: 1,
                 ...(deviceWidth >= 1280 ? { x: [-300, 150, 100] } : {}),
               }}
-              exit={{ opacity: 0, ...(deviceWidth >= 1280 ? { x: -300 } : {}) }}
+              exit={{
+                opacity: 0,
+                ...(deviceWidth >= 1280 ? { x: -300, y: 100 } : {}),
+              }}
               transition={{ duration: 0.25, ease: "easeOut", delay: 0.1 }}
-              className={`pt-10 xl:pt-25 text-4xl xl:text-6xl  font-light tracking-tight text-gray-800 dark:text-gray-200 ${
-                language === "fr" ? "" : "xl:pl-28"
+              className={`pt-10 xl:pt-25 text-4xl xl:text-6xl  font-light xl:min-w-[30%] tracking-tight text-gray-800 dark:text-gray-200 ${
+                language === "fr" ? "xl:gap-6" : "xl:pl-28"
               } ${deviceWidth < 1280 ? "text-center" : ""}`}
             >
               {translations[language].skills.title}
             </motion.p>
-            <div className="flex flex-col xl:flex-row xl:justify-start xl:items-start xl:pt-20  gap-8 xl:gap-20">
+            <div className="flex flex-col xl:flex-row xl:justify-start xl:items-start xl:pt-20 xl:min-w-[0%] mx-auto  gap-8 xl:gap-14 ">
               <ChaqueCompetences
                 title={translations[language].skills.languages}
                 items={languages}

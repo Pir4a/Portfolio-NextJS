@@ -41,7 +41,7 @@ export default function ChaqueCompetences({
           ...(deviceWidth >= 1280 ? { x: -300 } : {}),
         }}
         transition={{ duration: 0.25, ease: "easeOut", delay }}
-        className="text-2xl xl:text-3xl font-light tracking-tight text-gray-700 dark:text-gray-300 mb-6 text-center"
+        className="text-2xl xl:text-3xl font-light tracking-tight text-gray-900 dark:text-gray-300 mb-6 text-center"
       >
         {title}
       </motion.h3>
@@ -101,7 +101,7 @@ export default function ChaqueCompetences({
             }}
             className="flex flex-col items-center gap-2"
           >
-            <Icon className="text-4xl xl:text-5xl text-gray-800 dark:text-gray-200" />
+            <Icon className="text-4xl xl:text-5xl text-gray-900 dark:text-gray-200" />
             <span className="text-sm xl:text-md text-gray-700 dark:text-gray-300 font-light tracking-wide">
               {label}
             </span>

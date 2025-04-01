@@ -9,6 +9,7 @@ import { useScroll } from "motion/react"
 import { useMotionValueEvent } from "motion/react"
 import { useEffect, useState } from "react"
 import Competences from "../../components/competences"
+import Projets from "../../components/projets"
 export default function Home() {
   const { scrollY } = useScroll()
   const [scrollYValue, setScrollYValue] = useState(0)
@@ -40,7 +41,7 @@ export default function Home() {
         setScrollYValue(latest)
       })
   return (
-    <div className="bg-cyan-100 dark:bg-black lg:px-[10%]  w-[100dvw]">
+    <div className="bg-cyan-100 dark:bg-black md:px-[10%] lg:px-[0%]  2xl:px-[10%]  w-[100dvw]">
       <CursorGlow />
       <Header />
       <div className="dark:bg-black bg-cyan-100">
@@ -53,6 +54,7 @@ export default function Home() {
           </div>
           <Profil scrollYValue={scrollYValue} deviceWidth={deviceWidth} />
           <Competences scrollYValue={scrollYValue} deviceWidth={deviceWidth} />
+          <Projets scrollYValue={scrollYValue} deviceWidth={deviceWidth} />
         </main>
       </div>
     </div>
