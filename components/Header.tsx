@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "motion/react"
 import { useLanguage } from "../contexts/LanguageContext"
 import { translations } from "../translations"
 import LangageButton from "./langagebutton"
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -32,14 +33,20 @@ export default function Header() {
 
         <ul className="hidden xl:flex items-center xl:gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           {menuItems.map((item) => (
-            <li key={item.label}>
+            <motion.li
+              key={item.label}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
               <Link
                 href={item.href}
                 className="text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium"
               >
                 {item.label}
               </Link>
-            </li>
+            </motion.li>
           ))}
         </ul>
 
