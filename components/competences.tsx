@@ -55,7 +55,7 @@ function Competences({
   return (
     <div className="dark:bg-black pb-14 pt-40 xl:pt-0 z-40 min-h-[50dvh] xl:max-h-[70dvh] bg-cyan-100 flex flex-col overflow-x-hidden">
       <div className="dark:bg-black bg-cyan-100 text-lg leading-relaxed flex flex-col xl:flex-row  xl:gap-10 xl:items-top h-full px-4 xl:px-[0%] gap-10 ">
-        {scrollYValue > 650 && (
+        {scrollYValue > 680 && (
           <>
             <motion.p
               key={`${language}-${deviceWidth}`}
@@ -106,6 +106,7 @@ function Competences({
           </>
         )}
       </div>
+      <span id="projects" className="invisible" />
     </div>
   )
 }

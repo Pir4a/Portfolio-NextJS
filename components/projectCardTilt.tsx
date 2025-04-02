@@ -10,13 +10,14 @@ import { useTheme } from "next-themes"
 interface TiltShineCardProps {
   className?: string
   children: React.ReactNode
-
+  delay?: number
   layoutId?: string
 }
 
 import Backdrop from "./backdrop"
 
 export function TiltShineCard({
+  delay,
   className,
   children,
   layoutId,
@@ -92,7 +93,13 @@ export function TiltShineCard({
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="group h-full w-full mx-auto xl:perspective-[1000px]">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, ease: "easeOut", delay: delay }}
+      whileHover={{ scale: 1.05 }}
+      className="group h-full w-full mx-auto xl:perspective-[1000px]"
+    >
       <motion.div
         onClick={() => console.log(rotateX.get(), rotateY.get())}
         layoutId={layoutId}
@@ -110,13 +117,6 @@ export function TiltShineCard({
         }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.4,
-          layout: { duration: 1, type: "spring" },
-        }}
-        whileHover={{ scale: 1.05 }}
       >
         {/* Subtle glow effect */}
         <div className="absolute inset-0 z-30 rounded-lg bg-gradient-to-b from-[#1A1A1A]/20 to-transparent" />
@@ -152,6 +152,6 @@ export function TiltShineCard({
           {children}
         </motion.div>
       </motion.div>
-    </div>
+    </motion.div>
   )
 }

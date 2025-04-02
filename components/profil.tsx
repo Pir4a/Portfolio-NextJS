@@ -1,14 +1,9 @@
 "use client"
 
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-} from "framer-motion"
+import { motion } from "framer-motion"
 import { translations } from "../translations"
 import { useLanguage } from "../contexts/LanguageContext"
-import { useState, useEffect } from "react"
+
 import TextCard from "./textCard"
 
 export default function Profil({
@@ -31,15 +26,9 @@ export default function Profil({
       id="profile"
     >
       {/* Top border line */}
-      {scrollYValue > 150 && (
-        <motion.span
-          className="w-full h-[2px] bg-gradient-to-r from-transparent via-pink-300/60 to-transparent"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        />
-      )}
+
+      <motion.span className="w-full h-[2px] bg-gradient-to-r from-transparent via-pink-300/60 to-transparent" />
+
       {/* Content container */}
 
       <div className="text-lg leading-relaxed flex flex-col xl:flex-row items-center justify-center w-[full] xl:w-full xl:justify-between xl:items-top h-full xl:px-[6%]">
