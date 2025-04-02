@@ -1,5 +1,5 @@
 "use client "
-import { motion } from "motion/react"
+import { AnimatePresence, motion, useInView } from "motion/react"
 import { useLanguage } from "../contexts/LanguageContext"
 import {
   FaCss3,
@@ -19,6 +19,7 @@ import { RiNextjsFill, RiTailwindCssLine } from "react-icons/ri"
 import { SiTypescript, SiThreedotjs } from "react-icons/si"
 import { translations } from "../translations"
 import ChaqueCompetences from "./chaqueCompetences"
+import { useRef } from "react"
 
 const languages = [
   { Icon: FaJs, key: "js", label: "JavaScript" },
@@ -44,67 +45,79 @@ const tools = [
   { Icon: FaCode, key: "vscode", label: "VSCode" },
 ]
 
-function Competences({
-  scrollYValue,
-  deviceWidth,
-}: {
-  scrollYValue: number
-  deviceWidth: number
-}) {
+function Competences({ deviceWidth }: { deviceWidth: number }) {
   const { language } = useLanguage()
+
+  const ref = useRef(null)
+  const isInView = useInView(ref, {
+    margin: "0px 0px -30% 0px",
+    once: true,
+  })
+
   return (
-    <div className="dark:bg-black pb-14 pt-40 xl:pt-0 z-40 min-h-[50dvh] xl:max-h-[70dvh] bg-cyan-100 flex flex-col overflow-x-hidden">
-      <div className="dark:bg-black bg-cyan-100 text-lg leading-relaxed flex flex-col xl:flex-row  xl:gap-10 xl:items-top h-full px-4 xl:px-[0%] gap-10 ">
-        {scrollYValue > 680 && (
-          <>
-            <motion.p
-              key={`${language}-${deviceWidth}`}
-              initial={{
-                opacity: 0,
-                ...(deviceWidth >= 1280 ? { x: -300 } : {}),
-              }}
-              animate={{
-                opacity: 1,
-                ...(deviceWidth >= 1280 ? { x: [-300, 150, 100] } : {}),
-              }}
-              exit={{
-                opacity: 0,
-                ...(deviceWidth >= 1280 ? { x: -300, y: 100 } : {}),
-              }}
-              transition={{ duration: 0.25, ease: "easeOut", delay: 0.1 }}
-              className={`pt-10 xl:pt-25 text-4xl xl:text-6xl  font-light xl:min-w-[30%] tracking-tight text-gray-800 dark:text-gray-200 ${
-                language === "fr" ? "xl:gap-6" : "xl:pl-28"
-              } ${deviceWidth < 1280 ? "text-center" : ""}`}
-            >
-              {translations[language].skills.title}
-            </motion.p>
-            <div className="flex flex-col xl:flex-row xl:justify-start xl:items-start xl:pt-20 xl:min-w-[0%] mx-auto  gap-8 xl:gap-14 ">
-              <ChaqueCompetences
-                title={translations[language].skills.languages}
-                items={languages}
-                language={language}
-                deviceWidth={deviceWidth}
-                delay={0.2}
-              />
+    <div className="dark:bg-black pb-14 pt-40 xl:pt-0 z-40 min-h-[120dvh] xl:min-h-[60dvh] xl:max-h-[70dvh] bg-cyan-100 flex flex-col overflow-x-hidden ">
+      <div
+        ref={ref}
+        className="dark:bg-black bg-cyan-100 text-lg leading-relaxed flex flex-col xl:flex-row  xl:gap-10 xl:items-top h-full px-4 xl:px-[0%] gap-10 "
+      >
+        <AnimatePresence mode="wait">
+          {isInView && (
+            <>
+              <motion.h2
+                key={`${language}-${deviceWidth}`}
+                initial={{
+                  opacity: 0,
+                  ...(deviceWidth >= 1280 ? { x: -300 } : {}),
+                }}
+                animate={{
+                  opacity: 1,
+                  ...(deviceWidth >= 1280 ? { x: [-300, 150, 100] } : {}),
+                }}
+                exit={{
+                  opacity: 0,
+                  ...(deviceWidth >= 1280 ? { x: -300 } : {}),
+                }}
+                transition={{ duration: 0.25, ease: "easeOut", delay: 0.1 }}
+                className={`pt-10 xl:pt-25 text-4xl xl:text-6xl  font-light xl:min-w-[30%] tracking-tight text-gray-800 dark:text-gray-200 ${
+                  language === "fr" ? "xl:gap-6" : "xl:pl-28"
+                } ${deviceWidth < 1280 ? "text-center" : ""}`}
+              >
+                {translations[language].skills.title}
+              </motion.h2>
+              <div className="flex flex-col xl:flex-row xl:justify-start xl:items-start xl:pt-20 xl:min-w-[0%] mx-auto  gap-8 xl:gap-14 ">
+                <ChaqueCompetences
+                  title={translations[language].skills.languages}
+                  items={languages}
+                  language={language}
+                  deviceWidth={deviceWidth}
+                  delay={0.1}
+                  // delay de 0.1 pour les langages
+                  arbriraryValue={0.1}
+                />
 
-              <ChaqueCompetences
-                title={translations[language].skills.frameworks}
-                items={frameworks}
-                language={language}
-                deviceWidth={deviceWidth}
-                delay={0.2}
-              />
+                <ChaqueCompetences
+                  title={translations[language].skills.frameworks}
+                  items={frameworks}
+                  language={language}
+                  deviceWidth={deviceWidth}
+                  delay={0.1}
+                  // delay de 0.1 pour les frameworks
+                  arbriraryValue={0.2}
+                />
 
-              <ChaqueCompetences
-                title={translations[language].skills.tools}
-                items={tools}
-                language={language}
-                deviceWidth={deviceWidth}
-                delay={0.2}
-              />
-            </div>
-          </>
-        )}
+                <ChaqueCompetences
+                  title={translations[language].skills.tools}
+                  items={tools}
+                  language={language}
+                  deviceWidth={deviceWidth}
+                  delay={0.1}
+                  // delay de 0.5 pour les outils
+                  arbriraryValue={0.3}
+                />
+              </div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
       <span id="projects" className="invisible" />
     </div>

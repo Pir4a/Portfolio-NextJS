@@ -15,9 +15,11 @@ interface ChaqueCompetencesProps {
   language: string
   deviceWidth: number
   delay?: number
+  arbriraryValue?: number
 }
 
 export default function ChaqueCompetences({
+  arbriraryValue,
   title,
   items,
   language,
@@ -57,10 +59,11 @@ export default function ChaqueCompetences({
         }}
         exit={{
           opacity: 0,
-          ...(deviceWidth >= 1280 ? { x: -300 } : {}),
+          ...(deviceWidth >= 1280 ? { x: -300, scale: 0.8 } : {}),
         }}
         transition={{
           duration: 0.25,
+          bounce: 1,
           ease: "easeOut",
           delay: 0.12,
         }}
@@ -74,10 +77,10 @@ export default function ChaqueCompetences({
               ...(deviceWidth >= 1280 ? { x: -270, scale: 0.8 } : {}),
             }}
             animate={{
-              opacity: 1,
+              opacity: [0, 0.4, 0.6, 1],
               ...(deviceWidth >= 1280
                 ? {
-                    x: [-300, 100, 0],
+                    x: [-3000, 100, 0],
                     scale: [0.8, 1, 1.05, 1],
                   }
                 : {}),
@@ -89,10 +92,11 @@ export default function ChaqueCompetences({
             transition={{
               duration: 0.3,
               ease: "easeOut",
-              delay: 0.14 + index * 0.08,
+              delay: 0.14 + index * 0.14 + (arbriraryValue ?? 0),
               ...(deviceWidth >= 1280
                 ? {
                     scale: {
+                      bounce: 1,
                       duration: 0.2,
                       times: [0, 0.7, 0.85, 1],
                     },

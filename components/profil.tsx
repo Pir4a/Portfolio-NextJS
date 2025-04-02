@@ -1,20 +1,16 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { translations } from "../translations"
 import { useLanguage } from "../contexts/LanguageContext"
 
 import TextCard from "./textCard"
+import { useRef } from "react"
 
-export default function Profil({
-  scrollYValue,
-  deviceWidth,
-}: {
-  scrollYValue: number
-  deviceWidth: number
-}) {
+export default function Profil({ deviceWidth }: { deviceWidth: number }) {
   const { language } = useLanguage()
-
+  const ref = useRef(null)
+  const isInView = useInView(ref, { margin: "0px 0px -10% 0px", once: true })
   // Split the description into sentences
   const sentences = translations[language].profil.description
     .split(/[.!?]+/)
@@ -27,12 +23,15 @@ export default function Profil({
     >
       {/* Top border line */}
 
-      <motion.span className="w-full h-[2px] bg-gradient-to-r from-transparent via-pink-300/60 to-transparent" />
+      <motion.span
+        ref={ref}
+        className="w-full h-[2px] invisible xl:visible bg-gradient-to-r from-transparent via-pink-300/60 to-transparent"
+      />
 
       {/* Content container */}
 
       <div className="text-lg leading-relaxed flex flex-col xl:flex-row items-center justify-center w-[full] xl:w-full xl:justify-between xl:items-top h-full xl:px-[6%]">
-        {scrollYValue > 180 && (
+        {isInView && (
           <>
             <motion.p
               key={`${language}-${deviceWidth}`}
