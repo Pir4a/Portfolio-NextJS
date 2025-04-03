@@ -51,12 +51,22 @@ export default function ContactForm() {
         className="w-full xl:mt-0 mt-10 h-[2px] bg-gradient-to-r from-transparent via-pink-300/60 to-transparent "
       />
       <div className="xl:py-20 flex h-full flex-col items-center xl:items-start  xl:flex-row">
-        <motion.div className="min-w-[40%] flex justify-center">
+        <motion.div
+          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "circOut" }}
+          className="min-w-[40%] flex justify-center"
+        >
           <h2 className="text-6xl font-light text-center mb-8 pt-10  tracking-tight text-gray-800  dark:text-gray-200">
             {t.title}
           </h2>
         </motion.div>
         <motion.div
+          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "circOut" }}
           ref={formRef}
           className="min-w-[60%] max-w-2xl p-8 rounded-xl relative z-10"
           style={{

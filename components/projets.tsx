@@ -44,8 +44,8 @@ function Projets({ deviceWidth }: { deviceWidth: number }) {
   const isInView = useInView(
     ref,
     deviceWidth >= 1024
-      ? { margin: "0px 0px -18% 0px" }
-      : { margin: "0px 0px 0% 0px" }
+      ? { margin: "0px 0px -18% 0px", once: true }
+      : { margin: "0px 0px 0% 0px", once: true }
   )
 
   return (
@@ -53,7 +53,7 @@ function Projets({ deviceWidth }: { deviceWidth: number }) {
       <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-pink-300/60 to-transparent " />
       <div
         ref={ref}
-        className="flex flex-col items-center min-h-[180dvh] xl:min-h-[120dvh] 2xl:min-h-[105dvh]"
+        className="flex flex-col items-center min-h-[180dvh] xl:min-h-[150dvh] 2xl:min-h-[105dvh]"
       >
         <AnimatePresence mode="wait">
           {isInView && (
@@ -73,8 +73,8 @@ function Projets({ deviceWidth }: { deviceWidth: number }) {
                   initial={{ width: 0 }}
                   animate={{ width: "auto" }}
                   transition={{
-                    duration: 1,
-                    ease: "easeOut",
+                    duration: 0.6,
+                    ease: "circOut",
                     delay: 0.2,
                   }}
                   className="overflow-hidden whitespace-nowrap inline-block pb-2"
@@ -100,7 +100,7 @@ function Projets({ deviceWidth }: { deviceWidth: number }) {
                     className=""
                     index={index}
                     key={index}
-                    delay={index * 0.2}
+                    delay={0.36 + index * 0.18}
                     iconMap={iconMap}
                   >
                     <h3 className="text-2xl flex justify-center pb-2 xl:py-2 xl:pt-0  font-light tracking-tight text-black dark:text-gray-200">

@@ -21,7 +21,7 @@ export default function Header() {
 
   const menuItems = [
     { href: "/#profile", label: translations[language].menu.profile },
-    { href: "/#skills", label: translations[language].menu.skills },
+    { href: "/#profile", label: translations[language].menu.skills },
     { href: "/#projects", label: translations[language].menu.projects },
     { href: "/#contact", label: translations[language].menu.contact },
   ]
@@ -29,7 +29,7 @@ export default function Header() {
   return (
     <>
       <header className="flex items-center rounded-b-lg justify-between py-3 px-1 xl:py-4 xl:px-8 bg-white/60 dark:bg-black/60 backdrop-blur-lg text-gray-800 dark:text-gray-100 sticky top-0 z-50 border-b border-gray-300/50 dark:border-gray-800/50">
-        <Logo text="DEDU Stéphane" />
+        {mounted && <Logo text="DEDU Stéphane" />}
 
         <div className="hidden xl:flex items-center justify-center flex-1">
           <ul className="flex items-center gap-12">
