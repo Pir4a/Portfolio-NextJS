@@ -26,6 +26,18 @@ export const translations = {
     projects: {
       title: "Projets",
     },
+    contact: {
+      title: "Contactez-moi",
+      form: {
+        name: "Nom",
+        email: "Email",
+        message: "Message",
+        submit: "Envoyer",
+        sending: "Envoi en cours...",
+        sent: "Message envoyé!",
+        error: "Erreur, réessayez",
+      },
+    },
   },
   en: {
     menu: {
@@ -53,6 +65,18 @@ export const translations = {
     },
     projects: {
       title: "Projects",
+    },
+    contact: {
+      title: "Get in Touch",
+      form: {
+        name: "Name",
+        email: "Email",
+        message: "Message",
+        submit: "Send",
+        sending: "Sending...",
+        sent: "Message Sent!",
+        error: "Error, try again",
+      },
     },
   },
 } as const
