@@ -39,6 +39,7 @@ export default function ContactForm() {
       toast.error(result.error.email?.[0] || "An error occurred")
     } else {
       setFormStatus("sent")
+      toast.success("Email sent successfully")
       reset()
     }
   }
