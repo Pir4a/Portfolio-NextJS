@@ -1,16 +1,16 @@
 "use client"
 
 import { useRef, useState } from "react"
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { contactSchema } from "../src/lib/schemas"
+import { toast } from "sonner"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { motion } from "framer-motion"
 import { useTheme } from "next-themes"
 import { useLanguage } from "../contexts/LanguageContext"
 import { translations } from "../translations"
+import { z } from "zod"
+import { sendEmail } from "@/lib/actions"
 
 export default function ContactForm() {
   const formRef = useRef<HTMLDivElement>(null)
@@ -22,19 +22,25 @@ export default function ContactForm() {
 
   const t = translations[language as keyof typeof translations].contact
 
-  // Handle mouse move
+  type FormData = z.infer<ReturnType<typeof contactSchema>>
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setFormStatus("sending")
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    resolver: zodResolver(contactSchema(language as "en" | "fr")),
+  })
 
-    // Simulate form submission (replace with actual API call)
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      setFormStatus("sent")
-      e.currentTarget.reset()
-    } catch (error) {
+  const processForm: SubmitHandler<FormData> = async (data) => {
+    const result = await sendEmail(data)
+    if (result?.error) {
       setFormStatus("error")
+      toast.error(result.error.email?.[0] || "An error occurred")
+    } else {
+      setFormStatus("sent")
+      reset()
     }
   }
 
@@ -69,11 +75,10 @@ export default function ContactForm() {
             {/* Pink border glow */}
             <div className="absolute inset-0 z-0 rounded-lg border via-pink-300/60 shadow-[0_0_10px_rgba(236,72,153,0.1)]" />
 
-            {/*  <h2 className="text-2xl font-light text-center mb-8 text-gray-800 dark:text-gray-200">
-              {language === "en" ? "Get in Touch" : "Contactez-moi"}
-            </h2> */}
-
-            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+            <form
+              onSubmit={handleSubmit(processForm)}
+              className="space-y-6 relative z-10"
+            >
               <div className="space-y-2">
                 <label
                   htmlFor="name"
@@ -82,12 +87,16 @@ export default function ContactForm() {
                   {t.form.name}
                 </label>
                 <input
+                  {...register("name")}
                   type="text"
                   id="name"
                   name="name"
-                  required
+                  placeholder={t.form.name}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-800/50  focus:border-transparent transition-all duration-300 relative z-20"
                 />
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name.message}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -98,12 +107,16 @@ export default function ContactForm() {
                   {t.form.email}
                 </label>
                 <input
+                  {...register("email")}
                   type="email"
                   id="email"
                   name="email"
-                  required
+                  placeholder={t.form.email}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-800/50  focus:border-transparent transition-all duration-300 relative z-20"
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -114,27 +127,33 @@ export default function ContactForm() {
                   {t.form.message}
                 </label>
                 <textarea
+                  {...register("message")}
                   id="message"
                   name="message"
-                  required
+                  placeholder={t.form.message}
                   rows={4}
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-800/50   transition-all duration-300 resize-none relative z-20"
                 />
+                {errors.message && (
+                  <p className="text-red-500 text-sm">
+                    {errors.message.message}
+                  </p>
+                )}
               </div>
 
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                disabled={formStatus === "sending"}
+                disabled={isSubmitting}
                 className={`w-full py-3 px-6 rounded-lg text-white font-medium transition-all duration-300 relative z-20
               ${
-                formStatus === "sending"
+                isSubmitting
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-pink-400/80 hover:bg-pink-500/80 cursor-pointer"
               }`}
               >
-                {formStatus === "sending" ? (
+                {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2">
                     <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                       <circle

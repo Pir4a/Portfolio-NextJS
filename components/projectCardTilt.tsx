@@ -130,7 +130,7 @@ export function TiltShineCard({
           className={`relative xl:max-w-auto xl:min-h-full  cursor-pointer hover:-z-50 overflow-hidden rounded-lg border p-5 
             xl:max-h-[35dvh] dark:bg-[#0A0A0A]/10 border-pink-200/50 dark:border-[#1A1A1A]/10 
             dark:shadow-[0_0_20px_rgba(0,0,0,0.4)] shadow-[0_0_20px_rgba(0,0,0,0.1)] 
-            z-30 bg-gray-200/20 ${className || ""}`}
+            z-30 bg-white/10 ${className || ""}`}
           style={{
             transformStyle: "preserve-3d",
             transformOrigin: "center center",
