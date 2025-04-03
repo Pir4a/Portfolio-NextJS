@@ -78,11 +78,13 @@ export default function Hero() {
                 className="flex  gap-4 pt-4"
               >
                 <HeroButton
+                  href=""
                   text="CV"
                   className="bg-gray-900 px-6 py-3 dark:bg-white text-white dark:text-black transition-all duration-200"
                 />
                 <HeroButton
                   text="Contact"
+                  href="#contact"
                   className="border-2 px-6 py-3 border-gray-900 dark:border-white text-gray-900 dark:text-white rounded-lg font-medium hover:bg-gray-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-200"
                 />
               </motion.span>
