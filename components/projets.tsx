@@ -85,7 +85,7 @@ function Projets({ deviceWidth }: { deviceWidth: number }) {
 
               <motion.div
                 layout
-                className=" flex flex-col lg:grid lg:grid-cols-2 lg:gap-8 relative  space-y-8 xl:space-y-0 xl:px-40 2xl:px-0  xl:mx-0 2xl:grid-cols-3 2xl:min-h-[60dvh] gap-10 w-[90%] xl:w-full items-center pt-10 "
+                className=" flex flex-col lg:grid lg:grid-cols-2 lg:gap-8 relative  space-y-8 xl:space-y-0 xl:px-40 2xl:px-0  xl:mx-0 2xl:grid-cols-3 xl:min-h-[128dvh] 2xl:min-h-[60dvh] gap-10 w-[90%] xl:w-full items-center pt-10 "
               >
                 {projetsdata.map((projet: Projet, index: number) => (
                   <TiltShineCard

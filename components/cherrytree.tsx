@@ -81,12 +81,12 @@ const Cherrytree: React.FC = () => {
         const relativeRotation = newRotation - initialRotationRef.current
 
         // Limit rotation to 10% (approximately 0.628 radians) in either direction
-        if (Math.abs(relativeRotation) <= 0.31) {
+        if (Math.abs(relativeRotation) <= 0.21) {
           modelRef.current.rotation.y = newRotation
         } else {
           // Clamp the rotation to the maximum allowed
           modelRef.current.rotation.y =
-            initialRotationRef.current + Math.sign(relativeRotation) * 0.31
+            initialRotationRef.current + Math.sign(relativeRotation) * 0.18
         }
 
         lastMouseXRef.current = event.clientX

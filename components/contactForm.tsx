@@ -50,7 +50,7 @@ export default function ContactForm() {
         id="contact"
         className="w-full xl:mt-0 mt-10 h-[2px] bg-gradient-to-r from-transparent via-pink-300/60 to-transparent "
       />
-      <div className="xl:py-20 flex h-full flex-col items-center xl:items-start  xl:flex-row">
+      <div className="xl:py-20 flex h-full pb-10 flex-col items-center xl:items-start  xl:flex-row">
         <motion.div
           viewport={{ once: true }}
           initial={{ opacity: 0, y: 40 }}
@@ -58,7 +58,7 @@ export default function ContactForm() {
           transition={{ duration: 0.6, ease: "circOut" }}
           className="min-w-[40%] flex justify-center"
         >
-          <h2 className="text-6xl font-light text-center mb-8 pt-10  tracking-tight text-gray-800  dark:text-gray-200">
+          <h2 className="text-5xl xl:text-6xl font-light text-center mb-8 pt-10  tracking-tight text-gray-800  dark:text-gray-200">
             {t.title}
           </h2>
         </motion.div>

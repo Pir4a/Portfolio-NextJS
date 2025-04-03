@@ -18,7 +18,7 @@ export default function Profil({ deviceWidth }: { deviceWidth: number }) {
 
   return (
     <div
-      className="dark:bg-black z-40 pt-20 xl:pt-0 min-h-[50dvh] h-[50dvh] xl:h-auto  bg-cyan-100 flex flex-col xl:mt-[22dvh]  relative"
+      className="dark:bg-black text-center xl:text-left z-40 pt-20 xl:pt-0 min-h-[50dvh] h-[50dvh] xl:h-auto  bg-cyan-100 flex flex-col xl:mt-[22dvh]  relative"
       id="profile"
     >
       {/* Top border line */}
