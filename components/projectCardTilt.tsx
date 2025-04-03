@@ -9,7 +9,7 @@ import {
 } from "framer-motion"
 import { useTheme } from "next-themes"
 import { useLanguage } from "../contexts/LanguageContext"
-
+import { IconType } from "react-icons"
 interface TiltShineCardProps {
   technosImg: string[]
   technos: string[]
@@ -22,7 +22,7 @@ interface TiltShineCardProps {
   delay?: number
   layoutId?: string
   index: number
-  iconMap: { [key: string]: any }
+  iconMap: { [key: string]: IconType }
   gitLink: string
   liveLink: string
 }
@@ -37,7 +37,6 @@ export function TiltShineCard({
   delay,
   className,
   children,
-  layoutId,
   index,
   iconMap,
   gitLink,
@@ -46,10 +45,6 @@ export function TiltShineCard({
   const cardRef = useRef<HTMLDivElement>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { language } = useLanguage()
-
-  // Mouse position motion values
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
 
   // Add spring physics for smooth movement
   const springConfig = { damping: 15, stiffness: 15 }

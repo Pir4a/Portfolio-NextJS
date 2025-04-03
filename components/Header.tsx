@@ -13,7 +13,7 @@ import LangageButton from "./langagebutton"
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const { language, setLanguage } = useLanguage()
+  const { language } = useLanguage()
 
   useEffect(() => {
     setMounted(true)

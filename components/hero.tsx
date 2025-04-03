@@ -8,11 +8,6 @@ import { BsGithub, BsLinkedin } from "react-icons/bs"
 import HeroButton from "./herobutton"
 export default function Hero() {
   const { language } = useLanguage()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   return (
     <div className="mx-auto xl:mx-0 flex text-center flex-col gap-10 xl:gap-6 xl:text-start items-center xl:items-start justify-center min-h-[100dvh] xl:min-h-[70dvh] px-4 xl:px-[6%] xl:min-w-[50%] xl:max-w-[50%]">

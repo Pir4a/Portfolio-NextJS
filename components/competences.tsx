@@ -3,7 +3,6 @@ import { AnimatePresence, motion, useInView } from "motion/react"
 import { useLanguage } from "../contexts/LanguageContext"
 import {
   FaCss3,
-  FaCss3Alt,
   FaFigma,
   FaGit,
   FaGithub,

@@ -78,7 +78,7 @@ export default function Profil({ deviceWidth }: { deviceWidth: number }) {
                     {sentences.map((sentence, index) => (
                       <p
                         id="skills"
-                        key={`${index}-${deviceWidth}`}
+                        key={`${index}`}
                         className="pb-4 text-xl leading-relaxed font-light tracking-wide text-black dark:text-gray-300"
                       >
                         {sentence.trim()}

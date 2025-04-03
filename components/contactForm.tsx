@@ -14,7 +14,7 @@ import { sendEmail } from "@/lib/actions"
 
 export default function ContactForm() {
   const formRef = useRef<HTMLDivElement>(null)
-  const { theme } = useTheme()
+
   const { language } = useLanguage()
   const [formStatus, setFormStatus] = useState<
     "idle" | "sending" | "sent" | "error"

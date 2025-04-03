@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 
 export default function logo({ text }: { text?: string }) {
-  const { theme, resolvedTheme } = useTheme()
+  const { theme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -22,11 +22,7 @@ export default function logo({ text }: { text?: string }) {
   return (
     <span className="flex items-center px-2 lg:px-4 gap-4 text-lg font-bold dark:text-white text-black">
       <img
-        src={
-          resolvedTheme === "dark"
-            ? "/stephanelogo.png"
-            : "/stephanelogolight.png"
-        }
+        src={theme === "dark" ? "/stephanelogo.png" : "/stephanelogolight.png"}
         alt="logo"
         className="w-10 h-10 flex-shrink-0"
       />

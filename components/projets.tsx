@@ -10,8 +10,9 @@ import {
   SiTypescript,
   SiThreedotjs,
 } from "react-icons/si"
-import { AnimatePresence, delay, motion, useInView } from "framer-motion"
+import { AnimatePresence, motion, useInView } from "framer-motion"
 import { useRef } from "react"
+import { IconType } from "react-icons"
 
 interface Projet {
   projectName: string
@@ -25,7 +26,7 @@ interface Projet {
 }
 
 // Icon mapping object
-const iconMap: { [key: string]: any } = {
+const iconMap: { [key: string]: IconType } = {
   FaReact,
   FaSass,
   FaNodeJs,
