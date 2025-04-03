@@ -8,6 +8,7 @@ import Petals from "../../components/petals"
 import { useEffect, useState } from "react"
 import Competences from "../../components/competences"
 import Projets from "../../components/projets"
+import ContactForm from "../../components/contactForm"
 export default function Home() {
   const [deviceWidth, setDeviceWidth] = useState(0)
 
@@ -44,6 +45,7 @@ export default function Home() {
           <Profil deviceWidth={deviceWidth} />
           <Competences deviceWidth={deviceWidth} />
           <Projets deviceWidth={deviceWidth} />
+          <ContactForm />
         </main>
       </div>
     </div>

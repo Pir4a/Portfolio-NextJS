@@ -3,7 +3,7 @@
     "projectName": "Portfolio",
     "projectDescription": "Il s'agit de mon projet le plus abouti à ce jour. Ce portfolio est développé avec NextJs, TailwindCSS et ThreeJs pour offrir une expérience utilisateur fluide et immersive. Il présente mes compétences, mes projets et mon parcours de manière dynamique et interactive. J'ai utilisé ThreeJs pour intégrer des animations 3D et améliorer l'esthétique globale du site. Ce projet reflète mon savoir-faire en développement front-end avancé et mon souci du détail en termes d'UI/UX design.",
     "projectDescriptionEN": "This is my most advanced project to date. This portfolio is built using NextJs, TailwindCSS, and ThreeJs to provide a smooth and immersive user experience. It showcases my skills, projects, and journey in a dynamic and interactive way. I utilized ThreeJs to integrate 3D animations and enhance the overall aesthetics of the site. This project highlights my expertise in advanced front-end development and my attention to detail in UI/UX design.",
-    "technosImg": ["SiNextdotJs", "SiTailwindcss", "SiThreeDotJs"],
+    "technosImg": ["SiNextdotjs", "SiTailwindcss", "SiThreedotjs"],
     "technos": ["NextJS", "TailwindCSS", "ThreeJS"],
     "gitLink": "https://github.com/Pir4a/portfolio",
     "liveLink": "https://portfolio.vercel.app",
@@ -47,6 +47,16 @@
     "technos": ["React", "TypeScript", "TailwindCSS"],
     "gitLink": "https://github.com/Pir4a/gym-website.git",
     "liveLink": "https://gym-website-ashy.vercel.app/",
-    "projectImg": "/static/ZyzzGymm.png"
+    "projectImg": "/static/Zyzz.png"
+  },
+  {
+    "projectName": "Premier Portfolio",
+    "projectDescription": "Mon premier portfolio, développé avec React et TailwindCSS. Il présente mes compétences et mes projets a travers des projets réalisés en formation ou en autonomie.",
+    "projectDescriptionEN": "My first portfolio, built with React and TailwindCSS. It showcases my skills and projects through projects developed during training or independently.",
+    "technosImg": ["FaReact", "SiTailwindcss"],
+    "technos": ["React", "TailwindCSS"],
+    "gitLink": "https://github.com/Pir4a/OpenClassrooms-portfolio",
+    "liveLink": "https://stephane-dedu-portfolio.vercel.app/",
+    "projectImg": "/static/portfolioun.png"
   }
 ]
