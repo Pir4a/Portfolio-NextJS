@@ -6,7 +6,6 @@ import { contactSchema } from "../src/lib/schemas"
 import { toast } from "sonner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
-import { useTheme } from "next-themes"
 import { useLanguage } from "../contexts/LanguageContext"
 import { translations } from "../translations"
 import { z } from "zod"
@@ -119,7 +118,7 @@ export default function ContactForm() {
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2 xl:min-h-[160px]">
                 <label
                   htmlFor="message"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -132,7 +131,7 @@ export default function ContactForm() {
                   name="message"
                   placeholder={t.form.message}
                   rows={4}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-800/50   transition-all duration-300 resize-none relative z-20"
+                  className="w-full px-4 py-2  rounded-lg border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-800/50   transition-all duration-300 resize-none relative z-20"
                 />
                 {errors.message && (
                   <p className="text-red-500 text-sm">

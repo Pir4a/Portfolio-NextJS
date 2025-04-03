@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useLanguage } from "../contexts/LanguageContext"
 import { translations } from "../translations"
-import { useEffect, useState } from "react"
 import { BsGithub, BsLinkedin } from "react-icons/bs"
 import HeroButton from "./herobutton"
 export default function Hero() {

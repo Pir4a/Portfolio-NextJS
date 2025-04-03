@@ -73,20 +73,19 @@ export default function Profil({ deviceWidth }: { deviceWidth: number }) {
                 className={
                   "xl:max-w-full mx-auto xl:mx-0 max-w-[90%] bg-cyan-50 text-black dark:text-gray-700 dark:bg-[#0A0A0A] backdrop-blur-xl"
                 }
-                children={
-                  <>
-                    {sentences.map((sentence, index) => (
-                      <p
-                        id="skills"
-                        key={`${index}`}
-                        className="pb-4 text-xl leading-relaxed font-light tracking-wide text-black dark:text-gray-300"
-                      >
-                        {sentence.trim()}
-                      </p>
-                    ))}
-                  </>
-                }
-              />
+              >
+                <>
+                  {sentences.map((sentence, index) => (
+                    <p
+                      id="skills"
+                      key={`${index}`}
+                      className="pb-4 text-xl leading-relaxed font-light tracking-wide text-black dark:text-gray-300"
+                    >
+                      {sentence.trim()}
+                    </p>
+                  ))}
+                </>
+              </TextCard>
             </motion.div>
           </>
         )}
