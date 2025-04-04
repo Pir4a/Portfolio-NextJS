@@ -52,6 +52,10 @@ export default function Profil({ deviceWidth }: { deviceWidth: number }) {
               }`}
             >
               {translations[language].profil.title}
+              <motion.p
+                ref={ref}
+                className="w-[70%] h-[2px] -translate-x-16 translate-y-2 invisible xl:visible bg-gradient-to-r from-transparent via-pink-100/60 to-transparent"
+              />
             </motion.p>
             <motion.div
               key={`${language}-${deviceWidth}-description`}

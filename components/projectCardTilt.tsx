@@ -10,6 +10,8 @@ import {
 import { useTheme } from "next-themes"
 import { useLanguage } from "../contexts/LanguageContext"
 import { IconType } from "react-icons"
+import { toast } from "sonner"
+
 interface TiltShineCardProps {
   technosImg: string[]
   technos: string[]
@@ -289,10 +291,17 @@ export function TiltShineCard({
                             stiffness: 300,
                             damping: 20,
                           }}
-                          href={liveLink}
+                          onClick={() => {
+                            if (liveLink === "") {
+                              toast.error(
+                                `${titre} ${language === "en" ? "is not available yet in live version" : "n'est pas encore disponible en version live"}`
+                              )
+                            }
+                          }}
+                          href={liveLink === "" ? undefined : liveLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="bg-pink-400/70  xl:max-h-[45px] hover:bg-pink-400/80  text-white px-6 py-2 rounded-lg transition-colors duration-300 flex items-center gap-2"
+                          className="bg-pink-400/70 cursor-pointer  xl:max-h-[45px] hover:bg-pink-400/80  text-white px-6 py-2 rounded-lg transition-colors duration-300 flex items-center gap-2"
                         >
                           <svg
                             className="w-5 h-5"
