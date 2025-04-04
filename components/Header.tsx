@@ -2,7 +2,6 @@
 
 import ThemeToggle from "./theme-toggle"
 import Logo from "./logo"
-import Link from "next/link"
 import { MenuIcon, X } from "lucide-react"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
@@ -47,12 +46,12 @@ export default function Header() {
                 transition={{ duration: 0.2 }}
                 className="whitespace-nowrap"
               >
-                <Link
+                <a
                   href={item.href}
                   className="text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium"
                 >
                   {item.label}
-                </Link>
+                </a>
               </motion.li>
             ))}
           </ul>
@@ -108,13 +107,13 @@ export default function Header() {
                       transition={{ delay: index * 0.1 }}
                       className="whitespace-nowrap"
                     >
-                      <Link
+                      <a
                         href={item.href}
                         className="text-xl font-medium text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors"
                         onClick={() => setIsOpen(false)}
                       >
                         {item.label}
-                      </Link>
+                      </a>
                     </motion.li>
                   ))}
                   <motion.li
