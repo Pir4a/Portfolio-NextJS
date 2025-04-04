@@ -6,7 +6,7 @@
     "technosImg": ["SiNextdotjs", "SiTailwindcss", "SiThreedotjs"],
     "technos": ["NextJS", "TailwindCSS", "ThreeJS"],
     "gitLink": "https://github.com/Pir4a/portfolio",
-    "liveLink": "https://portfolio.vercel.app",
+    "liveLink": "https://stephane-dedu-devportfolio.vercel.app/",
     "projectImg": "/static/portfolio.png"
   },
   {
