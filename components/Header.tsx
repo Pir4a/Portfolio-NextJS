@@ -9,15 +9,20 @@ import { motion, AnimatePresence } from "motion/react"
 import { useLanguage } from "../contexts/LanguageContext"
 import { translations } from "../translations"
 import LangageButton from "./langagebutton"
+import { useTheme } from "next-themes"
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const { language } = useLanguage()
-
+  const { theme, setTheme } = useTheme()
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    setTheme(theme === "dark" ? "dark" : "light")
+  }, [mounted])
 
   const menuItems = [
     { href: "/#profile", label: translations[language].menu.profile },
@@ -29,7 +34,7 @@ export default function Header() {
   return (
     <>
       <header className="flex items-center rounded-b-lg justify-between py-3 px-1 xl:py-4 xl:px-8 bg-white/60 dark:bg-black/60 backdrop-blur-lg text-gray-800 dark:text-gray-100 sticky top-0 z-50 border-b border-gray-300/50 dark:border-gray-800/50">
-        {mounted && <Logo text="DEDU Stéphane" />}
+        {mounted && <Logo>DEDU Stéphane</Logo>}
 
         <div className="hidden xl:flex items-center justify-center flex-1">
           <ul className="flex items-center gap-12">

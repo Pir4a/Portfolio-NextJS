@@ -31,7 +31,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="bg-cyan-100 dark:bg-black md:px-[10%] lg:px-[0%]  2xl:px-[10%]  w-[100dvw]">
+    <div className="bg-cyan-100 dark:bg-black md:px-[10%] lg:px-[0%] scroll-smooth  2xl:px-[10%]  w-[100dvw]">
       <CursorGlow />
       <Header />
       <div className="dark:bg-black bg-cyan-100">

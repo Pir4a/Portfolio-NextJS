@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes"
 import Link from "next/link"
 
-export default function Logo({ text }: { text?: string }) {
+export default function Logo({ children }: { children?: React.ReactNode }) {
   const { theme } = useTheme()
 
   return (
@@ -16,7 +16,7 @@ export default function Logo({ text }: { text?: string }) {
         alt="logo"
         className="w-10 h-10 flex-shrink-0"
       />
-      {text}
+      {children}
     </Link>
   )
 }
