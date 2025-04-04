@@ -9,39 +9,54 @@ import { motion, AnimatePresence } from "motion/react"
 import { useLanguage } from "../contexts/LanguageContext"
 import { translations } from "../translations"
 import LangageButton from "./langagebutton"
+import { useTheme } from "next-themes"
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
-  const { language, setLanguage } = useLanguage()
-
+  const { language } = useLanguage()
+  const { theme, setTheme } = useTheme()
   useEffect(() => {
     setMounted(true)
   }, [])
 
+  useEffect(() => {
+    setTheme(theme === "dark" ? "dark" : "light")
+  }, [mounted])
+
   const menuItems = [
-    { href: "/", label: translations[language].menu.profile },
-    { href: "/", label: translations[language].menu.skills },
-    { href: "/", label: translations[language].menu.projects },
-    { href: "/", label: translations[language].menu.contact },
+    { href: "/#profile", label: translations[language].menu.profile },
+    { href: "/#profile", label: translations[language].menu.skills },
+    { href: "/#projects", label: translations[language].menu.projects },
+    { href: "/#contact", label: translations[language].menu.contact },
   ]
 
   return (
     <>
       <header className="flex items-center rounded-b-lg justify-between py-3 px-1 xl:py-4 xl:px-8 bg-white/60 dark:bg-black/60 backdrop-blur-lg text-gray-800 dark:text-gray-100 sticky top-0 z-50 border-b border-gray-300/50 dark:border-gray-800/50">
-        <Logo text="DEDU Stéphane" />
+        {mounted && <Logo>DEDU Stéphane</Logo>}
 
-        <ul className="hidden xl:flex items-center xl:gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          {menuItems.map((item) => (
-            <li key={item.label}>
-              <Link
-                href={item.href}
-                className="text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium"
+        <div className="hidden xl:flex items-center justify-center flex-1">
+          <ul className="flex items-center gap-12">
+            {menuItems.map((item) => (
+              <motion.li
+                key={item.label}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="whitespace-nowrap"
               >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+                <Link
+                  href={item.href}
+                  className="text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium"
+                >
+                  {item.label}
+                </Link>
+              </motion.li>
+            ))}
+          </ul>
+        </div>
 
         <div className="flex items-center gap-8 px-2">
           <div className="hidden xl:flex items-center gap-2">
@@ -91,6 +106,7 @@ export default function Header() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ delay: index * 0.1 }}
+                      className="whitespace-nowrap"
                     >
                       <Link
                         href={item.href}

@@ -1,0 +1,62 @@
+[
+  {
+    "projectName": "Portfolio",
+    "projectDescription": "Il s'agit de mon projet le plus abouti à ce jour. Ce portfolio est développé avec NextJs, TailwindCSS et ThreeJs pour offrir une expérience utilisateur fluide et immersive. Il présente mes compétences, mes projets et mon parcours de manière dynamique et interactive. J'ai utilisé ThreeJs pour intégrer des animations 3D et améliorer l'esthétique globale du site. Ce projet reflète mon savoir-faire en développement front-end avancé et mon souci du détail en termes d'UI/UX design.",
+    "projectDescriptionEN": "This is my most advanced project to date. This portfolio is built using NextJs, TailwindCSS, and ThreeJs to provide a smooth and immersive user experience. It showcases my skills, projects, and journey in a dynamic and interactive way. I utilized ThreeJs to integrate 3D animations and enhance the overall aesthetics of the site. This project highlights my expertise in advanced front-end development and my attention to detail in UI/UX design.",
+    "technosImg": ["SiNextdotjs", "SiTailwindcss", "SiThreedotjs"],
+    "technos": ["NextJS", "TailwindCSS", "ThreeJS"],
+    "gitLink": "https://github.com/Pir4a/portfolio",
+    "liveLink": "https://portfolio.vercel.app",
+    "projectImg": "/static/portfolio.png"
+  },
+  {
+    "projectName": "Car Rental",
+    "projectDescription": "Ce projet est une application front-end de location de voitures. Développée avec React, TypeScript et TailwindCSS, elle offre une interface moderne et réactive permettant aux utilisateurs de rechercher, comparer et réserver des véhicules facilement. L'objectif était de créer une plateforme ergonomique avec une navigation fluide et un design épuré, optimisé pour une expérience utilisateur intuitive.",
+    "projectDescriptionEN": "This project is a front-end car rental application. Developed with React, TypeScript, and TailwindCSS, it provides a modern and responsive interface, allowing users to search, compare, and book vehicles with ease. The goal was to create an ergonomic platform with smooth navigation and a clean design, optimized for an intuitive user experience.",
+    "technosImg": ["FaReact", "SiTypescript", "SiTailwindcss"],
+    "technos": ["React", "TypeScript", "TailwindCSS"],
+    "gitLink": "https://github.com/Pir4a/car-rent-website",
+    "liveLink": "https://car-rent-website-six.vercel.app",
+    "projectImg": "/static/carrental.png"
+  },
+  {
+    "projectName": "Kasa (OC)",
+    "projectDescription": "Projet réalisé dans le cadre de ma formation OpenClassrooms, Kasa est un site de réservation de biens immobiliers. Développé avec React et SaSS, il offre une expérience fluide et dynamique pour les utilisateurs cherchant à louer des logements. L'accent a été mis sur la gestion des routes et des états avec React Router et une architecture modulaire.",
+    "projectDescriptionEN": "A project developed as part of my OpenClassrooms training, Kasa is a real estate booking website. Built with React and SaSS, it provides a smooth and dynamic experience for users looking to rent properties. The focus was on routing management, state handling with React Router, and a modular architecture.",
+    "technosImg": ["FaReact", "FaSass"],
+    "technos": ["React", "SaSS"],
+    "gitLink": "https://github.com/Pir4a/OpenClassrooms-projet-4.git",
+    "liveLink": "https://open-classrooms-projet-4.vercel.app/",
+    "projectImg": "/static/Kasa.png"
+  },
+  {
+    "projectName": "Mon Vieux Grimoire (OC)",
+    "projectDescription": "Un projet back-end réalisé dans le cadre de ma formation OpenClassrooms. Mon Vieux Grimoire est une plateforme de notation de livres développée en NodeJs avec une base de données MongoDB. Il comprend un système d'authentification sécurisé, la gestion des utilisateurs et des avis, ainsi que des fonctionnalités CRUD avancées pour la gestion des livres.",
+    "projectDescriptionEN": "A back-end project developed as part of my OpenClassrooms training. Mon Vieux Grimoire is a book rating platform built with NodeJs and a MongoDB database. It includes a secure authentication system, user and review management, as well as advanced CRUD functionalities for handling books.",
+    "technosImg": ["FaNodeJs", "FaDatabase"],
+    "technos": ["NodeJS", "MongoDB"],
+    "gitLink": "https://github.com/Pir4a/OpenClassrooms-p5",
+    "liveLink": "",
+    "projectImg": "/static/grimoire.png"
+  },
+  {
+    "projectName": "Zyzz Gym",
+    "projectDescription": "Zyzz Gym est une application front-end dédiée aux salles de sport. Ce projet personnel a été conçu avec React, TypeScript et TailwindCSS pour proposer un site moderne et ergonomique aux amateurs de fitness. Il met en avant les différentes prestations proposées par la salle ainsi qu'un système de réservation simplifié.",
+    "projectDescriptionEN": "Zyzz Gym is a front-end application dedicated to gyms. This personal project was built with React, TypeScript, and TailwindCSS to offer a modern and ergonomic site for fitness enthusiasts. It highlights the different services offered by the gym and features a streamlined booking system.",
+    "technosImg": ["FaReact", "SiTypescript", "SiTailwindcss"],
+    "technos": ["React", "TypeScript", "TailwindCSS"],
+    "gitLink": "https://github.com/Pir4a/gym-website.git",
+    "liveLink": "https://gym-website-ashy.vercel.app/",
+    "projectImg": "/static/Zyzz.png"
+  },
+  {
+    "projectName": "Premier Portfolio",
+    "projectDescription": "Mon premier portfolio, développé avec React et TailwindCSS. Il présente mes compétences et mes projets a travers des projets réalisés en formation ou en autonomie.",
+    "projectDescriptionEN": "My first portfolio, built with React and TailwindCSS. It showcases my skills and projects through projects developed during training or independently.",
+    "technosImg": ["FaReact", "SiTailwindcss"],
+    "technos": ["React", "TailwindCSS"],
+    "gitLink": "https://github.com/Pir4a/OpenClassrooms-portfolio",
+    "liveLink": "https://stephane-dedu-portfolio.vercel.app/",
+    "projectImg": "/static/portfolioun.png"
+  }
+]

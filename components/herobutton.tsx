@@ -2,13 +2,14 @@
 
 import { motion } from "framer-motion"
 import { useLanguage } from "../contexts/LanguageContext"
-
+import Link from "next/link"
 interface HeroButtonProps {
+  href: string
   text: string
   className?: string
 }
 
-export default function HeroButton({ text, className }: HeroButtonProps) {
+export default function HeroButton({ text, className, href }: HeroButtonProps) {
   const { language } = useLanguage()
   const handleDownload = () => {
     if (text !== "CV") return
@@ -36,7 +37,7 @@ export default function HeroButton({ text, className }: HeroButtonProps) {
       onClick={handleDownload}
       className={`${className} rounded-lg font-medium shadow-lg hover:shadow-xl cursor-pointer`}
     >
-      {text}
+      <Link href={href}>{text}</Link>
     </motion.button>
   )
 }
