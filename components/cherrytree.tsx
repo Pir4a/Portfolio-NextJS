@@ -173,6 +173,7 @@ const Cherrytree: React.FC = () => {
         model.rotation.y = -0.1
         initialRotationRef.current = -0.15
         scene.add(model)
+        if (window.innerWidth < 1000) return setIsLoading(false)
         modelRef.current = model
         setIsLoading(false)
       },

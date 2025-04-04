@@ -15,7 +15,7 @@ export const translations = {
     profil: {
       title: "Profil",
       description:
-        "Salut, moi c'est Stéphane, développeur FullStack.Diplomé d'une formation Developpeur Informatique OpenClassrooms, je code et ai appris ce dernier en autodidacte depuis Novembre 2021. Ma passion est de créer et développer un UI/UX propre. Ma mainstack est actuellement React et NodeJS en combinaison avec Typescriptet Tailwind CSS",
+        "Salut, moi c'est Stéphane, développeur FullStack.Diplomé d'une formation Developpeur Informatique OpenClassrooms, je code et ai appris ce dernier en autodidacte depuis Novembre 2021. Ma passion est de créer et développer un UI/UX propre. Ma mainstack est actuellement React et NodeJS en combinaison avec Typescript et Tailwind CSS",
     },
     skills: {
       title: "Compétences",

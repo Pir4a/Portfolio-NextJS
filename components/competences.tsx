@@ -62,28 +62,42 @@ function Competences({ deviceWidth }: { deviceWidth: number }) {
         <AnimatePresence mode="wait">
           {isInView && (
             <>
-              <motion.h2
-                key={`${language}-${deviceWidth}`}
-                initial={{
-                  opacity: 0,
-                  ...(deviceWidth >= 1280 ? { x: -300 } : {}),
-                }}
-                animate={{
-                  opacity: 1,
-                  ...(deviceWidth >= 1280 ? { x: [-300, 150, 100] } : {}),
-                }}
-                exit={{
-                  opacity: 0,
-                  ...(deviceWidth >= 1280 ? { x: -300 } : {}),
-                }}
-                transition={{ duration: 0.25, ease: "easeOut", delay: 0.1 }}
-                className={`pt-10 xl:pt-25 text-4xl xl:text-6xl  font-light xl:min-w-[30%] tracking-tight text-gray-800 dark:text-gray-200 ${
-                  language === "fr" ? "xl:gap-6" : "xl:pl-28"
-                } ${deviceWidth < 1280 ? "text-center" : ""}`}
+              <div
+                className={`pt-10  ${
+                  language === "fr" ? "xl:pl-0 xl:pt-25" : "xl:pl-28 xl:pt-20"
+                }`}
               >
-                {translations[language].skills.title}
-              </motion.h2>
-              <div className="flex flex-col xl:flex-row xl:justify-start xl:items-start xl:pt-20 xl:min-w-[0%] mx-auto  gap-8 xl:gap-14 ">
+                <motion.h2
+                  key={`${language}-${deviceWidth}`}
+                  initial={{
+                    opacity: 0,
+                    ...(deviceWidth >= 1280 ? { x: -300 } : {}),
+                  }}
+                  animate={{
+                    opacity: 1,
+                    ...(deviceWidth >= 1280 ? { x: [-300, 150, 100] } : {}),
+                  }}
+                  exit={{
+                    opacity: 0,
+                    ...(deviceWidth >= 1280 ? { x: -300 } : {}),
+                  }}
+                  transition={{ duration: 0.25, ease: "easeOut", delay: 0.1 }}
+                  className={`xl:min-w-[30%]  relative text-4xl xl:text-6xl  font-light  tracking-tight text-gray-800 dark:text-gray-200  ${deviceWidth < 1280 ? "text-center" : ""}`}
+                >
+                  {translations[language].skills.title}
+                  <motion.span
+                    ref={ref}
+                    className={`${language === "fr" ? "w-[120%]" : "w-[140%]"} h-[2px] -bottom-4 absolute left-[50%] -translate-x-[50%]  bg-gradient-to-r from-transparent via-pink-300/40 to-transparent`}
+                  />
+                </motion.h2>
+              </div>
+              <div
+                className={`flex flex-col xl:flex-row xl:justify-start xl:items-start xl:min-w-[0%] mx-auto ${
+                  language === "fr"
+                    ? "xl:pl-30 xl:pt-20 "
+                    : "xl:pl-54 xl:pt-16 "
+                }  gap-8 xl:gap-14 `}
+              >
                 <ChaqueCompetences
                   title={translations[language].skills.languages}
                   items={languages}
