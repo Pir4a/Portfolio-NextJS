@@ -9,7 +9,7 @@
     "liveLink": "https://stephane-dedu-devportfolio.vercel.app/",
     "projectImg": "/static/portfolio.png"
   },{
-    "projectName": "Fissure",
+    "projectName": "Fissure ( SaaS )",
     "projectDescription": "Il s'agit de mon projet le plus abouti à ce jour. Application mobile ( SaaS ) pour atteindre ses objectifs fitness, du tracking des calories a celui de l'entrainement, le tout avec une implémentation de Gemini pour rendre les données plus facile a traquer. Développer avec React Native, ExpressJs, Turso ( SqLite ) et build avec Expo .",
     "projectDescriptionEN": "This is my most accomplished project to date. A mobile (SaaS) application to help users reach their fitness goals, from calorie tracking to workout tracking, all with a Gemini integration to make the data easier to manage. Developed with React Native, ExpressJs, Turso (SQLite), and built using Expo.",
     "technosImg": ["FaReact", "FaNodeJs"],
