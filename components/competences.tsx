@@ -15,7 +15,7 @@ import {
   FaCode,
 } from "react-icons/fa"
 import { RiNextjsFill, RiTailwindCssLine } from "react-icons/ri"
-import { SiTypescript, SiThreedotjs } from "react-icons/si"
+import { SiTypescript, SiThreedotjs, SiSqlite } from "react-icons/si"
 import { translations } from "../translations"
 import ChaqueCompetences from "./chaqueCompetences"
 import { useRef } from "react"
@@ -39,6 +39,7 @@ const frameworks = [
 const tools = [
   { Icon: FaFigma, key: "figma", label: "Figma" },
   { Icon: FaGit, key: "git", label: "Git" },
+{Icon : SiSqlite, key:"sqlite", label:"Sqlite"},
   { Icon: FaNpm, key: "npm", label: "npm" },
   { Icon: FaGithub, key: "github", label: "GitHub" },
   { Icon: FaCode, key: "vscode", label: "VSCode" },
