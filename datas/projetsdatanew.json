@@ -1,13 +1,22 @@
 [
   {
     "projectName": "Portfolio",
-    "projectDescription": "Il s'agit de mon projet le plus abouti à ce jour. Ce portfolio est développé avec NextJs, TailwindCSS et ThreeJs pour offrir une expérience utilisateur fluide et immersive. Il présente mes compétences, mes projets et mon parcours de manière dynamique et interactive. J'ai utilisé ThreeJs pour intégrer des animations 3D et améliorer l'esthétique globale du site. Ce projet reflète mon savoir-faire en développement front-end avancé et mon souci du détail en termes d'UI/UX design.",
+    "projectDescription": " Ce portfolio est développé avec NextJs, TailwindCSS et ThreeJs pour offrir une expérience utilisateur fluide et immersive. Il présente mes compétences, mes projets et mon parcours de manière dynamique et interactive. J'ai utilisé ThreeJs pour intégrer des animations 3D et améliorer l'esthétique globale du site. Ce projet reflète mon savoir-faire en développement front-end avancé et mon souci du détail en termes d'UI/UX design.",
     "projectDescriptionEN": "This is my most advanced project to date. This portfolio is built using NextJs, TailwindCSS, and ThreeJs to provide a smooth and immersive user experience. It showcases my skills, projects, and journey in a dynamic and interactive way. I utilized ThreeJs to integrate 3D animations and enhance the overall aesthetics of the site. This project highlights my expertise in advanced front-end development and my attention to detail in UI/UX design.",
     "technosImg": ["SiNextdotjs", "SiTailwindcss", "SiThreedotjs"],
     "technos": ["NextJS", "TailwindCSS", "ThreeJS"],
     "gitLink": "https://github.com/Pir4a/portfolio",
     "liveLink": "https://stephane-dedu-devportfolio.vercel.app/",
     "projectImg": "/static/portfolio.png"
+  },{
+    "projectName": "Fissure",
+    "projectDescription": "Il s'agit de mon projet le plus abouti à ce jour. Application mobile ( SaaS ) pour atteindre ses objectifs fitness, du tracking des calories a celui de l'entrainement, le tout avec une implémentation de Gemini pour rendre les données plus facile a traquer. Développer avec React Native, ExpressJs, Turso ( SqLite ) et build avec Expo .",
+    "projectDescriptionEN": "This is my most accomplished project to date. A mobile (SaaS) application to help users reach their fitness goals, from calorie tracking to workout tracking, all with a Gemini integration to make the data easier to manage. Developed with React Native, ExpressJs, Turso (SQLite), and built using Expo.",
+    "technosImg": ["FaReact", "FaNodeJs"],
+    "technos": ["React Native", "ExpressJS"],
+    "gitLink": "",
+    "liveLink": "https://landing-page-fissure-4adi.vercel.app/",
+    "projectImg": "/static/fissure.png"
   },
   {
     "projectName": "Car Rental",
@@ -19,16 +28,7 @@
     "liveLink": "https://car-rent-website-six.vercel.app",
     "projectImg": "/static/carrental.png"
   },
-  {
-    "projectName": "Kasa (OC)",
-    "projectDescription": "Projet réalisé dans le cadre de ma formation OpenClassrooms, Kasa est un site de réservation de biens immobiliers. Développé avec React et SaSS, il offre une expérience fluide et dynamique pour les utilisateurs cherchant à louer des logements. L'accent a été mis sur la gestion des routes et des états avec React Router et une architecture modulaire.",
-    "projectDescriptionEN": "A project developed as part of my OpenClassrooms training, Kasa is a real estate booking website. Built with React and SaSS, it provides a smooth and dynamic experience for users looking to rent properties. The focus was on routing management, state handling with React Router, and a modular architecture.",
-    "technosImg": ["FaReact", "FaSass"],
-    "technos": ["React", "SaSS"],
-    "gitLink": "https://github.com/Pir4a/OpenClassrooms-projet-4.git",
-    "liveLink": "https://open-classrooms-projet-4.vercel.app/",
-    "projectImg": "/static/Kasa.png"
-  },
+  
   {
     "projectName": "Mon Vieux Grimoire (OC)",
     "projectDescription": "Un projet back-end réalisé dans le cadre de ma formation OpenClassrooms. Mon Vieux Grimoire est une plateforme de notation de livres développée en NodeJs avec une base de données MongoDB. Il comprend un système d'authentification sécurisé, la gestion des utilisateurs et des avis, ainsi que des fonctionnalités CRUD avancées pour la gestion des livres.",
