@@ -19,21 +19,6 @@ const Cherrytree: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    if (isLoading) {
-      document.body.style.overflow = "hidden"
-      document.body.style.overflowX = "hidden"
-    } else {
-      document.body.style.overflow = "unset"
-      document.body.style.overflowX = "hidden"
-    }
-
-    return () => {
-      document.body.style.overflow = "unset"
-      document.body.style.overflowX = "hidden"
-    }
-  }, [isLoading])
-
-  useEffect(() => {
     if (!canvasRef.current) return
 
     // Scene setup
@@ -166,6 +151,7 @@ const Cherrytree: React.FC = () => {
       "/cherry tree/scene.gltf",
       (gltf: GLTF) => {
         const model = gltf.scene
+        setIsLoading(false)
         model.scale.set(1.65, 1.65, 1.65)
         model.position.y = -0.4
         model.position.x = 0.2
@@ -175,7 +161,6 @@ const Cherrytree: React.FC = () => {
         scene.add(model)
         if (window.innerWidth < 1000) return setIsLoading(false)
         modelRef.current = model
-        setIsLoading(false)
       },
       undefined,
       (error: unknown) => {
@@ -249,7 +234,10 @@ const Cherrytree: React.FC = () => {
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 flex items-center justify-center bg-black z-50"
+            className={` xl:block max-w-[100%] min-h-[110dvh] pl-30 absolute top-0 cursor-pointer transition-opacity duration-500 ${
+          isLoading ? "block" : "hidden"
+        }`}
+
           >
             <div className="text-center">
               <motion.div
