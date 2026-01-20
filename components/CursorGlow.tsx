@@ -35,7 +35,7 @@ export default function CursorGlow() {
       }}
     >
       <div className="absolute -translate-x-1/2 -translate-y-1/2">
-        <div className="w-64 h-64 rounded-full bg-pink-500/20 dark:bg-pink-400/10 blur-3xl" />
+        <div className="w-64 h-64 rounded-full bg-slate-500/20 dark:bg-slate-400/10 blur-3xl" />
       </div>
     </motion.div>
   )

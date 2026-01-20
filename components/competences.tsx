@@ -15,7 +15,7 @@ import {
   FaCode,
 } from "react-icons/fa"
 import { RiNextjsFill, RiTailwindCssLine } from "react-icons/ri"
-import { SiTypescript, SiThreedotjs, SiSqlite } from "react-icons/si"
+import { SiTypescript, SiSqlite } from "react-icons/si"
 import { translations } from "../translations"
 import ChaqueCompetences from "./chaqueCompetences"
 import { useRef } from "react"
@@ -33,13 +33,12 @@ const frameworks = [
   { Icon: FaNodeJs, key: "node", label: "Node.js" },
   { Icon: RiNextjsFill, key: "next", label: "Next.js" },
   { Icon: RiTailwindCssLine, key: "tailwind", label: "Tailwind CSS" },
-  { Icon: SiThreedotjs, key: "threejs", label: "Three.js" },
 ]
 
 const tools = [
   { Icon: FaFigma, key: "figma", label: "Figma" },
   { Icon: FaGit, key: "git", label: "Git" },
-{Icon : SiSqlite, key:"sqlite", label:"Sqlite"},
+  { Icon: SiSqlite, key: "sqlite", label: "Sqlite" },
   { Icon: FaNpm, key: "npm", label: "npm" },
   { Icon: FaGithub, key: "github", label: "GitHub" },
   { Icon: FaCode, key: "vscode", label: "VSCode" },
@@ -64,9 +63,8 @@ function Competences({ deviceWidth }: { deviceWidth: number }) {
           {isInView && (
             <>
               <div
-                className={`pt-10  ${
-                  language === "fr" ? "xl:pl-0 xl:pt-25" : "xl:pl-28 xl:pt-20"
-                }`}
+                className={`pt-10  ${language === "fr" ? "xl:pl-0 xl:pt-25" : "xl:pl-28 xl:pt-20"
+                  }`}
               >
                 <motion.h2
                   key={`${language}-${deviceWidth}`}
@@ -93,11 +91,10 @@ function Competences({ deviceWidth }: { deviceWidth: number }) {
                 </motion.h2>
               </div>
               <div
-                className={`flex flex-col xl:flex-row xl:justify-start xl:items-start xl:min-w-[0%] mx-auto ${
-                  language === "fr"
-                    ? "xl:pl-30 xl:pt-20 "
-                    : "xl:pl-54 xl:pt-16 "
-                }  gap-8 xl:gap-14 `}
+                className={`flex flex-col xl:flex-row xl:justify-start xl:items-start xl:min-w-[0%] mx-auto ${language === "fr"
+                  ? "xl:pl-30 xl:pt-20 "
+                  : "xl:pl-54 xl:pt-16 "
+                  }  gap-8 xl:gap-14 `}
               >
                 <ChaqueCompetences
                   title={translations[language].skills.languages}

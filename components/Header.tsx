@@ -24,9 +24,8 @@ export default function Header() {
   }, [mounted])
 
   const menuItems = [
-    { href: "/#profile", label: translations[language].menu.profile },
-    { href: "/#profile", label: translations[language].menu.skills },
-    { href: "/#projects", label: translations[language].menu.projects },
+    { href: "/", label: "Home" },
+    { href: "/profile", label: translations[language].menu.profile },
     { href: "/#contact", label: translations[language].menu.contact },
   ]
 

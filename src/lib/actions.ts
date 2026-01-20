@@ -6,7 +6,7 @@ import { EmailTemplate } from "../../emails/emailTemplate"
 
 type ContactFormInput = z.infer<ReturnType<typeof contactSchema>>
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+
 
 export async function sendEmail(data: ContactFormInput) {
   const result = contactSchema("en").safeParse(data)
@@ -14,6 +14,10 @@ export async function sendEmail(data: ContactFormInput) {
     return { error: result.error.flatten().fieldErrors }
   }
   try {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error("Missing RESEND_API_KEY")
+    }
+    const resend = new Resend(process.env.RESEND_API_KEY)
     const { name, email, message } = result.data
     const { data, error } = await resend.emails.send({
       from: "onboarding@resend.dev",

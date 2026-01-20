@@ -51,9 +51,8 @@ export default function Profil({ deviceWidth }: { deviceWidth: number }) {
                   ...(deviceWidth >= 1280 ? { x: -300 } : {}),
                 }}
                 transition={{ duration: 0.5, ease: "circOut", delay: 0.1 }}
-                className={`pt-10 xl:pt-0 relative  text-6xl font-light tracking-tight text-gray-800 xl:min-w-[30%] dark:text-gray-200 ${
-                  deviceWidth < 1280 ? "text-center" : "text-left"
-                }`}
+                className={`pt-10 xl:pt-0 relative  text-6xl font-light tracking-tight text-gray-800 xl:min-w-[30%] dark:text-gray-200 ${deviceWidth < 1280 ? "text-center" : "text-left"
+                  }`}
               >
                 {translations[language].profil.title}
                 <motion.span

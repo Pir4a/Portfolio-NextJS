@@ -8,14 +8,14 @@ export const translations = {
     },
     hero: {
       greeting: "Bonjour, je m'appelle Stéphane",
-      role: "Développeur FullStack",
+      role: "Ingénieur DevOps/SRE",
       description:
-        "Passionné par la création de sites web et le développement de logiciels.",
+        "Du code jusqu'à la production : allier qualité logicielle et infrastructure performante.",
     },
     profil: {
       title: "Profil",
       description:
-        "Salut, moi c'est Stéphane, développeur FullStack.Diplomé d'une formation Developpeur Informatique OpenClassrooms, je code et ai appris ce dernier en autodidacte depuis Novembre 2021. Ma passion est de créer et développer un UI/UX propre. Ma mainstack est actuellement React et NodeJS en combinaison avec Typescript et Tailwind CSS",
+        "Passionné par l'ingénierie logicielle, je suis convaincu qu'une application robuste nécessite d'aligner la qualité du code avec une infrastructure performante. Mon profil technique se structure autour de deux axes complémentaires : Développement avec une expérience concrète en Fullstack chez Swapn (Alternance), et Cloud avec des compétences en architecture et déploiement validées par la certification AWS Solutions Architect Associate. C'est cette approche transverse, du code jusqu'à la production, que je souhaite approfondir en orientant ma poursuite d'études vers les enjeux DevOps, SRE et Cloud Computing..",
     },
     skills: {
       title: "Compétences",
@@ -48,14 +48,14 @@ export const translations = {
     },
     hero: {
       greeting: "Hello, I'm Stéphane",
-      role: "FullStack Developer",
+      role: "DevOps/SRE",
       description:
-        "I'm passionate about creating websites and software development.",
+        "From code to production: combining software quality with performant infrastructure.",
     },
     profil: {
       title: "Profile",
       description:
-        "Hello, I'm Stéphane, FullStack Developer. I've graduated from a French Developer School and also learned it by myself since November 2021. My passion is to create and develop a clean UI/UX. My mainstack is currently React and NodeJS with Typescript and Tailwind CSS",
+        "Passionate about software engineering, I'm convinced that robust applications require aligning code quality with performant infrastructure. My technical profile is built around two complementary pillars: Development with hands-on Fullstack experience at Swapn (Apprenticeship), and Cloud with architecture and deployment skills validated by the AWS Solutions Architect Associate certification. This cross-functional approach, from code to production, is what I aim to deepen by pursuing further studies focused on DevOps, SRE, and Cloud Computing. Tech stack: Dev (Python/FastAPI, TypeScript/React), Ops (AWS, Docker), currently learning (Terraform, Kubernetes).",
     },
     skills: {
       title: "Skills",

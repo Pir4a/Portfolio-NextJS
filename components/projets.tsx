@@ -8,7 +8,6 @@ import {
   SiNextdotjs,
   SiTailwindcss,
   SiTypescript,
-  SiThreedotjs,
 } from "react-icons/si"
 import { AnimatePresence, motion, useInView } from "framer-motion"
 import { useRef } from "react"
@@ -34,7 +33,6 @@ const iconMap: { [key: string]: IconType } = {
   SiNextdotjs,
   SiTailwindcss,
   SiTypescript,
-  SiThreedotjs,
 }
 
 function Projets({ deviceWidth }: { deviceWidth: number }) {

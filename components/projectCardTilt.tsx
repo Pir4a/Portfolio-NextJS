@@ -105,29 +105,43 @@ export function TiltShineCard({
   const sentences = (sentence: string) =>
     sentence.split(/[.!?]+/).filter((sentence: string) => sentence.trim())
 
+  const isFissure = titre === "Fissure ( SaaS )"
+
   return (
     <>
       <motion.div
         key={`card-${index}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isModalOpen ? 0 : 1 }}
+        initial={{ opacity: 0, scale: isFissure ? 0.95 : 1 }}
+        animate={{ opacity: isModalOpen ? 0 : 1, scale: 1 }}
         exit={{ opacity: 0 }}
         transition={{
-          duration: 0.3,
-          ease: "easeIn",
+          duration: isFissure ? 0.5 : 0.3,
+          ease: "easeOut",
           delay: delay,
         }}
-        className="group h-full xl:w-full lg:min-h-[30dvh] xl:h-full mx-auto xl:perspective-[1000px] transition-all duration-300"
+        className={`group h-full xl:w-full lg:min-h-[30dvh] xl:h-full mx-auto xl:perspective-[1000px] transition-all duration-300 ${isFissure ? "perspective-[1500px]" : ""
+          }`}
       >
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          whileHover={{
+            scale: isFissure ? 1.02 : 1.05,
+            boxShadow: isFissure
+              ? "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 40px rgba(59, 130, 246, 0.15)"
+              : undefined
+          }}
+          transition={{
+            type: "spring",
+            stiffness: isFissure ? 200 : 300,
+            damping: isFissure ? 25 : 20
+          }}
           layoutId={`card-${index}`}
           ref={cardRef}
-          className={`relative xl:max-w-auto xl:min-h-full  cursor-pointer hover:-z-50 overflow-hidden rounded-lg border p-5 
+          className={`relative xl:max-w-auto xl:min-h-full cursor-pointer hover:-z-50 ${isFissure ? "overflow-visible" : "overflow-hidden"
+            } rounded-lg border p-5 
             xl:max-h-[35dvh] dark:bg-[#0A0A0A]/10 border-pink-200/50 dark:border-[#1A1A1A]/10 
             dark:shadow-[0_0_20px_rgba(0,0,0,0.4)] shadow-[0_0_20px_rgba(0,0,0,0.1)] 
-            z-30 bg-white/10 ${className || ""}`}
+            z-30 bg-white/10 ${className || ""} ${isFissure ? "border-blue-300/50 dark:border-blue-500/20 shadow-[0_0_30px_rgba(59,130,246,0.1)]" : ""
+            }`}
           style={{
             transformStyle: "preserve-3d",
             transformOrigin: "center center",
@@ -141,7 +155,10 @@ export function TiltShineCard({
           onClick={() => setIsModalOpen(true)}
         >
           {/* Subtle glow effect */}
-          <div className="absolute inset-0 z-30 rounded-lg bg-gradient-to-b from-[#1A1A1A]/20 to-transparent" />
+          <div className={`absolute inset-0 z-30 rounded-lg bg-gradient-to-b ${isFissure
+            ? "from-blue-500/10 to-transparent"
+            : "from-[#1A1A1A]/20 to-transparent"
+            }`} />
 
           {/* Pink border glow */}
           <div className="absolute inset-0 z-30 rounded-lg border via-pink-300/60 shadow-[0_0_10px_rgba(236,72,153,0.1)]" />
@@ -153,11 +170,10 @@ export function TiltShineCard({
           <div
             className="absolute inset-0 -z-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"
             style={{
-              background: `radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${
-                theme === "dark"
-                  ? "rgba(236, 72, 153, 0.1)"
-                  : "rgba(236, 72, 153, 0.15)"
-              } 0%, transparent 60%)`,
+              background: `radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${theme === "dark"
+                ? "rgba(236, 72, 153, 0.1)"
+                : "rgba(236, 72, 153, 0.15)"
+                } 0%, transparent 60%)`,
             }}
             onMouseMove={(e) => {
               if (!cardRef.current) return
@@ -196,7 +212,8 @@ export function TiltShineCard({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[90vw] max-w-4xl"
+              className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 max-w-7xl ${titre === "Fissure ( SaaS )" ? "w-[80dvw]" : "w-[90vw] max-w-4xl"
+                }`}
             >
               <motion.div
                 className="relative overflow-hidden rounded-lg border p-8 pt-4 bg-gray-400/80 dark:bg-black/80 shadow-xl"
@@ -323,23 +340,81 @@ export function TiltShineCard({
 
                     {/* Right Column - Description */}
                     <div className="lg:w-1/2 text-black/90 tracking-tight dark:font-light dark:text-gray-200 space-y-4">
-                      {sentences(
-                        language === "en" ? descriptionEN : description
-                      ).map((sentence, i) => (
-                        <motion.p
-                          key={i}
-                          className="leading-relaxed text-lg"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: [0, 1] }}
-                          transition={{
-                            duration: 0.5,
-                            bounce: 0,
-                            delay: i * 0.2,
-                          }}
-                        >
-                          {sentence.trim()}
-                        </motion.p>
-                      ))}
+                      {titre === "Fissure ( SaaS )" ? (
+                        <>
+                          {/* Fissure Detailed Sections */}
+                          <div className="space-y-6">
+                            <div>
+                              <h3 className="text-lg font-semibold mb-2 text-pink-600 dark:text-pink-400">
+                                📱 Overview
+                              </h3>
+                              <p className="leading-relaxed text-base">
+                                {language === "en" ? descriptionEN : description}
+                              </p>
+                            </div>
+
+                            <div>
+                              <h3 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-400">
+                                🛠️ Backend Architecture
+                              </h3>
+                              <ul className="list-disc list-inside space-y-1 text-sm">
+                                <li>Express.js REST API with TypeScript</li>
+                                <li>Turso (SQLite) for edge database</li>
+                                <li>Gemini AI integration for meal tracking</li>
+                                <li>JWT authentication & bcrypt encryption</li>
+                                <li>Rate limiting & input validation</li>
+                              </ul>
+                            </div>
+
+                            <div>
+                              <h3 className="text-lg font-semibold mb-2 text-emerald-600 dark:text-emerald-400">
+                                ☁️ Infrastructure & Deployment
+                              </h3>
+                              <ul className="list-disc list-inside space-y-1 text-sm">
+                                <li>Frontend: Expo (React Native) deployed via EAS</li>
+                                <li>Backend: Docker containers on Railway</li>
+                                <li>Database: Turso edge network (SQLite)</li>
+                                <li>CI/CD: GitHub Actions for automated builds</li>
+                                <li>Environment: Production & staging separation</li>
+                              </ul>
+                            </div>
+
+                            <div>
+                              <h3 className="text-lg font-semibold mb-2 text-amber-600 dark:text-amber-400">
+                                🔧 Future: Terraform & IaC
+                              </h3>
+                              <ul className="list-disc list-inside space-y-1 text-sm">
+                                <li>Planned migration to AWS infrastructure</li>
+                                <li>Terraform for infrastructure as code</li>
+                                <li>ECS/Fargate for containerized backend</li>
+                                <li>RDS for managed PostgreSQL database</li>
+                                <li>CloudWatch for monitoring & logging</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          {/* Regular project description */}
+                          {sentences(
+                            language === "en" ? descriptionEN : description
+                          ).map((sentence, i) => (
+                            <motion.p
+                              key={i}
+                              className="leading-relaxed text-lg"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: [0, 1] }}
+                              transition={{
+                                duration: 0.5,
+                                bounce: 0,
+                                delay: i * 0.2,
+                              }}
+                            >
+                              {sentence.trim()}
+                            </motion.p>
+                          ))}
+                        </>
+                      )}
                     </div>
                   </div>
                 </motion.div>

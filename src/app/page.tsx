@@ -1,11 +1,8 @@
 "use client"
 import Header from "../../components/Header"
-import Profil from "../../components/profil"
 import Hero from "../../components/hero"
 import CursorGlow from "../../components/CursorGlow"
-import Cherrytree from "../../components/cherrytree"
-import Petals from "../../components/petals"
-import {useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Competences from "../../components/competences"
 import Projets from "../../components/projets"
 import ContactForm from "../../components/contactForm"
@@ -33,20 +30,13 @@ export default function Home() {
   return (
     <div
       id="top"
-      className="bg-cyan-100  dark:bg-black md:px-[10%] lg:px-[0%] scroll-smooth  2xl:px-[10%]  w-[100dvw]"
+      className="bg-cyan-100 dark:bg-black scroll-smooth w-[100dvw]"
     >
       <CursorGlow />
       <Header />
       <div className="dark:bg-black bg-cyan-100">
         <main>
-          <div className="flex overflow-hidden ">
-            <Hero />
-            <Cherrytree />
-            <Petals />
-          </div>
-          <Profil deviceWidth={deviceWidth} />
-          <Competences deviceWidth={deviceWidth} />
-          <Projets deviceWidth={deviceWidth} />
+          <Hero />
           <ContactForm />
         </main>
       </div>

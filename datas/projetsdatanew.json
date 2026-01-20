@@ -1,19 +1,32 @@
 [
   {
     "projectName": "Portfolio",
-    "projectDescription": " Ce portfolio est développé avec NextJs, TailwindCSS et ThreeJs pour offrir une expérience utilisateur fluide et immersive. Il présente mes compétences, mes projets et mon parcours de manière dynamique et interactive. J'ai utilisé ThreeJs pour intégrer des animations 3D et améliorer l'esthétique globale du site. Ce projet reflète mon savoir-faire en développement front-end avancé et mon souci du détail en termes d'UI/UX design.",
-    "projectDescriptionEN": "This is my most advanced project to date. This portfolio is built using NextJs, TailwindCSS, and ThreeJs to provide a smooth and immersive user experience. It showcases my skills, projects, and journey in a dynamic and interactive way. I utilized ThreeJs to integrate 3D animations and enhance the overall aesthetics of the site. This project highlights my expertise in advanced front-end development and my attention to detail in UI/UX design.",
-    "technosImg": ["SiNextdotjs", "SiTailwindcss", "SiThreedotjs"],
-    "technos": ["NextJS", "TailwindCSS", "ThreeJS"],
+    "projectDescription": " Ce portfolio est développé avec NextJs et TailwindCSS pour offrir une expérience utilisateur fluide. Il présente mes compétences, mes projets et mon parcours de manière dynamique et interactive. Ce projet reflète mon savoir-faire en développement front-end avancé et mon souci du détail en termes d'UI/UX design.",
+    "projectDescriptionEN": "This portfolio is built using NextJs and TailwindCSS to provide a smooth user experience. It showcases my skills, projects, and journey in a dynamic and interactive way. This project highlights my expertise in advanced front-end development and my attention to detail in UI/UX design.",
+    "technosImg": [
+      "SiNextdotjs",
+      "SiTailwindcss"
+    ],
+    "technos": [
+      "NextJS",
+      "TailwindCSS"
+    ],
     "gitLink": "https://github.com/Pir4a/portfolio",
     "liveLink": "https://stephane-dedu-devportfolio.vercel.app/",
     "projectImg": "/static/portfolio.png"
-  },{
+  },
+  {
     "projectName": "Fissure ( SaaS )",
     "projectDescription": "Il s'agit de mon projet le plus abouti à ce jour. Application mobile ( SaaS ) pour atteindre ses objectifs fitness, du tracking des calories a celui de l'entrainement, le tout avec une implémentation de Gemini pour rendre les données plus facile a traquer. Développer avec React Native, ExpressJs, Turso ( SqLite ) et build avec Expo .",
     "projectDescriptionEN": "This is my most accomplished project to date. A mobile (SaaS) application to help users reach their fitness goals, from calorie tracking to workout tracking, all with a Gemini integration to make the data easier to manage. Developed with React Native, ExpressJs, Turso (SQLite), and built using Expo.",
-    "technosImg": ["FaReact", "FaNodeJs"],
-    "technos": ["React Native", "ExpressJS"],
+    "technosImg": [
+      "FaReact",
+      "FaNodeJs"
+    ],
+    "technos": [
+      "React Native",
+      "ExpressJS"
+    ],
     "gitLink": "",
     "liveLink": "https://landing-page-fissure-4adi.vercel.app/",
     "projectImg": "/static/fissure.png"
@@ -22,19 +35,32 @@
     "projectName": "Car Rental",
     "projectDescription": "Ce projet est une application front-end de location de voitures. Développée avec React, TypeScript et TailwindCSS, elle offre une interface moderne et réactive permettant aux utilisateurs de rechercher, comparer et réserver des véhicules facilement. L'objectif était de créer une plateforme ergonomique avec une navigation fluide et un design épuré, optimisé pour une expérience utilisateur intuitive.",
     "projectDescriptionEN": "This project is a front-end car rental application. Developed with React, TypeScript, and TailwindCSS, it provides a modern and responsive interface, allowing users to search, compare, and book vehicles with ease. The goal was to create an ergonomic platform with smooth navigation and a clean design, optimized for an intuitive user experience.",
-    "technosImg": ["FaReact", "SiTypescript", "SiTailwindcss"],
-    "technos": ["React", "TypeScript", "TailwindCSS"],
+    "technosImg": [
+      "FaReact",
+      "SiTypescript",
+      "SiTailwindcss"
+    ],
+    "technos": [
+      "React",
+      "TypeScript",
+      "TailwindCSS"
+    ],
     "gitLink": "https://github.com/Pir4a/car-rent-website",
     "liveLink": "https://car-rent-website-six.vercel.app",
     "projectImg": "/static/carrental.png"
   },
-  
   {
     "projectName": "Mon Vieux Grimoire (OC)",
     "projectDescription": "Un projet back-end réalisé dans le cadre de ma formation OpenClassrooms. Mon Vieux Grimoire est une plateforme de notation de livres développée en NodeJs avec une base de données MongoDB. Il comprend un système d'authentification sécurisé, la gestion des utilisateurs et des avis, ainsi que des fonctionnalités CRUD avancées pour la gestion des livres.",
     "projectDescriptionEN": "A back-end project developed as part of my OpenClassrooms training. Mon Vieux Grimoire is a book rating platform built with NodeJs and a MongoDB database. It includes a secure authentication system, user and review management, as well as advanced CRUD functionalities for handling books.",
-    "technosImg": ["FaNodeJs", "FaDatabase"],
-    "technos": ["NodeJS", "MongoDB"],
+    "technosImg": [
+      "FaNodeJs",
+      "FaDatabase"
+    ],
+    "technos": [
+      "NodeJS",
+      "MongoDB"
+    ],
     "gitLink": "https://github.com/Pir4a/OpenClassrooms-p5",
     "liveLink": "",
     "projectImg": "/static/grimoire.png"
@@ -43,8 +69,16 @@
     "projectName": "Zyzz Gym",
     "projectDescription": "Zyzz Gym est une application front-end dédiée aux salles de sport. Ce projet personnel a été conçu avec React, TypeScript et TailwindCSS pour proposer un site moderne et ergonomique aux amateurs de fitness. Il met en avant les différentes prestations proposées par la salle ainsi qu'un système de réservation simplifié.",
     "projectDescriptionEN": "Zyzz Gym is a front-end application dedicated to gyms. This personal project was built with React, TypeScript, and TailwindCSS to offer a modern and ergonomic site for fitness enthusiasts. It highlights the different services offered by the gym and features a streamlined booking system.",
-    "technosImg": ["FaReact", "SiTypescript", "SiTailwindcss"],
-    "technos": ["React", "TypeScript", "TailwindCSS"],
+    "technosImg": [
+      "FaReact",
+      "SiTypescript",
+      "SiTailwindcss"
+    ],
+    "technos": [
+      "React",
+      "TypeScript",
+      "TailwindCSS"
+    ],
     "gitLink": "https://github.com/Pir4a/gym-website.git",
     "liveLink": "https://gym-website-ashy.vercel.app/",
     "projectImg": "/static/Zyzz.png"
@@ -53,8 +87,14 @@
     "projectName": "Premier Portfolio",
     "projectDescription": "Mon premier portfolio, développé avec React et TailwindCSS. Il présente mes compétences et mes projets a travers des projets réalisés en formation ou en autonomie.",
     "projectDescriptionEN": "My first portfolio, built with React and TailwindCSS. It showcases my skills and projects through projects developed during training or independently.",
-    "technosImg": ["FaReact", "SiTailwindcss"],
-    "technos": ["React", "TailwindCSS"],
+    "technosImg": [
+      "FaReact",
+      "SiTailwindcss"
+    ],
+    "technos": [
+      "React",
+      "TailwindCSS"
+    ],
     "gitLink": "https://github.com/Pir4a/OpenClassrooms-portfolio",
     "liveLink": "https://stephane-dedu-portfolio.vercel.app/",
     "projectImg": "/static/portfolioun.png"
