@@ -5,6 +5,8 @@ import { useLanguage } from "../../../contexts/LanguageContext"
 import { BsGithub, BsLinkedin } from "react-icons/bs"
 import Header from "../../../components/Header"
 import CursorGlow from "../../../components/CursorGlow"
+import CertificationsList from "../../../components/CertificationsList"
+import SkillsSidebar from "../../../components/SkillsSidebar"
 
 export default function ProfilePage() {
     const { language } = useLanguage()
@@ -43,30 +45,41 @@ export default function ProfilePage() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     className="max-w-4xl mx-auto"
                 >
-                    {/* Header */}
-                    <div className="mb-12">
-                        <h1 className="text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-                            Stéphane DEDU
-                        </h1>
-                        <p className="text-2xl font-medium text-slate-700 dark:text-slate-300 mb-6">
-                            {profileText[language].role}
-                        </p>
+                    {/* Top Section: Header + Certifications */}
+                    <div className="flex flex-col xl:flex-row gap-12 mb-12 items-start">
+                        {/* Header Info */}
+                        <div className="flex-1">
+                            <h1 className="text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+                                Stéphane DEDU
+                            </h1>
+                            <p className="text-2xl font-medium text-slate-700 dark:text-slate-300 mb-6">
+                                {profileText[language].role}
+                            </p>
 
-                        {/* Social Links */}
-                        <div className="flex items-center gap-6 mb-8">
-                            <a href="https://github.com/Pir4a" target="_blank" className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors">
-                                <BsGithub className="w-7 h-7" />
-                            </a>
-                            <a
-                                href="https://www.linkedin.com/in/st%C3%A9phane-dedu-14579a266/"
-                                target="_blank"
-                                className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
-                            >
-                                <BsLinkedin className="w-7 h-7" />
-                            </a>
+                            {/* Social Links */}
+                            <div className="flex items-center gap-6 mb-8">
+                                <a href="https://github.com/Pir4a" target="_blank" className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors">
+                                    <BsGithub className="w-7 h-7" />
+                                </a>
+                                <a
+                                    href="https://www.linkedin.com/in/st%C3%A9phane-dedu-14579a266/"
+                                    target="_blank"
+                                    className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
+                                >
+                                    <BsLinkedin className="w-7 h-7" />
+                                </a>
+                            </div>
+
+                            <div className="h-px bg-slate-200 dark:bg-slate-700" />
                         </div>
 
-                        <div className="h-px bg-slate-200 dark:bg-slate-700" />
+                        {/* Certifications (Right Side) */}
+                        <div className="w-full xl:w-80 flex-shrink-0">
+                            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4 xl:hidden">
+                                Certifications
+                            </h2>
+                            <CertificationsList />
+                        </div>
                     </div>
 
                     {/* Bio */}
@@ -77,51 +90,8 @@ export default function ProfilePage() {
                     </div>
 
                     {/* Tech Stack */}
-                    <div className="bg-slate-50/50 dark:bg-slate-900/30 p-8 rounded-2xl border border-slate-200 dark:border-slate-800">
-                        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-6">
-                            {profileText[language].techStack.title}
-                        </h2>
-                        <div className="flex flex-col gap-3 text-slate-600 dark:text-slate-400">
-                            <p className="text-base">{profileText[language].techStack.dev}</p>
-                            <p className="text-base">{profileText[language].techStack.ops}</p>
-                            <p className="text-base">{profileText[language].techStack.learning}</p>
-                        </div>
-                    </div>
-
-                    {/* Certifications */}
-                    <div className="mt-12">
-                        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-6">
-                            Certifications
-                        </h2>
-                        <div className="flex gap-8 items-center">
-                            <a href="https://www.credly.com/badges/393932de-9587-40b5-96c7-9cdc582aebe1" target="_blank" rel="noopener noreferrer">
-                                <motion.img
-                                    src="/badges/aws_saa_badge-2106246363.png"
-                                    alt="AWS Solutions Architect Associate"
-                                    className="w-32 h-32 object-contain opacity-90 hover:opacity-100"
-                                    whileHover={{ scale: 1.05 }}
-                                    transition={{ duration: 0.2 }}
-                                />
-                            </a>
-                            <a href="https://www.credly.com/badges/393932de-9587-40b5-96c7-9cdc582aebe1" target="_blank" rel="noopener noreferrer">
-                                <motion.img
-                                    src="/badges/1645553469-hcta0-badge-1345755619.png"
-                                    alt="HashiCorp Terraform Associate"
-                                    className="w-32 h-32 object-contain opacity-90 hover:opacity-100"
-                                    whileHover={{ scale: 1.05 }}
-                                    transition={{ duration: 0.2 }}
-                                />
-                            </a>
-                            <a href="https://www.credly.com/badges/393932de-9587-40b5-96c7-9cdc582aebe1" target="_blank" rel="noopener noreferrer">
-                                <motion.img
-                                    src="/badges/cka_from_cncfsite__281_29-1073793947.png"
-                                    alt="Certified Kubernetes Administrator"
-                                    className="w-32 h-32 object-contain opacity-90 hover:opacity-100"
-                                    whileHover={{ scale: 1.05 }}
-                                    transition={{ duration: 0.2 }}
-                                />
-                            </a>
-                        </div>
+                    <div className="mb-12">
+                        <SkillsSidebar layout="grid-2" />
                     </div>
                 </motion.div>
             </div>

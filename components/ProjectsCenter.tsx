@@ -37,14 +37,14 @@ export default function ProjectsCenter() {
         if (a.projectName === "Fissure ( SaaS )") return -1
         if (b.projectName === "Fissure ( SaaS )") return 1
         return 0
-    })
+    }).slice(0, 3)
 
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-            className="flex flex-col flex-1 pt-8 gap-6 max-w-3xl overflow-visible px-4"
+            className="flex flex-col flex-[3] pt-8 gap-6 overflow-visible px-4"
         >
             <div>
                 <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-1.5">

@@ -4,6 +4,7 @@ export const translations = {
       profile: "Profil",
       skills: "Compétences",
       projects: "Projets",
+      certifications: "Certifications",
       contact: "Contact",
     },
     hero: {
@@ -19,9 +20,12 @@ export const translations = {
     },
     skills: {
       title: "Compétences",
-      languages: "Langages",
-      frameworks: "Frameworks",
-      tools: "Outils",
+      cloud_iac: "Cloud & IaC",
+      containerization: "Conteneurisation & Orchestration",
+      os_scripting: "OS / Scripting",
+      cicd: "CI/CD",
+      observability: "Observabilité",
+      development: "Développement",
     },
     projects: {
       title: "Projets",
@@ -44,6 +48,7 @@ export const translations = {
       profile: "Profile",
       skills: "Skills",
       projects: "Projects",
+      certifications: "Certifications",
       contact: "Contact",
     },
     hero: {
@@ -59,9 +64,12 @@ export const translations = {
     },
     skills: {
       title: "Skills",
-      languages: "Languages",
-      frameworks: "Frameworks",
-      tools: "Tools",
+      cloud_iac: "Cloud & IaC",
+      containerization: "Containerization & Orchestration",
+      os_scripting: "OS / Scripting",
+      cicd: "CI/CD",
+      observability: "Observability",
+      development: "Development",
     },
     projects: {
       title: "Projects",

@@ -7,6 +7,7 @@ import { BsGithub, BsLinkedin } from "react-icons/bs"
 import HeroButton from "./herobutton"
 import SkillsSidebar from "./SkillsSidebar"
 import ProjectsCenter from "./ProjectsCenter"
+import CertificationsList from "./CertificationsList"
 export default function Hero() {
   const { language } = useLanguage()
 
@@ -28,7 +29,7 @@ export default function Hero() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="flex flex-col justify-start pt-8 gap-6 w-80 flex-shrink-0"
+        className="flex flex-col justify-start pt-8 gap-6 flex-1"
       >
         {/* Profile Info */}
         <div className="flex flex-col gap-3">
@@ -80,7 +81,7 @@ export default function Hero() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-        className="flex flex-col justify-start pt-8 gap-6 w-64 flex-shrink-0"
+        className="flex flex-col justify-start pt-8 gap-6 flex-1"
       >
         <div>
           <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-1.5">
@@ -90,35 +91,7 @@ export default function Hero() {
         </div>
 
         {/* Certifications - Vertical Stack */}
-        <div className="flex flex-col gap-6 items-center">
-          <a href="https://www.credly.com/badges/393932de-9587-40b5-96c7-9cdc582aebe1" target="_blank" rel="noopener noreferrer">
-            <motion.img
-              src="/badges/aws_saa_badge-2106246363.png"
-              alt="AWS Solutions Architect Associate"
-              className="w-32 h-32 object-contain opacity-90 hover:opacity-100"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.2 }}
-            />
-          </a>
-          <a href="https://www.credly.com/badges/393932de-9587-40b5-96c7-9cdc582aebe1" target="_blank" rel="noopener noreferrer">
-            <motion.img
-              src="/badges/1645553469-hcta0-badge-1345755619.png"
-              alt="HashiCorp Terraform Associate"
-              className="w-32 h-32 object-contain opacity-90 hover:opacity-100"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.2 }}
-            />
-          </a>
-          <a href="https://www.credly.com/badges/393932de-9587-40b5-96c7-9cdc582aebe1" target="_blank" rel="noopener noreferrer">
-            <motion.img
-              src="/badges/cka_from_cncfsite__281_29-1073793947.png"
-              alt="Certified Kubernetes Administrator"
-              className="w-32 h-32 object-contain opacity-90 hover:opacity-100"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.2 }}
-            />
-          </a>
-        </div>
+        <CertificationsList />
       </motion.div>
     </div>
   )
