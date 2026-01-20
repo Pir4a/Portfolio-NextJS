@@ -1,4 +1,5 @@
 import { useRef, useState } from "react"
+import NextImage from "next/image"
 import {
   AnimatePresence,
   motion,
@@ -124,10 +125,10 @@ export function TiltShineCard({
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
           layoutId={`card-${index}`}
           ref={cardRef}
-          className={`relative xl:max-w-auto xl:min-h-full  cursor-pointer hover:-z-50 overflow-hidden rounded-lg border p-5 
-            xl:max-h-[35dvh] dark:bg-[#0A0A0A]/10 border-pink-200/50 dark:border-[#1A1A1A]/10 
-            dark:shadow-[0_0_20px_rgba(0,0,0,0.4)] shadow-[0_0_20px_rgba(0,0,0,0.1)] 
-            z-30 bg-white/10 ${className || ""}`}
+          className={`relative xl:max-w-auto xl:min-h-full cursor-pointer overflow-hidden rounded-lg border p-5 
+            xl:max-h-[35dvh] dark:bg-black/30 bg-white/70 border-pink-300/40 dark:border-pink-500/30
+            shadow-xl shadow-pink-500/10 backdrop-blur-xl
+            z-30 ${className || ""}`}
           style={{
             transformStyle: "preserve-3d",
             transformOrigin: "center center",
@@ -141,10 +142,10 @@ export function TiltShineCard({
           onClick={() => setIsModalOpen(true)}
         >
           {/* Subtle glow effect */}
-          <div className="absolute inset-0 z-30 rounded-lg bg-gradient-to-b from-[#1A1A1A]/20 to-transparent" />
+          <div className="absolute inset-0 z-30 rounded-lg bg-gradient-to-b from-pink-500/5 to-transparent" />
 
           {/* Pink border glow */}
-          <div className="absolute inset-0 z-30 rounded-lg border via-pink-300/60 shadow-[0_0_10px_rgba(236,72,153,0.1)]" />
+          <div className="absolute inset-0 z-30 rounded-lg border border-pink-400/20 shadow-[0_0_20px_rgba(236,72,153,0.15)]" />
 
           {/* Light reflection effect */}
           <div className="absolute z-30 inset-0 bg-gradient-to-t from-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
@@ -153,11 +154,10 @@ export function TiltShineCard({
           <div
             className="absolute inset-0 -z-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"
             style={{
-              background: `radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${
-                theme === "dark"
-                  ? "rgba(236, 72, 153, 0.1)"
-                  : "rgba(236, 72, 153, 0.15)"
-              } 0%, transparent 60%)`,
+              background: `radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${theme === "dark"
+                ? "rgba(236, 72, 153, 0.1)"
+                : "rgba(236, 72, 153, 0.15)"
+                } 0%, transparent 60%)`,
             }}
             onMouseMove={(e) => {
               if (!cardRef.current) return
@@ -233,11 +233,15 @@ export function TiltShineCard({
                   <div className="pt-2 flex flex-col lg:flex-row gap-8">
                     {/* Left Column - Image and Tech Stack */}
                     <div className="lg:w-1/2 flex flex-col gap-4">
-                      <div className="relative ">
-                        <img
+                      <div className="relative aspect-video w-full">
+                        <NextImage
                           src={displayedimg}
                           alt={titre}
-                          className="rounded-lg shadow-lg object-cover w-full opacity-90 "
+                          fill
+                          className="rounded-lg shadow-lg object-cover opacity-90"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          placeholder="blur"
+                          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
                         />
                       </div>
                       {/* Tech Stack */}

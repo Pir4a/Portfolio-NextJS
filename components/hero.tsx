@@ -8,6 +8,11 @@ import HeroButton from "./herobutton"
 export default function Hero() {
   const { language } = useLanguage()
 
+  // Dynamic CV link based on language
+  const cvLink = language === "fr"
+    ? "/CV_STEPHANEDEDU_FULLSTACK.pdf"
+    : "/cv_dedu_stephane_fullstack_english.pdf"
+
   return (
     <div className="mx-auto xl:mx-0 flex text-center flex-col gap-10 xl:gap-6 xl:text-start items-center xl:items-start justify-center min-h-[100dvh] xl:min-h-[70dvh] px-4 xl:px-[6%] xl:min-w-[50%] xl:max-w-[50%]">
       <AnimatePresence mode="wait">
@@ -32,12 +37,12 @@ export default function Hero() {
           className="text-2xl z-30"
         >
           <motion.span
-            className="font-bold z-30 bg-gradient-to-r from-pink-800 via-cyan-950 to-pink-800 dark:from-pink-600 dark:via-cyan-700 dark:to-pink-600 bg-clip-text text-transparent bg-[length:300%_auto]"
+            className="font-bold z-30 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 dark:from-pink-400 dark:via-purple-400 dark:to-cyan-400 bg-clip-text text-transparent bg-[length:200%_auto]"
             animate={{
               backgroundPosition: ["0% center", "100% center", "0% center"],
             }}
             transition={{
-              duration: 5,
+              duration: 4,
               repeat: Infinity,
               ease: "linear",
               times: [0, 0.5, 1],
@@ -78,14 +83,14 @@ export default function Hero() {
                 className="flex  gap-4 pt-4"
               >
                 <HeroButton
-                  href=""
+                  href={cvLink}
                   text="CV"
-                  className="bg-gray-900 px-6 py-3 dark:bg-white text-white dark:text-black transition-all duration-200"
+                  className="bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-3 text-white rounded-lg font-medium hover:from-pink-600 hover:to-purple-700 hover:shadow-lg hover:shadow-pink-500/50 transition-all duration-300 hover:scale-105"
                 />
                 <HeroButton
                   text="Contact"
                   href="#contact"
-                  className="border-2 px-6 py-3 border-gray-900 dark:border-white text-gray-900 dark:text-white rounded-lg font-medium hover:bg-gray-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-200"
+                  className="border-2 px-6 py-3 border-pink-500 dark:border-pink-400 text-pink-600 dark:text-pink-400 rounded-lg font-medium hover:bg-pink-500 dark:hover:bg-pink-400 hover:text-white dark:hover:text-black transition-all duration-300 hover:scale-105"
                 />
               </motion.span>
             </AnimatePresence>

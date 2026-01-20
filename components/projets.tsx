@@ -3,12 +3,17 @@ import { useLanguage } from "../contexts/LanguageContext"
 import { translations } from "../translations"
 import projetsdata from "../datas/projetsdatanew.json"
 import { TiltShineCard } from "./projectCardTilt"
-import { FaReact, FaSass, FaNodeJs, FaDatabase } from "react-icons/fa"
+import { FaReact, FaSass, FaNodeJs, FaDatabase, FaDocker, FaAws } from "react-icons/fa"
 import {
   SiNextdotjs,
   SiTailwindcss,
   SiTypescript,
   SiThreedotjs,
+  SiTerraform,
+  SiPostgresql,
+  SiKubernetes,
+  SiPrometheus,
+  SiGrafana,
 } from "react-icons/si"
 import { AnimatePresence, motion, useInView } from "framer-motion"
 import { useRef } from "react"
@@ -31,10 +36,17 @@ const iconMap: { [key: string]: IconType } = {
   FaSass,
   FaNodeJs,
   FaDatabase,
+  FaDocker,
+  FaAws,
   SiNextdotjs,
   SiTailwindcss,
   SiTypescript,
   SiThreedotjs,
+  SiTerraform,
+  SiPostgresql,
+  SiKubernetes,
+  SiPrometheus,
+  SiGrafana,
 }
 
 function Projets({ deviceWidth }: { deviceWidth: number }) {

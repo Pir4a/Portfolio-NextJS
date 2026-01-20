@@ -5,23 +5,26 @@ export const translations = {
       skills: "Compétences",
       projects: "Projets",
       contact: "Contact",
+      certifications: "Certifications",
     },
     hero: {
       greeting: "Bonjour, je m'appelle Stéphane",
-      role: "Développeur FullStack",
+      role: "Site Reliability Engineer",
       description:
-        "Passionné par la création de sites web et le développement de logiciels.",
+        "Du code jusqu'à la production, je conçois des infrastructures cloud robustes et automatisées.",
     },
     profil: {
       title: "Profil",
       description:
-        "Salut, moi c'est Stéphane, développeur FullStack.Diplomé d'une formation Developpeur Informatique OpenClassrooms, je code et ai appris ce dernier en autodidacte depuis Novembre 2021. Ma passion est de créer et développer un UI/UX propre. Ma mainstack est actuellement React et NodeJS en combinaison avec Typescript et Tailwind CSS",
+        "Passionné par l'ingénierie logicielle, je suis convaincu qu'une application robuste nécessite d'aligner la qualité du code avec une infrastructure performante. Mon profil technique se structure autour du Développement Fullstack et du Cloud, validé par la certification AWS Solutions Architect Associate. C'est cette approche transverse, du code jusqu'à la production, que j'approfondis à travers ma poursuite d'études en DevOps, SRE et Cloud Computing.",
     },
     skills: {
       title: "Compétences",
-      languages: "Langages",
-      frameworks: "Frameworks",
-      tools: "Outils",
+      cloudiac: "Cloud & IaC",
+      containers: "Conteneurs",
+      cicd: "CI/CD",
+      observability: "Observabilité",
+      development: "Développement",
     },
     projects: {
       title: "Projets",
@@ -45,23 +48,26 @@ export const translations = {
       skills: "Skills",
       projects: "Projects",
       contact: "Contact",
+      certifications: "Certifications",
     },
     hero: {
       greeting: "Hello, I'm Stéphane",
-      role: "FullStack Developer",
+      role: "Site Reliability Engineer",
       description:
-        "I'm passionate about creating websites and software development.",
+        "From code to production, I design robust and automated cloud infrastructures.",
     },
     profil: {
       title: "Profile",
       description:
-        "Hello, I'm Stéphane, FullStack Developer. I've graduated from a French Developer School and also learned it by myself since November 2021. My passion is to create and develop a clean UI/UX. My mainstack is currently React and NodeJS with Typescript and Tailwind CSS",
+        "Passionate about software engineering, I believe that a robust application requires aligning code quality with a performant infrastructure. My technical profile is structured around Fullstack Development and Cloud, validated by the AWS Solutions Architect Associate certification. It's this cross-functional approach, from code to production, that I'm deepening through my Master's studies in DevOps, SRE, and Cloud Computing.",
     },
     skills: {
       title: "Skills",
-      languages: "Languages",
-      frameworks: "Frameworks",
-      tools: "Tools",
+      cloudiac: "Cloud & IaC",
+      containers: "Containers",
+      cicd: "CI/CD",
+      observability: "Observability",
+      development: "Development",
     },
     projects: {
       title: "Projects",

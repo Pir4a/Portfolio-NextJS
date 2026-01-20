@@ -67,7 +67,7 @@ export default function ChaqueCompetences({
           ease: "easeOut",
           delay: 0.12,
         }}
-        className=" xl:min-w-[10rem] grid grid-cols-2 gap-4 xl:gap-4 xl:min-h-[320px] lg:max-w-full max-w-[300px] mx-auto"
+        className="xl:min-w-[10rem] grid grid-cols-2 gap-4 xl:gap-4 xl:min-h-[320px] lg:max-w-full max-w-[300px] mx-auto"
       >
         {items.map(({ Icon, key, label }, index) => (
           <motion.div
@@ -80,9 +80,9 @@ export default function ChaqueCompetences({
               opacity: [0, 0.4, 0.6, 1],
               ...(deviceWidth >= 1280
                 ? {
-                    x: [-3000, 100, 0],
-                    scale: [0.8, 1, 1.05, 1],
-                  }
+                  x: [-3000, 100, 0],
+                  scale: [0.8, 1, 1.05, 1],
+                }
                 : {}),
             }}
             exit={{
@@ -95,18 +95,18 @@ export default function ChaqueCompetences({
               delay: 0.14 + index * 0.14 + (arbriraryValue ?? 0),
               ...(deviceWidth >= 1280
                 ? {
-                    scale: {
-                      bounce: 1,
-                      duration: 0.2,
-                      times: [0, 0.7, 0.85, 1],
-                    },
-                  }
+                  scale: {
+                    bounce: 1,
+                    duration: 0.2,
+                    times: [0, 0.7, 0.85, 1],
+                  },
+                }
                 : {}),
             }}
-            className="flex flex-col items-center gap-2"
+            className="flex flex-col items-center gap-2 group cursor-pointer"
           >
-            <Icon className="text-4xl xl:text-5xl text-gray-900 dark:text-gray-200" />
-            <span className="text-sm xl:text-md text-gray-700 dark:text-gray-300 font-light tracking-wide">
+            <Icon className="text-4xl xl:text-5xl text-gray-900 dark:text-gray-200 transition-all duration-300 group-hover:scale-125 group-hover:text-pink-500 dark:group-hover:text-pink-400 group-hover:drop-shadow-[0_0_15px_rgba(236,72,153,0.5)]" />
+            <span className="text-sm xl:text-md text-gray-700 dark:text-gray-300 font-light tracking-wide group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
               {label}
             </span>
           </motion.div>

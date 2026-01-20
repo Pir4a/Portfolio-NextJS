@@ -4,9 +4,13 @@ import React, { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import type { GLTF } from "three/addons/loaders/GLTFLoader.js"
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js"
 import { motion, AnimatePresence } from "framer-motion"
+import { useIntersectionObserver } from "../src/lib/useIntersectionObserver"
+import { useReducedMotion } from "../src/lib/useReducedMotion"
 
 const Cherrytree: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const sceneRef = useRef<THREE.Scene | null>(null)
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
@@ -17,6 +21,14 @@ const Cherrytree: React.FC = () => {
   const lastMouseXRef = useRef(0)
   const initialRotationRef = useRef(-0.15)
   const [isLoading, setIsLoading] = useState(true)
+
+  // Performance optimizations
+  const prefersReducedMotion = useReducedMotion()
+  const entry = useIntersectionObserver(containerRef, {
+    threshold: 0.1,
+    freezeOnceVisible: false,
+  })
+  const isVisible = !!entry?.isIntersecting
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -40,9 +52,11 @@ const Cherrytree: React.FC = () => {
       canvas: canvasRef.current,
       antialias: true,
       alpha: true,
+      powerPreference: "high-performance",
     })
     renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    // Reduce pixel ratio for better performance
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
     rendererRef.current = renderer
 
     // Mouse event handlers
@@ -147,8 +161,14 @@ const Cherrytree: React.FC = () => {
 
     // Load the model
     const loader = new GLTFLoader()
+
+    // Setup Draco loader
+    const dracoLoader = new DRACOLoader()
+    dracoLoader.setDecoderPath('/draco/')
+    loader.setDRACOLoader(dracoLoader)
+
     loader.load(
-      "/cherry tree/scene.gltf",
+      "/cherry tree/scene-draco.gltf",
       (gltf: GLTF) => {
         const model = gltf.scene
         setIsLoading(false)
@@ -169,30 +189,46 @@ const Cherrytree: React.FC = () => {
       }
     )
 
-    // Animation
-    function animate() {
-      requestAnimationFrame(animate)
-      if (modelRef.current && !isDraggingRef.current) {
-        const currentRotation = modelRef.current.rotation.y
-        const maxRotation = 0.35
-        const rotationSpeed = 0.00022
+    // Animation loop variables
+    let animationFrameId: number
+    let lastTime = 0
+    const fps = 30 // Cap at 30 FPS for performance
+    const interval = 1000 / fps
 
-        // Change direction when reaching max rotation
-        if (Math.abs(currentRotation) >= maxRotation) {
-          rotationDirectionRef.current *= -1
+    // Animation
+    function animate(currentTime: number) {
+      animationFrameId = requestAnimationFrame(animate)
+
+      // Skip rendering if not visible
+      if (!isVisible && !isDraggingRef.current) return
+
+      const deltaTime = currentTime - lastTime
+
+      if (deltaTime > interval) {
+        lastTime = currentTime - (deltaTime % interval)
+
+        if (modelRef.current && !isDraggingRef.current && !prefersReducedMotion) {
+          const currentRotation = modelRef.current.rotation.y
+          const maxRotation = 0.35
+          const rotationSpeed = 0.00022 * (deltaTime / 16.67) // Adjust speed based on delta
+
+          // Change direction when reaching max rotation
+          if (Math.abs(currentRotation) >= maxRotation) {
+            rotationDirectionRef.current *= -1
+          }
+
+          // Apply rotation in current direction
+          modelRef.current.rotation.y +=
+            rotationSpeed * rotationDirectionRef.current
         }
 
-        // Apply rotation in current direction
-        modelRef.current.rotation.y +=
-          rotationSpeed * rotationDirectionRef.current
-      }
+        // Update shader time uniform
+        if (circleMaterial.uniforms && !prefersReducedMotion) {
+          circleMaterial.uniforms.time.value += 0.01 * (deltaTime / 16.67)
+        }
 
-      // Update shader time uniform
-      if (circleMaterial.uniforms) {
-        circleMaterial.uniforms.time.value += 0.01
+        renderer.render(scene, camera)
       }
-
-      renderer.render(scene, camera)
     }
 
     // Handle window resize
@@ -211,32 +247,41 @@ const Cherrytree: React.FC = () => {
     }
 
     window.addEventListener("resize", handleResize)
-    animate()
+
+    // Start animation loop
+    animationFrameId = requestAnimationFrame(animate)
+
+    const canvasCleanup = canvasRef.current
+    const rendererCleanup = rendererRef.current
 
     // Cleanup
     return () => {
+      cancelAnimationFrame(animationFrameId)
       window.removeEventListener("resize", handleResize)
       window.removeEventListener("mouseup", handleMouseUp)
       window.removeEventListener("mousemove", handleMouseMove)
-      if (canvasRef.current) {
-        canvasRef.current.removeEventListener("mousedown", handleMouseDown)
+      if (canvasCleanup) {
+        canvasCleanup.removeEventListener("mousedown", handleMouseDown)
       }
-      if (rendererRef.current) {
-        rendererRef.current.dispose()
+      if (rendererCleanup) {
+        rendererCleanup.dispose()
+        // Dispose of geometries and materials
+        circleGeometry.dispose()
+        circleMaterial.dispose()
       }
+      dracoLoader.dispose()
     }
-  }, [])
+  }, [isVisible, prefersReducedMotion]) // Re-run effect when visibility or motion preference changes
 
   return (
-    <>
+    <div ref={containerRef} className="absolute top-0 w-full h-full pointer-events-none">
       <AnimatePresence>
         {isLoading && (
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={` xl:block max-w-[100%] min-h-[110dvh] pl-30 absolute top-0 cursor-pointer transition-opacity duration-500 ${
-          isLoading ? "block" : "hidden"
-        }`}
+            className={` xl:block max-w-[100%] min-h-[110dvh] pl-30 absolute top-0 cursor-pointer transition-opacity duration-500 pointer-events-auto ${isLoading ? "block" : "hidden"
+              }`}
 
           >
             <div className="text-center">
@@ -258,11 +303,10 @@ const Cherrytree: React.FC = () => {
       </AnimatePresence>
       <canvas
         ref={canvasRef}
-        className={`hidden xl:block max-w-[100%] min-h-[110dvh] pl-30 absolute top-0 cursor-pointer transition-opacity duration-500 ${
-          isLoading ? "opacity-0" : "opacity-100"
-        }`}
+        className={`hidden xl:block max-w-[100%] min-h-[110dvh] pl-30 absolute top-0 cursor-pointer transition-opacity duration-500 pointer-events-auto ${isLoading ? "opacity-0" : "opacity-100"
+          }`}
       />
-    </>
+    </div>
   )
 }
 

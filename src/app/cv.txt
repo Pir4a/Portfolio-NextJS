@@ -1,0 +1,50 @@
+Stéphane Dedu
+Paris • sdedu.fr • stephane.dedu@gmail.com • 0643220954
+Experience
+Développeur Fullstack
+Swapn ( alternance ) Paris, France
+2025-2026
+● Développement d'APIs performantes (FastAPI) suivant la Clean Architecture. Mise en place
+de l'observabilité avec la stack Prometheus/Grafana et tracking d'erreurs via Sentry.
+● Conteneurisation de l'application (Docker) et implémentation de pipelines CI/CD via
+GitHub Actions pour automatiser les tests et le déploiement.
+● Réduction de 40% des coûts d'inférence IA (AWS Bedrock) par la mise en place de
+stratégies de Prompt Caching et l'utilisation d'Amazon ElastiCache (Redis).
+● Gestion sécurisée des assets sur Amazon S3 (IAM Policies strictes, chiffrement KMS,
+Signed-URLs) pour garantir l'intégrité des données utilisateurs.
+● Développement et orchestration d'agents IA complexes utilisant LangChain (Tools, sous-
+agents).
+Certifications
+,
+● AWS – Certified Solutions Architect Associate ( 2025 )
+● Hashicorp – Certified Terraform Associate ( 2025 )
+● The linux Foundation – Certified Kubernetes administrator [In Progress]
+Projets Personnels
+,
+● Fissure – Application Mobile Fullstack, Deployée sur AWS, disponible sur Android
+Déploiement d’une application de tracking d’entrainements, macronutriments et forme
+physique boosté par IA
+Infrastructure : ECS, RDS, S3, ALB, SG, VPC (1 subnet privé, 1 subnet
+public),Internet Gateway & NAT – 2 AZ (Haute disponibilité) , Terraform (IaC)
+Application : Typescript ( ExpressJS et React Native ) - Clean architecture,
+Drizzle ORM, Sqlite (migration PostGreSQL prod), Docker
+Compétences
+Cloud & IaC : AWS (ECS, RDS, S3, ALB, VPC, IAM, KMS), Terraform (Infrastructure as Code)
+Conteneurisation & Orchestration : Kubernetes, Docker
+CI/CD & Automatisation : GitHub Actions, Bash, Linux
+Observabilité : Prometheus, Grafana, Sentry
+Développement : Python (FastAPI), TypeScript (React/Express), SQL (PostgreSQL), Clean Architecture
+Soft Skills: Persévérant, Rigoureux, Autodidacte
+Langues: Anglais C1, Espagnol B2, Japonais ( JLPT N4 ), Roumain ( B2 )
+Centres d’intêrets: Veille technologique, Force Athlétique, Finance personnelle. Lecture
+Formation
+Sup de Vinci La défense, Paris
+Mastère Devops, Cloud & Infrastructure
+2026 - 2028
+Cours pertinants: Cloud Providers, IaC, Kubernetes, Monitoring ( Grafana, Prometheus )
+Sup de Vinci La défense, Paris
+Bachelor développement Informatique
+2025 - 2026
+Cours pertinants: Architecture Back-End, Python, Git, CI/CD, Docker, React
+Lycée Rosa Parks Montgeron, Essonne
+Baccalauréat Scientifique spécialité mathématiques

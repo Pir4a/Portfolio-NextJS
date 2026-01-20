@@ -32,7 +32,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="flex items-center rounded-b-lg justify-between py-3 px-1 xl:py-4 xl:px-8 bg-white/60 dark:bg-black/60 backdrop-blur-lg text-gray-800 dark:text-gray-100 sticky top-0 z-50 border-b border-gray-300/50 dark:border-gray-800/50">
+      <header className="flex items-center rounded-b-lg justify-between py-3 px-1 xl:py-4 xl:px-8 bg-white/70 dark:bg-black/70 backdrop-blur-xl text-gray-800 dark:text-gray-100 sticky top-0 z-50 border-b border-pink-200/30 dark:border-pink-500/20 shadow-lg shadow-pink-500/5">
         {mounted && <Logo>DEDU Stéphane</Logo>}
 
         <div className="hidden xl:flex items-center justify-center flex-1">
@@ -44,13 +44,14 @@ export default function Header() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="whitespace-nowrap"
+                className="whitespace-nowrap group"
               >
                 <a
                   href={item.href}
-                  className="text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 font-medium"
+                  className="text-gray-800 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-300 font-medium relative"
                 >
                   {item.label}
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-pink-500 to-purple-500 group-hover:w-full transition-all duration-300"></span>
                 </a>
               </motion.li>
             ))}

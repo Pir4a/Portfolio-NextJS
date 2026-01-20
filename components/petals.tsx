@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef } from "react"
 import * as THREE from "three"
+import { useIntersectionObserver } from "../src/lib/useIntersectionObserver"
+import { useReducedMotion } from "../src/lib/useReducedMotion"
 
 interface Petal {
   mesh: THREE.Mesh
@@ -12,6 +14,7 @@ interface Petal {
 }
 
 const Petals: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const sceneRef = useRef<THREE.Scene | null>(null)
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
@@ -19,6 +22,14 @@ const Petals: React.FC = () => {
   const petalsRef = useRef<Petal[]>([])
   const lastShakeTimeRef = useRef(0)
   const isShakingRef = useRef(false)
+
+  // Performance optimizations
+  const prefersReducedMotion = useReducedMotion()
+  const entry = useIntersectionObserver(containerRef, {
+    threshold: 0.1,
+    freezeOnceVisible: false,
+  })
+  const isVisible = !!entry?.isIntersecting
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -42,9 +53,10 @@ const Petals: React.FC = () => {
       canvas: canvasRef.current,
       antialias: true,
       alpha: true,
+      powerPreference: "high-performance",
     })
     renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
     rendererRef.current = renderer
 
     // Lighting setup
@@ -96,6 +108,9 @@ const Petals: React.FC = () => {
 
     // Add new petals
     function addPetals(count: number) {
+      // Limit total petals for performance
+      if (petalsRef.current.length > 50) return
+
       for (let i = 0; i < count; i++) {
         const petal = createPetal()
         scene.add(petal.mesh)
@@ -104,12 +119,12 @@ const Petals: React.FC = () => {
     }
 
     // Update petal physics
-    function updatePetals() {
+    function updatePetals(deltaTime: number) {
       const currentTime = Date.now()
       const timeSinceLastShake = currentTime - lastShakeTimeRef.current
 
       // Add more petals when tree is shaking
-      if (isShakingRef.current && timeSinceLastShake > 100) {
+      if (isShakingRef.current && timeSinceLastShake > 100 && !prefersReducedMotion) {
         addPetals(2)
         lastShakeTimeRef.current = currentTime
       }
@@ -128,7 +143,7 @@ const Petals: React.FC = () => {
         )
 
         // Update life
-        petal.life -= 0.001
+        petal.life -= 0.001 * (deltaTime / 16.67)
         if (petal.mesh.material instanceof THREE.Material) {
           petal.mesh.material.opacity = petal.life
         }
@@ -136,6 +151,9 @@ const Petals: React.FC = () => {
         // Remove if dead or fallen too far
         if (petal.life <= 0 || petal.mesh.position.y < -10) {
           scene.remove(petal.mesh)
+          // Dispose geometry and material
+          if (petal.mesh.geometry) petal.mesh.geometry.dispose()
+          if (petal.mesh.material instanceof THREE.Material) petal.mesh.material.dispose()
           return false
         }
 
@@ -146,7 +164,9 @@ const Petals: React.FC = () => {
     // Listen for tree shake events
     function handleTreeShakeStart() {
       isShakingRef.current = true
-      addPetals(5)
+      if (!prefersReducedMotion) {
+        addPetals(5)
+      }
     }
 
     function handleTreeShakeEnd() {
@@ -156,11 +176,26 @@ const Petals: React.FC = () => {
     window.addEventListener("treeShakeStart", handleTreeShakeStart)
     window.addEventListener("treeShakeEnd", handleTreeShakeEnd)
 
+    // Animation loop variables
+    let animationFrameId: number
+    let lastTime = 0
+    const fps = 30 // Cap at 30 FPS
+    const interval = 1000 / fps
+
     // Animation
-    function animate() {
-      requestAnimationFrame(animate)
-      updatePetals()
-      renderer.render(scene, camera)
+    function animate(currentTime: number) {
+      animationFrameId = requestAnimationFrame(animate)
+
+      // Skip rendering if not visible or reduced motion
+      if (!isVisible || prefersReducedMotion) return
+
+      const deltaTime = currentTime - lastTime
+
+      if (deltaTime > interval) {
+        lastTime = currentTime - (deltaTime % interval)
+        updatePetals(deltaTime)
+        renderer.render(scene, camera)
+      }
     }
 
     // Handle window resize
@@ -179,27 +214,40 @@ const Petals: React.FC = () => {
     }
 
     window.addEventListener("resize", handleResize)
-    animate()
+
+    // Start animation loop
+    animationFrameId = requestAnimationFrame(animate)
 
     // Initial petals
-    addPetals(10)
+    if (!prefersReducedMotion) {
+      addPetals(10)
+    }
 
     // Cleanup
     return () => {
+      cancelAnimationFrame(animationFrameId)
       window.removeEventListener("resize", handleResize)
       window.removeEventListener("treeShakeStart", handleTreeShakeStart)
       window.removeEventListener("treeShakeEnd", handleTreeShakeEnd)
       if (rendererRef.current) {
         rendererRef.current.dispose()
       }
+      // Clean up all petals
+      petalsRef.current.forEach(petal => {
+        scene.remove(petal.mesh)
+        if (petal.mesh.geometry) petal.mesh.geometry.dispose()
+        if (petal.mesh.material instanceof THREE.Material) petal.mesh.material.dispose()
+      })
     }
-  }, [])
+  }, [isVisible, prefersReducedMotion])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-[50%] h-full absolute left-0 top-0 pointer-events-none"
-    />
+    <div ref={containerRef} className="absolute top-0 left-0 w-full h-full pointer-events-none">
+      <canvas
+        ref={canvasRef}
+        className="w-[50%] h-full absolute left-0 top-0 pointer-events-none"
+      />
+    </div>
   )
 }
 
