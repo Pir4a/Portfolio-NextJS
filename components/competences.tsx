@@ -1,140 +1,67 @@
-"use client "
-import { AnimatePresence, motion, useInView } from "motion/react"
-import { useLanguage } from "../contexts/LanguageContext"
+"use client"
+
 import {
-  FaCss3,
-  FaFigma,
-  FaGit,
-  FaGithub,
-  FaHtml5,
-  FaJs,
-  FaNodeJs,
-  FaNpm,
   FaReact,
-  FaSass,
-  FaCode,
+  FaDocker
 } from "react-icons/fa"
 import { RiNextjsFill, RiTailwindCssLine } from "react-icons/ri"
-import { SiTypescript, SiThreedotjs, SiSqlite } from "react-icons/si"
-import { translations } from "../translations"
-import ChaqueCompetences from "./chaqueCompetences"
-import { useRef } from "react"
+import { SiTypescript, SiTerraform, SiAnsible, SiKubernetes, SiGrafana, SiPrometheus } from "react-icons/si"
 
-const languages = [
-  { Icon: FaJs, key: "js", label: "JavaScript" },
-  { Icon: FaHtml5, key: "html", label: "HTML5" },
-  { Icon: FaCss3, key: "css", label: "CSS3" },
-  { Icon: FaSass, key: "sass", label: "SASS" },
-  { Icon: SiTypescript, key: "typescript", label: "TypeScript" },
+const toolset = [
+  {
+    category: "Infrastructure & Cloud", items: [
+      { Icon: FaDocker, label: "Docker" },
+      { Icon: SiKubernetes, label: "Kubernetes" },
+      { Icon: SiTerraform, label: "Terraform" },
+      { Icon: SiAnsible, label: "Ansible" }
+    ]
+  },
+  {
+    category: "Observability", items: [
+      { Icon: SiGrafana, label: "Grafana" },
+      { Icon: SiPrometheus, label: "Prometheus" }
+    ]
+  },
+  {
+    category: "Frontend Ecosystem", items: [
+      { Icon: RiNextjsFill, label: "Next.js" },
+      { Icon: SiTypescript, label: "TypeScript" },
+      { Icon: RiTailwindCssLine, label: "Tailwind" },
+      { Icon: FaReact, label: "React" }
+    ]
+  },
 ]
 
-const frameworks = [
-  { Icon: FaReact, key: "react", label: "React" },
-  { Icon: FaNodeJs, key: "node", label: "Node.js" },
-  { Icon: RiNextjsFill, key: "next", label: "Next.js" },
-  { Icon: RiTailwindCssLine, key: "tailwind", label: "Tailwind CSS" },
-  { Icon: SiThreedotjs, key: "threejs", label: "Three.js" },
-]
-
-const tools = [
-  { Icon: FaFigma, key: "figma", label: "Figma" },
-  { Icon: FaGit, key: "git", label: "Git" },
-{Icon : SiSqlite, key:"sqlite", label:"Sqlite"},
-  { Icon: FaNpm, key: "npm", label: "npm" },
-  { Icon: FaGithub, key: "github", label: "GitHub" },
-  { Icon: FaCode, key: "vscode", label: "VSCode" },
-]
-
-function Competences({ deviceWidth }: { deviceWidth: number }) {
-  const { language } = useLanguage()
-
-  const ref = useRef(null)
-  const isInView = useInView(ref, {
-    margin: "0px 0px -30% 0px",
-    once: true,
-  })
+export default function Competences() {
 
   return (
-    <div className="dark:bg-black pb-14 pt-40 xl:pt-0 z-40 min-h-[120dvh] xl:min-h-[60dvh] xl:max-h-[70dvh] bg-cyan-100 flex flex-col overflow-x-hidden ">
-      <div
-        ref={ref}
-        className="dark:bg-black bg-cyan-100 text-lg leading-relaxed flex flex-col xl:flex-row  xl:gap-10 xl:items-top h-full px-4 xl:px-[0%] gap-10 "
-      >
-        <AnimatePresence mode="wait">
-          {isInView && (
-            <>
-              <div
-                className={`pt-10  ${
-                  language === "fr" ? "xl:pl-0 xl:pt-25" : "xl:pl-28 xl:pt-20"
-                }`}
-              >
-                <motion.h2
-                  key={`${language}-${deviceWidth}`}
-                  initial={{
-                    opacity: 0,
-                    ...(deviceWidth >= 1280 ? { x: -300 } : {}),
-                  }}
-                  animate={{
-                    opacity: 1,
-                    ...(deviceWidth >= 1280 ? { x: [-300, 150, 100] } : {}),
-                  }}
-                  exit={{
-                    opacity: 0,
-                    ...(deviceWidth >= 1280 ? { x: -300 } : {}),
-                  }}
-                  transition={{ duration: 0.25, ease: "easeOut", delay: 0.1 }}
-                  className={`xl:min-w-[30%]  relative text-4xl xl:text-6xl  font-light  tracking-tight text-gray-800 dark:text-gray-200  ${deviceWidth < 1280 ? "text-center" : ""}`}
-                >
-                  {translations[language].skills.title}
-                  <motion.span
-                    ref={ref}
-                    className={`${language === "fr" ? "w-[120%]" : "w-[140%]"} h-[2px] -bottom-4 absolute left-[50%] -translate-x-[50%]  bg-gradient-to-r from-transparent via-pink-300/40 to-transparent`}
-                  />
-                </motion.h2>
-              </div>
-              <div
-                className={`flex flex-col xl:flex-row xl:justify-start xl:items-start xl:min-w-[0%] mx-auto ${
-                  language === "fr"
-                    ? "xl:pl-30 xl:pt-20 "
-                    : "xl:pl-54 xl:pt-16 "
-                }  gap-8 xl:gap-14 `}
-              >
-                <ChaqueCompetences
-                  title={translations[language].skills.languages}
-                  items={languages}
-                  language={language}
-                  deviceWidth={deviceWidth}
-                  delay={0.1}
-                  // delay de 0.1 pour les langages
-                  arbriraryValue={0.1}
-                />
-
-                <ChaqueCompetences
-                  title={translations[language].skills.frameworks}
-                  items={frameworks}
-                  language={language}
-                  deviceWidth={deviceWidth}
-                  delay={0.1}
-                  // delay de 0.1 pour les frameworks
-                  arbriraryValue={0.2}
-                />
-
-                <ChaqueCompetences
-                  title={translations[language].skills.tools}
-                  items={tools}
-                  language={language}
-                  deviceWidth={deviceWidth}
-                  delay={0.1}
-                  // delay de 0.5 pour les outils
-                  arbriraryValue={0.3}
-                />
-              </div>
-            </>
-          )}
-        </AnimatePresence>
+    <div className="max-w-7xl mx-auto px-6 py-20 border-l border-gray-200 dark:border-gray-800 ml-4 lg:ml-20 pl-8 lg:pl-12">
+      <div className="mb-12">
+        <h2 className="text-4xl font-bold tracking-tight text-black dark:text-white mb-2">
+          Technical Arsenal
+        </h2>
+        <p className="font-mono text-sm text-gray-500">
+          $ echo $PATH
+        </p>
       </div>
-      <span id="projects" className="invisible" />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        {toolset.map((group) => (
+          <div key={group.category}>
+            <h3 className="text-xl font-bold font-mono mb-6 border-b border-gray-200 dark:border-gray-800 pb-2 inline-block">
+              {group.category}
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              {group.items.map((tool) => (
+                <div key={tool.label} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-[#111] border border-gray-100 dark:border-gray-800 hover:border-blue-500 transition-colors">
+                  <tool.Icon className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                  <span className="font-mono text-sm">{tool.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
-export default Competences

@@ -1,97 +1,62 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
 import { useLanguage } from "../contexts/LanguageContext"
-import { translations } from "../translations"
-import { BsGithub, BsLinkedin } from "react-icons/bs"
-import HeroButton from "./herobutton"
+import { FaAws } from "react-icons/fa"
+import { SiTerraform, SiKubernetes } from "react-icons/si"
+
 export default function Hero() {
   const { language } = useLanguage()
 
+  const certifications = [
+    { name: "AWS Solutions Arch.", icon: FaAws, color: "text-orange-500" },
+    { name: "CKA", icon: SiKubernetes, color: "text-blue-500" },
+    { name: "Terraform Assoc.", icon: SiTerraform, color: "text-purple-500" },
+  ]
+
   return (
-    <div className="mx-auto xl:mx-0 flex text-center flex-col gap-10 xl:gap-6 xl:text-start items-center xl:items-start justify-center min-h-[100dvh] xl:min-h-[70dvh] px-4 xl:px-[6%] xl:min-w-[50%] xl:max-w-[50%]">
-      <AnimatePresence mode="wait">
-        <motion.h1
-          key={language}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="text-5xl font-bold z-30"
-        >
-          {translations[language].hero.greeting}
-        </motion.h1>
-      </AnimatePresence>
-      <AnimatePresence mode="wait">
-        <motion.p
-          key={language}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
-          className="text-2xl z-30"
-        >
-          <motion.span
-            className="font-bold z-30 bg-gradient-to-r from-pink-800 via-cyan-950 to-pink-800 dark:from-pink-600 dark:via-cyan-700 dark:to-pink-600 bg-clip-text text-transparent bg-[length:300%_auto]"
-            animate={{
-              backgroundPosition: ["0% center", "100% center", "0% center"],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "linear",
-              times: [0, 0.5, 1],
-            }}
-          >
-            {translations[language].hero.role}
-          </motion.span>
-          <br /> {translations[language].hero.description}
-          <span className="flex justify-center xl:justify-start items-center pt-4 p-2 gap-4">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={language}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
-                className="flex items-center pt-4 p-2 gap-4"
-              >
-                <a href="https://github.com/Pir4a" target="_blank" className="">
-                  <BsGithub className="w-8 h-8 cursor-pointer hover:scale-120 transition-all duration-200" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/st%C3%A9phane-dedu-14579a266/"
-                  target="_blank"
-                  className=""
-                >
-                  <BsLinkedin className="w-8 h-8 cursor-pointer hover:scale-120 transition-all duration-200" />
-                </a>
-              </motion.span>
-            </AnimatePresence>
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={language}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
-                className="flex  gap-4 pt-4"
-              >
-                <HeroButton
-                  href=""
-                  text="CV"
-                  className="bg-gray-900 px-6 py-3 dark:bg-white text-white dark:text-black transition-all duration-200"
-                />
-                <HeroButton
-                  text="Contact"
-                  href="#contact"
-                  className="border-2 px-6 py-3 border-gray-900 dark:border-white text-gray-900 dark:text-white rounded-lg font-medium hover:bg-gray-900 dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-200"
-                />
-              </motion.span>
-            </AnimatePresence>
-          </span>
-        </motion.p>
-      </AnimatePresence>
-    </div>
+    <section className="min-h-[80vh] flex flex-col justify-center max-w-7xl mx-auto px-6 border-l border-gray-200 dark:border-gray-800 ml-4 lg:ml-20 pl-8 lg:pl-12 my-20">
+      <div className="space-y-2 mb-8">
+        <span className="font-mono text-sm text-gray-500 dark:text-gray-400">
+          #!/bin/bash
+        </span>
+        <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-black dark:text-white">
+          Stéphane Dedu
+        </h1>
+        <h2 className="text-2xl md:text-3xl font-mono text-blue-600 dark:text-blue-400">
+          &gt; SRE / Cloud Engineer<span className="animate-pulse">_</span>
+        </h2>
+      </div>
+
+      <div className="max-w-2xl mb-12">
+        <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-light">
+          {language === 'fr'
+            ? "Conception d'infrastructures résilientes, automatisation des déploiements et optimisation de la performance système. Focus sur l'observabilité et la scalabilité."
+            : "Architecting resilient infrastructure, automating deployments, and optimizing system performance. Focused on observability and scalability."}
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-sm font-mono uppercase tracking-widest text-gray-500">
+          Certifications_ & Status
+        </h3>
+        <div className="flex flex-wrap gap-4">
+          {certifications.map((cert) => (
+            <div
+              key={cert.name}
+              className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-sm"
+            >
+              <cert.icon className={`w-5 h-5 ${cert.color}`} />
+              <span className="font-mono text-sm font-medium">{cert.name}</span>
+            </div>
+          ))}
+          <div className="flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-sm">
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="font-mono text-sm font-medium text-green-700 dark:text-green-400">
+              Open to Work
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }

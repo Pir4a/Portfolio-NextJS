@@ -1,18 +1,7 @@
 "use client"
 import { useLanguage } from "../contexts/LanguageContext"
-import { translations } from "../translations"
 import projetsdata from "../datas/projetsdatanew.json"
-import { TiltShineCard } from "./projectCardTilt"
-import { FaReact, FaSass, FaNodeJs, FaDatabase } from "react-icons/fa"
-import {
-  SiNextdotjs,
-  SiTailwindcss,
-  SiTypescript,
-  SiThreedotjs,
-} from "react-icons/si"
-import { AnimatePresence, motion, useInView } from "framer-motion"
-import { useRef } from "react"
-import { IconType } from "react-icons"
+import ProjectCardSRE from "./ProjectCardSRE"
 
 interface Projet {
   projectName: string
@@ -25,110 +14,36 @@ interface Projet {
   projectImg: string
 }
 
-// Icon mapping object
-const iconMap: { [key: string]: IconType } = {
-  FaReact,
-  FaSass,
-  FaNodeJs,
-  FaDatabase,
-  SiNextdotjs,
-  SiTailwindcss,
-  SiTypescript,
-  SiThreedotjs,
-}
-
-function Projets({ deviceWidth }: { deviceWidth: number }) {
+function Projets() {
   const { language } = useLanguage()
 
-  const ref = useRef(null)
-  const isInView = useInView(
-    ref,
-    deviceWidth >= 1024
-      ? { margin: "0px 0px -18% 0px", once: true }
-      : { margin: "0px 0px 0% 0px", once: true }
-  )
-
   return (
-    <>
-      <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-pink-300/60 to-transparent " />
-      <div
-        ref={ref}
-        className="flex flex-col items-center min-h-[180dvh] xl:min-h-[150dvh] 2xl:min-h-[105dvh]"
-      >
-        <AnimatePresence mode="wait">
-          {isInView && (
-            <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{
-                  duration: 0.3,
-                  ease: "easeOut",
-                  delay: 0.1,
-                }}
-                className="text-6xl font-light tracking-tight text-gray-800 dark:text-gray-200 pt-10 mx-auto lg:pb-6 xl:pb-0"
-              >
-                <motion.span
-                  initial={{ width: 0 }}
-                  animate={{ width: "auto" }}
-                  transition={{
-                    duration: 0.6,
-                    ease: "circOut",
-                    delay: 0.2,
-                  }}
-                  className="whitespace-nowrap inline-block overflow-hidden relative pb-4"
-                >
-                  {translations[language].projects.title}
-                  <motion.span
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{
-                      duration: 0.8,
-                      ease: "circOut",
-                      delay: 0.4,
-                    }}
-                    className={`absolute left-0 right-0 h-[2px] overflow-visible -bottom-0 bg-gradient-to-r from-transparent via-pink-300/40 to-transparent`}
-                  />
-                </motion.span>
-              </motion.div>
-
-              <motion.div
-                layout
-                className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-8 relative space-y-8 xl:space-y-0 xl:px-40 2xl:px-0 xl:mx-0 2xl:grid-cols-3 xl:min-h-[128dvh] 2xl:min-h-[60dvh] gap-10 w-[90%] xl:w-full items-center pt-10"
-              >
-                {projetsdata.map((projet: Projet, index: number) => (
-                  <TiltShineCard
-                    gitLink={projet.gitLink}
-                    liveLink={projet.liveLink}
-                    technosImg={projet.technosImg}
-                    technos={projet.technos}
-                    descriptionEN={projet.projectDescriptionEN}
-                    titre={projet.projectName}
-                    description={projet.projectDescription}
-                    displayedimg={projet.projectImg}
-                    className=""
-                    index={index}
-                    key={index}
-                    delay={0.36 + index * 0.18}
-                    iconMap={iconMap}
-                  >
-                    <h3 className="text-2xl flex justify-center pb-2 xl:py-2 xl:pt-0 font-light tracking-tight text-black dark:text-gray-200">
-                      {projet.projectName}
-                    </h3>
-                    <img
-                      src={projet.projectImg}
-                      alt={projet.projectName}
-                      className="w-full h-auto xl:min-h-full rounded-lg shadow-lg object-cover opacity-80 group-hover:scale-[102%] transition-all duration-500"
-                    />
-                  </TiltShineCard>
-                ))}
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
+    <div className="flex flex-col items-center min-h-screen py-20 px-4 max-w-7xl mx-auto">
+      <div className="w-full mb-16 border-b border-gray-200 dark:border-gray-800 pb-8">
+        <h2 className="text-4xl font-bold text-black dark:text-white mb-2">
+          Project Index
+        </h2>
+        <p className="font-mono text-gray-500 text-sm">
+          /var/www/html/projects --list-all
+        </p>
       </div>
-    </>
+
+      <div className="flex flex-col gap-12 w-full">
+        {projetsdata.map((projet: Projet, index: number) => (
+          <ProjectCardSRE
+            key={index}
+            title={projet.projectName}
+            description={language === "fr" ? projet.projectDescription : projet.projectDescriptionEN}
+            techStack={projet.technos}
+            stats={{
+              uptime: "99.9%",
+              latency: `${Math.floor(Math.random() * 50) + 10}ms`, // Mock data for now
+              requests: "2.4M/mo"
+            }}
+          />
+        ))}
+      </div>
+    </div>
   )
 }
 
