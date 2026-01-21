@@ -90,9 +90,51 @@ export default function ProjectsCenter() {
                                     <img
                                         src={project.projectImg}
                                         alt={project.projectName}
-                                        className={`w-full rounded-lg shadow-lg object-cover opacity-80 group-hover:scale-[102%] transition-all duration-500 ${isFeatured ? "h-full min-h-[400px]" : "h-auto"
+                                        className={`w-full rounded-lg shadow-lg object-cover opacity-80 group-hover:scale-[102%] transition-all duration-500 ${isFeatured ? "h-[370px]" : "h-auto"
                                             }`}
                                     />
+                                    {isFeatured && (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                            {/* AWS Infra */}
+                                            <div className="flex flex-col gap-2">
+                                                <span className="text-sm font-semibold text-orange-600 dark:text-orange-400">AWS Infra :</span>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {["ECS", "RDS", "ECR"].map((tag) => (
+                                                        <span key={tag} className="text-xs px-2 py-1 rounded bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-orange-800">
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                    <span className="text-xs px-2 py-1 rounded bg-orange-50 dark:bg-orange-900/10 text-orange-600 dark:text-orange-400 italic">
+                                                        + more
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            {/* IaC */}
+                                            <div className="flex flex-col gap-2">
+                                                <span className="text-sm font-semibold text-purple-600 dark:text-purple-400">IaC :</span>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {["Terraform"].map((tag) => (
+                                                        <span key={tag} className="text-xs px-2 py-1 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Back-end */}
+                                            <div className="flex flex-col gap-2 md:col-span-2">
+                                                <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">Back-end :</span>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {["Typescript", "ExpressJS", "Clean Architecture"].map((tag) => (
+                                                        <span key={tag} className="text-xs px-2 py-1 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </TiltShineCard>
                         </div>
