@@ -3,10 +3,10 @@
 import { motion } from "framer-motion"
 import { useLanguage } from "../../../contexts/LanguageContext"
 import { BsGithub, BsLinkedin } from "react-icons/bs"
-import Header from "../../../components/Header"
-import CursorGlow from "../../../components/CursorGlow"
-import CertificationsList from "../../../components/CertificationsList"
-import SkillsSidebar from "../../../components/SkillsSidebar"
+import Header from "../../../components/organisms/Header"
+import CursorGlow from "../../../components/atoms/CursorGlow"
+import CertificationsList from "../../../components/organisms/CertificationsList"
+import SkillsSidebar from "../../../components/organisms/SkillsSidebar"
 
 export default function ProfilePage() {
     const { language } = useLanguage()
