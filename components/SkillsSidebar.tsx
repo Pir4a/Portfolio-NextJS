@@ -44,6 +44,7 @@ const skillCategories: SkillCategory[] = [
         items: [
             { Icon: SiAmazon, label: "AWS" },
             { Icon: SiTerraform, label: "Terraform" },
+            { Icon: SiGithubactions, label: "GitHub Actions" },
         ],
     },
     {
@@ -61,13 +62,6 @@ const skillCategories: SkillCategory[] = [
             { Icon: SiLinux, label: "Linux" },
             { Icon: SiGnubash, label: "Bash" },
             { Icon: SiPython, label: "Python" },
-        ],
-    },
-    {
-        id: "cicd",
-        color: "text-indigo-500",
-        items: [
-            { Icon: SiGithubactions, label: "GitHub Actions" },
         ],
     },
     {

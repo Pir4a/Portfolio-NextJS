@@ -111,11 +111,15 @@ output "public_subnet_ids" {
 }`
 }
 
+import { translations } from "../translations"
+
 const InfraBrowser = ({ displayedimg, titre, description, descriptionEN, language }: any) => {
   const [selectedFile, setSelectedFile] = useState("main.tf")
   const [openFolders, setOpenFolders] = useState<Record<string, boolean>>({
     "modules": true,
   })
+
+  const text = translations[language as keyof typeof translations].fissure_card
 
   const toggleFolder = (path: string) => {
     setOpenFolders(prev => ({ ...prev, [path]: !prev[path] }))
@@ -217,7 +221,7 @@ const InfraBrowser = ({ displayedimg, titre, description, descriptionEN, languag
       <div className="relative w-full rounded-lg overflow-hidden shadow-2xl">
         <div className="absolute top-4 left-4 z-20 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-md border border-white/10">
           <h3 className="text-lg font-bold text-white tracking-wide">
-            Diagramme Infra :
+            {text.infra_diagram}
           </h3>
         </div>
         <img
@@ -231,26 +235,26 @@ const InfraBrowser = ({ displayedimg, titre, description, descriptionEN, languag
         {/* AWS Cloud Infra Section */}
         <div className="space-y-4">
           <h3 className="text-2xl font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2">
-            AWS Cloud Infra
+            {text.aws_cloud}
           </h3>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[450px]">
             {/* Left Column: Explanations */}
             <div className="bg-white/5 dark:bg-zinc-900/50 p-6 rounded-xl border border-orange-200/20 dark:border-orange-900/30 space-y-4 text-black dark:text-gray-300 overflow-y-auto custom-scrollbar">
-              <p><strong className="text-orange-700 dark:text-orange-300">Why this specific choice?</strong><br />
-                We chose AWS ECS (Elastic Container Service) coupled with Fargate for a serverless container experience. This eliminates the need to manage EC2 instances directly, allowing us to focus purely on the application logic.</p>
+              <p><strong className="text-orange-700 dark:text-orange-300">{text.why_choice}</strong><br />
+                {text.why_choice_text}</p>
 
-              <p><strong className="text-orange-700 dark:text-orange-300">Scalability (10x users)</strong><br />
-                For scale, we would vertically scale the RDS instance (to t3.medium) and enable Auto Scaling on ECS to add more tasks during traffic spikes.</p>
+              <p><strong className="text-orange-700 dark:text-orange-300">{text.scalability}</strong><br />
+                {text.scalability_text}</p>
 
-              <p><strong className="text-orange-700 dark:text-orange-300">Security</strong><br />
-                Strict Security Groups ensure isolation. The App talks to DB only on port 5432. The Load Balancer opens port 443 to the world.</p>
+              <p><strong className="text-orange-700 dark:text-orange-300">{text.security}</strong><br />
+                {text.security_text}</p>
             </div>
 
             {/* Right Column: Interactive Infra Browser */}
             <div className="bg-[#1e1e1e] rounded-xl border border-zinc-700 overflow-hidden flex shadow-2xl">
               {/* Sidebar: File Tree */}
               <div className="w-[35%] border-r border-zinc-700 bg-[#252526] flex flex-col font-mono text-xs">
-                <div className="p-3 text-zinc-400 uppercase tracking-wider text-[10px] font-bold">Explorer</div>
+                <div className="p-3 text-zinc-400 uppercase tracking-wider text-[10px] font-bold">{text.explorer}</div>
                 <div className="flex-1 overflow-y-auto py-2">
                   {renderTree(tree)}
                 </div>
@@ -293,11 +297,11 @@ const InfraBrowser = ({ displayedimg, titre, description, descriptionEN, languag
         {/* IaC Section */}
         <div className="space-y-4">
           <h3 className="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2">
-            Infrastructure as Code (IaC)
+            {text.iac_title}
           </h3>
           <div className="bg-white/5 dark:bg-zinc-900/50 p-6 rounded-xl border border-purple-200/20 dark:border-purple-900/30 space-y-4 text-black dark:text-gray-300">
             <p>
-              We use <strong className="text-purple-700 dark:text-purple-300">Terraform</strong> to define the entire infrastructure. This approach allows us to version control our infrastructure (GitOps), ensuring reproducibility and eliminating "configuration drift". We can spin up a new environment (staging/prod) in minutes just by applying the Terraform plan.
+              {text.iac_text}
             </p>
           </div>
         </div>
@@ -306,23 +310,23 @@ const InfraBrowser = ({ displayedimg, titre, description, descriptionEN, languag
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left: Video Placeholder */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">App Demo</h3>
+            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">{text.app_demo}</h3>
             <div className="aspect-video w-full bg-zinc-200 dark:bg-zinc-900 rounded-xl border border-zinc-300 dark:border-zinc-800 flex flex-col items-center justify-center text-zinc-500 dark:text-zinc-600 gap-2">
-              <span className="font-medium text-sm">Full app walkthrough video coming soon</span>
+              <span className="font-medium text-sm">{text.video_placeholder}</span>
             </div>
           </div>
 
           {/* Right: Architecture Choices */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400">Architecture Choices</h3>
+            <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400">{text.architecture_choices}</h3>
             <div className="space-y-4 text-black dark:text-gray-300 text-sm leading-relaxed">
               <div>
-                <strong className="text-blue-700 dark:text-blue-300 block mb-1">Back-End (Clean Architecture)</strong>
-                <p>The backend is built with ExpressJS and TypeScript following <span className="italic">Clean Architecture</span> principles.</p>
+                <strong className="text-blue-700 dark:text-blue-300 block mb-1">{text.backend_title}</strong>
+                <p>{text.backend_text}</p>
               </div>
               <div>
-                <strong className="text-sky-700 dark:text-sky-300 block mb-1">Front-End (React Native)</strong>
-                <p>We chose React Native with Expo for a "Write Once, Run Anywhere" strategy.</p>
+                <strong className="text-sky-700 dark:text-sky-300 block mb-1">{text.frontend_title}</strong>
+                <p>{text.frontend_text}</p>
               </div>
             </div>
           </div>

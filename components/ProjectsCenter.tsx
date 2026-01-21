@@ -61,7 +61,7 @@ export default function ProjectsCenter() {
                     return (
                         <div
                             key={index}
-                            className={isFeatured ? "col-span-2 row-span-2" : ""}
+                            className={isFeatured ? "col-span-2 row-span-2 relative group cursor-pointer" : "relative group"}
                         >
                             <TiltShineCard
                                 gitLink={project.gitLink}
@@ -77,22 +77,35 @@ export default function ProjectsCenter() {
                                 delay={0.4 + index * 0.1}
                                 iconMap={iconMap}
                             >
-                                <div className={isFeatured ? "flex flex-col h-full" : ""}>
-                                    <h3 className={`font-medium pb-2 text-black dark:text-gray-200 ${isFeatured ? "text-2xl" : "text-lg"
+                                <div className={isFeatured ? "flex flex-col h-full relative" : ""}>
+                                    <h3 className={`font-medium pb-2 text-black dark:text-gray-200 flex items-center gap-3 ${isFeatured ? "text-2xl" : "text-lg"
                                         }`}>
                                         {project.projectName}
                                         {isFeatured && (
-                                            <span className="ml-3 text-xs font-normal bg-blue-500/20 dark:bg-blue-500/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded">
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-300 border border-blue-200/50 dark:border-blue-400/20 backdrop-blur-md">
                                                 Featured
                                             </span>
                                         )}
                                     </h3>
-                                    <img
-                                        src={project.projectImg}
-                                        alt={project.projectName}
-                                        className={`w-full rounded-lg shadow-lg object-cover opacity-80 group-hover:scale-[102%] transition-all duration-500 ${isFeatured ? "h-[370px]" : "h-auto"
-                                            }`}
-                                    />
+
+                                    <div className="relative overflow-hidden rounded-lg group/image">
+                                        <img
+                                            src={project.projectImg}
+                                            alt={project.projectName}
+                                            className={`w-full shadow-lg object-cover opacity-90 transition-all duration-700 ${isFeatured ? "h-[370px] group-hover:scale-[1.02]" : "h-auto group-hover:scale-[1.02]"
+                                                }`}
+                                        />
+
+                                        {/* Click to Explore Overlay */}
+                                        {isFeatured && (
+                                            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10 pointer-events-none">
+                                                <span className="px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-medium tracking-wide shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                                    Click to Explore
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+
                                     {isFeatured && (
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                                             {/* AWS Infra */}
