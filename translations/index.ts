@@ -46,7 +46,7 @@ export const translations = {
       infra_diagram: "Diagramme Infra :",
       aws_cloud: "AWS Cloud Infra",
       why_choice: "Pourquoi ce choix ?",
-      why_choice_text: "Nous avons choisi AWS ECS (Elastic Container Service) couplé à Fargate pour une expérience conteneurisée sans serveur. Cela élimine le besoin de gérer directement les instances EC2, nous permettant de nous concentrer purement sur la logique applicative.",
+      why_choice_text: "Nous avons choisi AWS ECS (Elastic Container Service) couplé à Fargate pour une expérience conteneurisée sans se préoccuper du scaling des instances. Cela élimine le besoin de gérer directement les instances EC2, nous permettant de nous concentrer purement sur la logique applicative.",
       scalability: "Scalabilité (10x utilisateurs)",
       scalability_text: "Pour l'échelle, nous ferions une mise à l'échelle verticale de l'instance RDS (vers t3.medium) et activerions l'Auto Scaling sur ECS pour ajouter plus de tâches lors des pics de trafic.",
       security: "Sécurité",
