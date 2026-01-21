@@ -1,8 +1,9 @@
 "use client"
-import { useLanguage } from "../contexts/LanguageContext"
-import { translations } from "../translations"
-import projetsdata from "../datas/projetsdatanew.json"
-import { TiltShineCard } from "./projectCardTilt"
+import { useLanguage } from "../../contexts/LanguageContext"
+import Image from "next/image"
+import { translations } from "../../translations"
+import projetsdata from "../../datas/projetsdatanew.json"
+import { TiltShineCard } from "../organisms/projectCardTilt"
 import { FaReact, FaSass, FaNodeJs, FaDatabase } from "react-icons/fa"
 import {
   SiNextdotjs,
@@ -114,9 +115,11 @@ function Projets({ deviceWidth }: { deviceWidth: number }) {
                     <h3 className="text-2xl flex justify-center pb-2 xl:py-2 xl:pt-0 font-light tracking-tight text-black dark:text-gray-200">
                       {projet.projectName}
                     </h3>
-                    <img
+                    <Image
                       src={projet.projectImg}
                       alt={projet.projectName}
+                      width={800}
+                      height={600}
                       className="w-full h-auto xl:min-h-full rounded-lg shadow-lg object-cover opacity-80 group-hover:scale-[102%] transition-all duration-500"
                     />
                   </TiltShineCard>

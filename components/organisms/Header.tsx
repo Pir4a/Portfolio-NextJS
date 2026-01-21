@@ -21,7 +21,7 @@ export default function Header() {
 
   useEffect(() => {
     setTheme(theme === "dark" ? "dark" : "light")
-  }, [mounted])
+  }, [mounted, theme, setTheme])
 
   const menuItems = [
     { href: "/", label: "Home" },

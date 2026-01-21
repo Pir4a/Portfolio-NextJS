@@ -6,6 +6,7 @@ import { FaReact, FaNodeJs, FaDatabase } from "react-icons/fa"
 import { SiNextdotjs, SiTailwindcss, SiTypescript } from "react-icons/si"
 import { IconType } from "react-icons"
 import { TiltShineCard } from "./projectCardTilt"
+import Image from "next/image"
 
 interface Projet {
     projectName: string
@@ -88,11 +89,15 @@ export default function ProjectsCenter() {
                                     </h3>
 
                                     <div className="relative overflow-hidden rounded-lg group/image">
-                                        <img
+                                        <Image
                                             src={project.projectImg}
                                             alt={project.projectName}
+                                            width={0}
+                                            height={0}
+                                            sizes="100vw"
                                             className={`w-full shadow-lg object-cover opacity-90 transition-all duration-700 ${isFeatured ? "h-[370px] group-hover:scale-[1.02]" : "h-auto group-hover:scale-[1.02]"
                                                 }`}
+                                            style={{ width: '100%', height: isFeatured ? '370px' : 'auto' }}
                                         />
 
                                         {/* Click to Explore Overlay */}

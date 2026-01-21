@@ -1,4 +1,5 @@
 import { useRef, useState } from "react"
+import Image from "next/image"
 import {
   AnimatePresence,
   motion,
@@ -237,9 +238,11 @@ const InfraBrowser = ({ displayedimg, titre, language }: InfraBrowserProps) => {
             {text.infra_diagram}
           </h3>
         </div>
-        <img
+        <Image
           src={displayedimg}
           alt={titre}
+          width={800}
+          height={600}
           className="w-3/4 h-auto ml-[20%] object-cover rounded-lg"
         />
       </div>
@@ -598,9 +601,11 @@ export function TiltShineCard({
                       {/* Left Column - Image and Tech Stack */}
                       <div className="lg:w-1/2 flex flex-col gap-4">
                         <div className="relative ">
-                          <img
+                          <Image
                             src={displayedimg}
                             alt={titre}
+                            width={800}
+                            height={600}
                             className="rounded-lg shadow-lg object-cover w-full opacity-90 "
                           />
                         </div>
