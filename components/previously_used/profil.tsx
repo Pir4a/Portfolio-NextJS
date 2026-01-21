@@ -1,10 +1,10 @@
 "use client"
 
 import { motion, useInView } from "framer-motion"
-import { translations } from "../translations"
-import { useLanguage } from "../contexts/LanguageContext"
+import { translations } from "../../translations"
+import { useLanguage } from "../../contexts/LanguageContext"
 
-import TextCard from "./textCard"
+import TextCard from "../atoms/textCard"
 import { useRef } from "react"
 
 export default function Profil({ deviceWidth }: { deviceWidth: number }) {

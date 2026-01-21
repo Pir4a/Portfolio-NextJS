@@ -1,6 +1,6 @@
 "use client "
 import { AnimatePresence, motion, useInView } from "motion/react"
-import { useLanguage } from "../contexts/LanguageContext"
+import { useLanguage } from "../../contexts/LanguageContext"
 import {
   FaCss3,
   FaFigma,
@@ -16,7 +16,7 @@ import {
 } from "react-icons/fa"
 import { RiNextjsFill, RiTailwindCssLine } from "react-icons/ri"
 import { SiTypescript, SiSqlite } from "react-icons/si"
-import { translations } from "../translations"
+import { translations } from "../../translations"
 import ChaqueCompetences from "./chaqueCompetences"
 import { useRef } from "react"
 
@@ -97,7 +97,7 @@ function Competences({ deviceWidth }: { deviceWidth: number }) {
                   }  gap-8 xl:gap-14 `}
               >
                 <ChaqueCompetences
-                  title={translations[language].skills.languages}
+                  title={language === "fr" ? "Langages" : "Languages"}
                   items={languages}
                   language={language}
                   deviceWidth={deviceWidth}
@@ -107,7 +107,7 @@ function Competences({ deviceWidth }: { deviceWidth: number }) {
                 />
 
                 <ChaqueCompetences
-                  title={translations[language].skills.frameworks}
+                  title="Frameworks"
                   items={frameworks}
                   language={language}
                   deviceWidth={deviceWidth}
@@ -117,7 +117,7 @@ function Competences({ deviceWidth }: { deviceWidth: number }) {
                 />
 
                 <ChaqueCompetences
-                  title={translations[language].skills.tools}
+                  title={language === "fr" ? "Outils" : "Tools"}
                   items={tools}
                   language={language}
                   deviceWidth={deviceWidth}
