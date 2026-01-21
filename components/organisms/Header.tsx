@@ -26,6 +26,7 @@ export default function Header() {
   const menuItems = [
     { href: "/", label: "Home" },
     { href: "/profile", label: translations[language].menu.profile },
+    { href: "/blog", label: translations[language].menu.blog },
     { href: "/#contact", label: translations[language].menu.contact },
   ]
 

@@ -6,6 +6,7 @@ export const translations = {
       projects: "Projets",
       certifications: "Certifications",
       contact: "Contact",
+      blog: "Blog",
     },
     hero: {
       greeting: "Bonjour, je m'appelle Stéphane",
@@ -70,6 +71,7 @@ export const translations = {
       projects: "Projects",
       certifications: "Certifications",
       contact: "Contact",
+      blog: "Blog",
     },
     hero: {
       greeting: "Hello, I'm Stéphane",
