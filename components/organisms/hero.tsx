@@ -22,13 +22,13 @@ export default function Hero() {
   }
 
   return (
-    <div className="flex min-h-[100dvh] px-4 xl:px-[4%] pb-12 gap-6">
+    <div className="flex flex-col xl:flex-row min-h-[100dvh] px-4 xl:px-[4%] pb-12 gap-12 xl:gap-6">
       {/* Left side - Profile with Tech Stack */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="flex flex-col justify-start pt-8 gap-6 flex-1"
+        className="flex flex-col justify-start pt-8 gap-6 flex-1 w-full order-1 xl:order-1"
       >
         {/* Profile Info */}
         <div className="flex flex-col gap-3">
@@ -73,14 +73,16 @@ export default function Hero() {
       </motion.div>
 
       {/* Middle - Projects */}
-      <ProjectsCenter />
+      <div className="flex-[3] w-full order-3 xl:order-2">
+        <ProjectsCenter />
+      </div>
 
       {/* Right side - Certifications */}
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-        className="flex flex-col justify-start pt-8 gap-6 flex-1"
+        className="flex flex-col justify-start pt-8 gap-6 flex-1 w-full order-2 xl:order-3"
       >
         <div>
           <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-1.5">

@@ -44,7 +44,7 @@ export default function ProjectsCenter() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-            className="flex flex-col flex-[3] pt-8 gap-6 overflow-visible px-4"
+            className="flex flex-col flex-1 w-full pt-8 gap-6 overflow-visible"
         >
             <div>
                 <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-1.5">
