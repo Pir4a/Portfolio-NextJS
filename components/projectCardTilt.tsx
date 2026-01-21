@@ -10,7 +10,327 @@ import {
 import { useTheme } from "next-themes"
 import { useLanguage } from "../contexts/LanguageContext"
 import { IconType } from "react-icons"
+import { FaGithub, FaFolder, FaFolderOpen } from "react-icons/fa"
 import { toast } from "sonner"
+import { SiTerraform } from "react-icons/si"
+
+// Mock Infrastructure Files Content
+const INFRA_FILES = {
+  "main.tf": `module "networking" {
+  source = "./modules/networking"
+}
+module "storage" {
+  source = "./modules/storage"
+}
+module "database" {
+  source                = "./modules/database"
+  private_subnet_ids    = module.networking.private_subnet_ids
+  rds_security_group_id = module.networking.rds_security_group_id
+  db_password           = "********"
+}
+module "compute" {
+  source                 = "./modules/compute"
+  vpc_id                 = module.networking.vpc_id
+  public_subnet_ids      = module.networking.public_subnet_ids
+}`,
+  "variables.tf": `variable "app_name" {
+  default = "fissure"
+}
+variable "aws_region" {
+  default = "eu-west-1"
+}`,
+  "providers.tf": `provider "aws" {
+  region = "eu-west-1"
+}`,
+  // Compute Module
+  "modules/compute/main.tf": `resource "aws_lb" "fissure_lb" {
+  name = "fissure-alb"
+  load_balancer_type = "application"
+}
+
+resource "aws_ecs_cluster" "ecs_cluster" {
+  name = "fissure-cluster"
+}
+
+resource "aws_ecs_service" "ecs_service" {
+  name            = "fissure-service"
+  launch_type     = "FARGATE"
+  desired_count   = 1
+}`,
+  "modules/compute/variables.tf": `variable "vpc_id" {}
+variable "public_subnet_ids" {}
+variable "instance_count" {
+  default = 1
+}`,
+  "modules/compute/iam.tf": `resource "aws_iam_role" "ecs_execution" {
+  name = "fissure_ecs_execution_role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{ Action = "sts:AssumeRole", Effect = "Allow", Principal = { Service = "ecs-tasks.amazonaws.com" } }]
+  })
+}`,
+  "modules/compute/outputs.tf": `output "lb_dns_name" {
+  value = aws_lb.fissure_lb.dns_name
+}`,
+  // Networking Module
+  "modules/networking/main.tf": `resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+
+resource "aws_subnet" "public_1" {
+  cidr_block = "10.0.1.0/24"
+}
+
+resource "aws_nat_gateway" "main" {
+  subnet_id = aws_subnet.public_1.id
+}`,
+  "modules/networking/variables.tf": `variable "vpc_cidr" {
+  default = "10.0.0.0/16"
+}`,
+  "modules/networking/outputs.tf": `output "vpc_id" {
+  value = aws_vpc.main.id
+}
+output "public_subnet_ids" {
+  value = [aws_subnet.public_1.id]
+}`,
+  // Database Module
+  "modules/database/main.tf": `resource "aws_db_instance" "rds" {
+  engine         = "postgres"
+  engine_version = "16"
+  instance_class = "db.t3.micro"
+  allocated_storage = 20
+}`,
+  "modules/database/variables.tf": `variable "db_password" {}`,
+  // Storage Module
+  "modules/storage/main.tf": `resource "aws_ecr_repository" "ecr" {
+  name = "fissure-backend"
+  image_tag_mutability = "MUTABLE"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}`
+}
+
+const InfraBrowser = ({ displayedimg, titre, description, descriptionEN, language }: any) => {
+  const [selectedFile, setSelectedFile] = useState("main.tf")
+  const [openFolders, setOpenFolders] = useState<Record<string, boolean>>({
+    "modules": true,
+  })
+
+  const toggleFolder = (path: string) => {
+    setOpenFolders(prev => ({ ...prev, [path]: !prev[path] }))
+  }
+
+  // Tree Structure Definition
+  const tree = [
+    {
+      name: "modules",
+      path: "modules",
+      type: "folder",
+      children: [
+        {
+          name: "compute",
+          path: "modules/compute",
+          type: "folder",
+          children: [
+            { name: "main.tf", path: "modules/compute/main.tf", type: "file" },
+            { name: "variables.tf", path: "modules/compute/variables.tf", type: "file" },
+            { name: "iam.tf", path: "modules/compute/iam.tf", type: "file" },
+            { name: "outputs.tf", path: "modules/compute/outputs.tf", type: "file" },
+          ]
+        },
+        {
+          name: "networking",
+          path: "modules/networking",
+          type: "folder",
+          children: [
+            { name: "main.tf", path: "modules/networking/main.tf", type: "file" },
+            { name: "variables.tf", path: "modules/networking/variables.tf", type: "file" },
+            { name: "outputs.tf", path: "modules/networking/outputs.tf", type: "file" },
+          ]
+        },
+        {
+          name: "database",
+          path: "modules/database",
+          type: "folder",
+          children: [
+            { name: "main.tf", path: "modules/database/main.tf", type: "file" },
+            { name: "variables.tf", path: "modules/database/variables.tf", type: "file" },
+          ]
+        },
+        {
+          name: "storage",
+          path: "modules/storage",
+          type: "folder",
+          children: [
+            { name: "main.tf", path: "modules/storage/main.tf", type: "file" },
+          ]
+        }
+      ]
+    },
+    { name: "main.tf", path: "main.tf", type: "file" },
+    { name: "variables.tf", path: "variables.tf", type: "file" },
+    { name: "providers.tf", path: "providers.tf", type: "file" },
+  ]
+
+  const renderTree = (items: any[], depth = 0) => {
+    return items.map((item) => {
+      const isOpen = openFolders[item.path]
+      const isSelected = selectedFile === item.path
+      const paddingLeft = `${depth * 12 + 12}px`
+
+      if (item.type === "folder") {
+        return (
+          <div key={item.path}>
+            <div
+              onClick={() => toggleFolder(item.path)}
+              className="flex items-center gap-1.5 py-1 text-zinc-300 hover:bg-[#2a2d2e] cursor-pointer"
+              style={{ paddingLeft }}
+            >
+              {isOpen ? <FaFolderOpen className="text-yellow-500" /> : <FaFolder className="text-yellow-500" />}
+              <span>{item.name}</span>
+            </div>
+            {isOpen && item.children && (
+              <div>{renderTree(item.children, depth + 1)}</div>
+            )}
+          </div>
+        )
+      } else {
+        return (
+          <div
+            key={item.path}
+            onClick={() => setSelectedFile(item.path)}
+            className={`flex items-center gap-1.5 py-1 cursor-pointer transition-colors ${isSelected ? "bg-[#37373d] text-white" : "text-zinc-400 hover:bg-[#2a2d2e] hover:text-white"}`}
+            style={{ paddingLeft }}
+          >
+            <SiTerraform className="text-purple-400 opacity-80" />
+            <span>{item.name}</span>
+          </div>
+        )
+      }
+    })
+  }
+
+  return (
+    <div className="flex flex-col gap-8">
+      {/* Full Width Image with Overlay */}
+      <div className="relative w-full rounded-lg overflow-hidden shadow-2xl">
+        <div className="absolute top-4 left-4 z-20 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-md border border-white/10">
+          <h3 className="text-lg font-bold text-white tracking-wide">
+            Diagramme Infra :
+          </h3>
+        </div>
+        <img
+          src={displayedimg}
+          alt={titre}
+          className="w-3/4 h-auto ml-[20%] object-cover rounded-lg"
+        />
+      </div>
+
+      <div className="space-y-10 px-2 lg:px-4">
+        {/* AWS Cloud Infra Section */}
+        <div className="space-y-4">
+          <h3 className="text-2xl font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2">
+            AWS Cloud Infra
+          </h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[450px]">
+            {/* Left Column: Explanations */}
+            <div className="bg-white/5 dark:bg-zinc-900/50 p-6 rounded-xl border border-orange-200/20 dark:border-orange-900/30 space-y-4 text-black dark:text-gray-300 overflow-y-auto custom-scrollbar">
+              <p><strong className="text-orange-700 dark:text-orange-300">Why this specific choice?</strong><br />
+                We chose AWS ECS (Elastic Container Service) coupled with Fargate for a serverless container experience. This eliminates the need to manage EC2 instances directly, allowing us to focus purely on the application logic.</p>
+
+              <p><strong className="text-orange-700 dark:text-orange-300">Scalability (10x users)</strong><br />
+                For scale, we would vertically scale the RDS instance (to t3.medium) and enable Auto Scaling on ECS to add more tasks during traffic spikes.</p>
+
+              <p><strong className="text-orange-700 dark:text-orange-300">Security</strong><br />
+                Strict Security Groups ensure isolation. The App talks to DB only on port 5432. The Load Balancer opens port 443 to the world.</p>
+            </div>
+
+            {/* Right Column: Interactive Infra Browser */}
+            <div className="bg-[#1e1e1e] rounded-xl border border-zinc-700 overflow-hidden flex shadow-2xl">
+              {/* Sidebar: File Tree */}
+              <div className="w-[35%] border-r border-zinc-700 bg-[#252526] flex flex-col font-mono text-xs">
+                <div className="p-3 text-zinc-400 uppercase tracking-wider text-[10px] font-bold">Explorer</div>
+                <div className="flex-1 overflow-y-auto py-2">
+                  {renderTree(tree)}
+                </div>
+              </div>
+
+              {/* Code View */}
+              <div className="flex-1 bg-[#1e1e1e] flex flex-col font-mono text-xs min-w-0">
+                {/* MacOS Header */}
+                <div className="h-9 flex items-center px-4 gap-2 bg-[#2d2d2d] border-b border-black/30">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                  <div className="ml-4 text-zinc-400 text-[11px]">{selectedFile}</div>
+                </div>
+                {/* Code Editor */}
+                <div className="flex-1 overflow-x-auto overflow-y-auto p-4 custom-scrollbar">
+                  <pre className="text-zinc-300 leading-relaxed font-mono whitespace-pre inline-block min-w-full">
+                    <code dangerouslySetInnerHTML={{
+                      __html: (INFRA_FILES[selectedFile as keyof typeof INFRA_FILES] || "").replace(
+                        /("[^"]*")|\b(resource|module|provider|data)\b|\b(variable|output|source)\b|([={}[\]])/g,
+                        (match, str, purpleKw, blueKw, operator) => {
+                          if (str) return `<span class="text-green-400">${str}</span>`
+                          if (purpleKw) return `<span class="text-purple-400">${purpleKw}</span>`
+                          if (blueKw) return `<span class="text-blue-400">${blueKw}</span>`
+                          if (operator) {
+                            if (operator === "=") return `<span class="text-zinc-500">=</span>`
+                            return `<span class="text-yellow-400">${operator}</span>`
+                          }
+                          return match
+                        }
+                      )
+                    }} />
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* IaC Section */}
+        <div className="space-y-4">
+          <h3 className="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2">
+            Infrastructure as Code (IaC)
+          </h3>
+          <div className="bg-white/5 dark:bg-zinc-900/50 p-6 rounded-xl border border-purple-200/20 dark:border-purple-900/30 space-y-4 text-black dark:text-gray-300">
+            <p>
+              We use <strong className="text-purple-700 dark:text-purple-300">Terraform</strong> to define the entire infrastructure. This approach allows us to version control our infrastructure (GitOps), ensuring reproducibility and eliminating "configuration drift". We can spin up a new environment (staging/prod) in minutes just by applying the Terraform plan.
+            </p>
+          </div>
+        </div>
+
+        {/* Split View: Video + Architecture */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left: Video Placeholder */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">App Demo</h3>
+            <div className="aspect-video w-full bg-zinc-200 dark:bg-zinc-900 rounded-xl border border-zinc-300 dark:border-zinc-800 flex flex-col items-center justify-center text-zinc-500 dark:text-zinc-600 gap-2">
+              <span className="font-medium text-sm">Full app walkthrough video coming soon</span>
+            </div>
+          </div>
+
+          {/* Right: Architecture Choices */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400">Architecture Choices</h3>
+            <div className="space-y-4 text-black dark:text-gray-300 text-sm leading-relaxed">
+              <div>
+                <strong className="text-blue-700 dark:text-blue-300 block mb-1">Back-End (Clean Architecture)</strong>
+                <p>The backend is built with ExpressJS and TypeScript following <span className="italic">Clean Architecture</span> principles.</p>
+              </div>
+              <div>
+                <strong className="text-sky-700 dark:text-sky-300 block mb-1">Front-End (React Native)</strong>
+                <p>We chose React Native with Expo for a "Write Once, Run Anywhere" strategy.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 interface TiltShineCardProps {
   technosImg: string[]
@@ -250,82 +570,13 @@ export function TiltShineCard({
 
                   {/* Fissure Special Layout */}
                   {isFissure ? (
-                    <div className="flex flex-col gap-8">
-                      {/* Full Width Image with Overlay */}
-                      <div className="relative w-full rounded-lg overflow-hidden shadow-2xl">
-                        <div className="absolute top-4 left-4 z-20 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-md border border-white/10">
-                          <h3 className="text-lg font-bold text-white tracking-wide">
-                            Diagramme Infra :
-                          </h3>
-                        </div>
-                        <img
-                          src={displayedimg}
-                          alt={titre}
-                          className="w-3/4 h-auto ml-[20%] object-cover rounded-lg"
-                        />
-                      </div>
-
-                      <div className="space-y-10 px-2 lg:px-4">
-                        {/* AWS Cloud Infra Section */}
-                        <div className="space-y-4">
-                          <h3 className="text-2xl font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2">
-                            AWS Cloud Infra
-                          </h3>
-                          <div className="bg-white/5 dark:bg-zinc-900/50 p-6 rounded-xl border border-orange-200/20 dark:border-orange-900/30 space-y-4 text-black dark:text-gray-300">
-                            <p><strong className="text-orange-700 dark:text-orange-300">Why this specific choice?</strong><br />
-                              We chose AWS ECS (Elastic Container Service) coupled with Fargate for a serverless container experience. This eliminates the need to manage EC2 instances directly, allowing us to focus purely on the application logic. The architecture is deployed across 2 Availability Zones for high availability.</p>
-
-                            <p><strong className="text-orange-700 dark:text-orange-300">What if 10x more users?</strong><br />
-                              The current setup uses RDS (b.t3.micro) which is cost-effective mainly for development. For a 10x scale, we would vertically scale the RDS instance (to t3.medium or large) and implement Read Replicas to offload read traffic. ECS Fargate can auto-scale the number of tasks based on CPU/Memory utilization to handle traffic spikes instantly.</p>
-
-                            <p><strong className="text-orange-700 dark:text-orange-300">Security?</strong><br />
-                              Security is enforced via restricted Security Groups (firewalls) allowing traffic only from the ALB to the App and from the App to the DB. IAM Roles ensure the principle of least privilege—application containers have only the permissions they strictly need (e.g., pulling images from ECR, writing logs to CloudWatch).</p>
-                          </div>
-                        </div>
-
-                        {/* IaC Section */}
-                        <div className="space-y-4">
-                          <h3 className="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2">
-                            Infrastructure as Code (IaC)
-                          </h3>
-                          <div className="bg-white/5 dark:bg-zinc-900/50 p-6 rounded-xl border border-purple-200/20 dark:border-purple-900/30 space-y-4 text-black dark:text-gray-300">
-                            <p>
-                              We use <strong className="text-purple-700 dark:text-purple-300">Terraform</strong> to define the entire infrastructure. This approach allows us to version control our infrastructure (GitOps), ensuring reproducibility and eliminating "configuration drift". We can spin up a new environment (staging/prod) in minutes just by applying the Terraform plan. It also provides a clear audit trail of all infrastructure changes.
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Split View: Video + Architecture */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                          {/* Left: Video Placeholder */}
-                          <div className="space-y-4">
-                            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">App Demo</h3>
-                            <div className="aspect-video w-full bg-zinc-200 dark:bg-zinc-900 rounded-xl border border-zinc-300 dark:border-zinc-800 flex flex-col items-center justify-center text-zinc-500 dark:text-zinc-600 gap-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.328l5.603 3.113Z" />
-                              </svg>
-                              <span className="font-medium text-sm">Full app walkthrough video coming soon</span>
-                            </div>
-                          </div>
-
-                          {/* Right: Architecture Choices */}
-                          <div className="space-y-4">
-                            <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400">Architecture Choices</h3>
-                            <div className="space-y-4 text-black dark:text-gray-300 text-sm leading-relaxed">
-                              <div>
-                                <strong className="text-blue-700 dark:text-blue-300 block mb-1">Back-End (Clean Architecture)</strong>
-                                <p>The backend is built with ExpressJS and TypeScript following <span className="italic">Clean Architecture</span> principles. This separates the Domain (business rules) from the Infrastructure (database, web server). It makes the code highly testable and independent of frameworks. If we change the DB from SQLite to PostgreSQL, the business logic remains untouched.</p>
-                              </div>
-                              <div>
-                                <strong className="text-sky-700 dark:text-sky-300 block mb-1">Front-End (React Native)</strong>
-                                <p>We chose React Native with Expo for a "Write Once, Run Anywhere" strategy. The UI is component-driven, ensuring consistency. We use local state for immediate feedback and sync with the backend asynchronously for a smooth user experience.</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <InfraBrowser
+                      displayedimg={displayedimg}
+                      titre={titre}
+                      description={description}
+                      descriptionEN={descriptionEN}
+                      language={language}
+                    />
                   ) : (
                     // Standard Layout for other cards
                     <div className="pt-2 flex flex-col lg:flex-row gap-8">
