@@ -8,9 +8,9 @@ import {
   useTransform,
 } from "framer-motion"
 import { useTheme } from "next-themes"
-import { useLanguage } from "../contexts/LanguageContext"
+import { useLanguage } from "../../contexts/LanguageContext"
 import { IconType } from "react-icons"
-import { FaGithub, FaFolder, FaFolderOpen } from "react-icons/fa"
+import { FaFolder, FaFolderOpen } from "react-icons/fa"
 import { toast } from "sonner"
 import { SiTerraform } from "react-icons/si"
 
@@ -111,9 +111,15 @@ output "public_subnet_ids" {
 }`
 }
 
-import { translations } from "../translations"
+import { translations } from "../../translations"
 
-const InfraBrowser = ({ displayedimg, titre, description, descriptionEN, language }: any) => {
+interface InfraBrowserProps {
+  displayedimg: string
+  titre: string
+  language: string
+}
+
+const InfraBrowser = ({ displayedimg, titre, language }: InfraBrowserProps) => {
   const [selectedFile, setSelectedFile] = useState("main.tf")
   const [openFolders, setOpenFolders] = useState<Record<string, boolean>>({
     "modules": true,
@@ -125,8 +131,15 @@ const InfraBrowser = ({ displayedimg, titre, description, descriptionEN, languag
     setOpenFolders(prev => ({ ...prev, [path]: !prev[path] }))
   }
 
+  interface TreeItem {
+    name: string
+    path: string
+    type: "folder" | "file"
+    children?: TreeItem[]
+  }
+
   // Tree Structure Definition
-  const tree = [
+  const tree: TreeItem[] = [
     {
       name: "modules",
       path: "modules",
@@ -177,7 +190,7 @@ const InfraBrowser = ({ displayedimg, titre, description, descriptionEN, languag
     { name: "providers.tf", path: "providers.tf", type: "file" },
   ]
 
-  const renderTree = (items: any[], depth = 0) => {
+  const renderTree = (items: TreeItem[], depth = 0) => {
     return items.map((item) => {
       const isOpen = openFolders[item.path]
       const isSelected = selectedFile === item.path
@@ -577,8 +590,6 @@ export function TiltShineCard({
                     <InfraBrowser
                       displayedimg={displayedimg}
                       titre={titre}
-                      description={description}
-                      descriptionEN={descriptionEN}
                       language={language}
                     />
                   ) : (

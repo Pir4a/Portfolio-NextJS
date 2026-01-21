@@ -1,13 +1,13 @@
 "use client"
 
-import ThemeToggle from "./theme-toggle"
-import Logo from "./logo"
+import ThemeToggle from "../atoms/theme-toggle"
+import Logo from "../atoms/logo"
 import { MenuIcon, X } from "lucide-react"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
-import { useLanguage } from "../contexts/LanguageContext"
-import { translations } from "../translations"
-import LangageButton from "./langagebutton"
+import { useLanguage } from "../../contexts/LanguageContext"
+import { translations } from "../../translations"
+import LangageButton from "../atoms/langagebutton"
 import { useTheme } from "next-themes"
 
 export default function Header() {

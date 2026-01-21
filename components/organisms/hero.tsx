@@ -1,10 +1,9 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
-import { useLanguage } from "../contexts/LanguageContext"
-import { translations } from "../translations"
+import { motion } from "framer-motion"
+import { useLanguage } from "../../contexts/LanguageContext"
 import { BsGithub, BsLinkedin } from "react-icons/bs"
-import HeroButton from "./herobutton"
+import HeroButton from "../atoms/herobutton"
 import SkillsSidebar from "./SkillsSidebar"
 import ProjectsCenter from "./ProjectsCenter"
 import CertificationsList from "./CertificationsList"

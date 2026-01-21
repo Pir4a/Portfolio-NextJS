@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { M_PLUS_Rounded_1c } from "next/font/google"
 import "./globals.css"
-import Providers from "../../components/providers"
+import Providers from "../../components/atoms/providers"
 import { LanguageProvider } from "../../contexts/LanguageContext"
 
 const mPlusRounded1c = M_PLUS_Rounded_1c({

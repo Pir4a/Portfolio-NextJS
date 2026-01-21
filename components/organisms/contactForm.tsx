@@ -2,12 +2,12 @@
 
 import { useRef, useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { contactSchema } from "../src/lib/schemas"
+import { contactSchema } from "@/lib/schemas"
 import { toast } from "sonner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
-import { useLanguage } from "../contexts/LanguageContext"
-import { translations } from "../translations"
+import { useLanguage } from "../../contexts/LanguageContext"
+import { translations } from "../../translations"
 import { z } from "zod"
 import { sendEmail } from "@/lib/actions"
 
@@ -158,11 +158,10 @@ export default function ContactForm() {
                 type="submit"
                 disabled={isSubmitting}
                 className={`w-full py-3 px-6 rounded-lg text-white font-medium transition-all duration-300 relative z-20
-              ${
-                isSubmitting
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-pink-400/80 hover:bg-pink-500/80 cursor-pointer"
-              }`}
+              ${isSubmitting
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-pink-400/80 hover:bg-pink-500/80 cursor-pointer"
+                  }`}
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2">

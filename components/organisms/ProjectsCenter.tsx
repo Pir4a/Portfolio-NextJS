@@ -1,8 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useLanguage } from "../contexts/LanguageContext"
-import projetsdata from "../datas/projetsdatanew.json"
+import projetsdata from "../../datas/projetsdatanew.json"
 import { FaReact, FaNodeJs, FaDatabase } from "react-icons/fa"
 import { SiNextdotjs, SiTailwindcss, SiTypescript } from "react-icons/si"
 import { IconType } from "react-icons"
@@ -29,7 +28,7 @@ const iconMap: { [key: string]: IconType } = {
 }
 
 export default function ProjectsCenter() {
-    const { language } = useLanguage()
+    // const { language } = useLanguage() // unused
     const projects = projetsdata as Projet[]
 
     // Sort projects to put Fissure first

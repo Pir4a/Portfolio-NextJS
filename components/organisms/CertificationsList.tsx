@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useLanguage } from "../contexts/LanguageContext"
+import { useLanguage } from "../../contexts/LanguageContext"
 import { FaAws } from "react-icons/fa"
 import { SiTerraform, SiKubernetes } from "react-icons/si"
 

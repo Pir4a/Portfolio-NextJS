@@ -1,4 +1,4 @@
-import { useLanguage } from "../contexts/LanguageContext"
+import { useLanguage } from "../../contexts/LanguageContext"
 import { motion } from "motion/react"
 
 export default function LangageButton() {
@@ -8,11 +8,10 @@ export default function LangageButton() {
     <>
       {" "}
       <span
-        className={`text-sm font-medium transition-colors ${
-          language === "fr"
+        className={`text-sm font-medium transition-colors ${language === "fr"
             ? "text-gray-900 dark:text-white"
             : "text-gray-500 dark:text-gray-400"
-        }`}
+          }`}
       >
         FR
       </span>
@@ -34,11 +33,10 @@ export default function LangageButton() {
         />
       </button>
       <span
-        className={`text-sm font-medium transition-colors ${
-          language === "en"
+        className={`text-sm font-medium transition-colors ${language === "en"
             ? "text-gray-900 dark:text-white"
             : "text-gray-500 dark:text-gray-400"
-        }`}
+          }`}
       >
         EN
       </span>
