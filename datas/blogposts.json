@@ -31,7 +31,7 @@
             "sections": [
                 {
                     "title": "Contexte et Objectifs",
-                    "content": "<p>Fissure est une application mobile FullStack qui permet de tracker ses calories et ses entrainements, le tout avec une implémentation de Gemini pour rendre les données plus facile a traquer.</br> Cela peut sembler très classique, mais pratiquant du sport personnelement et faisant attention a ma diète, j'ai fait un constat: il n'y a pas d'application correcte d'un point de vue design et prix qui permet de faire les deux a la fois, cela force souvent deux applications voire deux abonnements pour un seul objectif. Liste des contraintes :</p><ul class='list-disc list-inside space-y-2 my-4'><li>Scalabilité horizontale</li><li>Coûts optimisés</li><li>Sécurité renforcée</li></ul>"
+                    "content": "<p>Fissure est une application mobile FullStack qui permet de tracker ses calories et ses entrainements, le tout avec une implémentation de Gemini pour rendre les données plus facile a traquer.</br> Cela peut sembler très classique, mais pratiquant du sport personnelement et faisant attention a ma diète, j'ai fait un constat: il n'y a pas d'application correcte d'un point de vue design et prix qui permet de faire les deux a la fois, cela force souvent deux applications voire deux abonnements pour un seul objectif."
                 },
                 {
                     "title": "Choix Technologiques",
