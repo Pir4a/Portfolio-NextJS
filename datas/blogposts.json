@@ -68,6 +68,13 @@
                     "en": {
                         "title": "Technology Choices",
                         "content": "<p>After studying the different options, I opted for a clean architecture in ExpressJS, easy and quick to set up with good scalability.</p><p>For the app's front-end, to be able to deploy on iOS and Android with the same code and a technology I was already efficient in, I chose React Native with Expo.</p><p>For the database, PostgreSQL stood out as the obvious choice for its robustness, ACID compliance, and compatibility with the application's relational needs.</p>"
+                    },
+                    "diagram": {
+                        "type": "architecture",
+                        "description": {
+                            "fr": "Structure Clean Architecture",
+                            "en": "Clean Architecture Structure"
+                        }
                     }
                 },
                 {
@@ -103,8 +110,8 @@
                         "type": "image",
                         "imagePath": "/static/fissure.png",
                         "description": {
-                            "fr": "Diagramme d'architecture cloud",
-                            "en": "Cloud architecture diagram"
+                            "fr": "L'infrastructure cloud:",
+                            "en": "Cloud infrastructure:"
                         }
                     }
                 },

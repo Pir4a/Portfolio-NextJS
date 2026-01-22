@@ -35,6 +35,355 @@ export interface JourneyCardRef {
     openModal: () => void
 }
 
+// Clean Architecture Files Content
+const ARCHITECTURE_FILES = {
+  "src/domain/entities/user.entity.ts": `export class User {
+  constructor(
+    public readonly id: string,
+    public readonly email: string,
+    public readonly name: string,
+    public readonly createdAt: Date,
+    public readonly updatedAt: Date
+  ) {}
+
+  static create(email: string, name: string): User {
+    return new User(
+      crypto.randomUUID(),
+      email,
+      name,
+      new Date(),
+      new Date()
+    )
+  }
+}`,
+  "src/domain/entities/workout.entity.ts": `export interface Exercise {
+  name: string
+  sets: number
+  reps: number
+  weight?: number
+}
+
+export class Workout {
+  constructor(
+    public readonly id: string,
+    public readonly userId: string,
+    public readonly name: string,
+    public readonly exercises: Exercise[],
+    public readonly date: Date
+  ) {}
+
+  static create(userId: string, name: string, exercises: Exercise[]): Workout {
+    return new Workout(
+      crypto.randomUUID(),
+      userId,
+      name,
+      exercises,
+      new Date()
+    )
+  }
+}`,
+  "src/domain/repositories/user.repository.interface.ts": `import { User } from '../entities/user.entity'
+
+export interface IUserRepository {
+  save(user: User): Promise<User>
+  findById(id: string): Promise<User | null>
+  findByEmail(email: string): Promise<User | null>
+}`,
+  "src/domain/repositories/workout.repository.interface.ts": `import { Workout } from '../entities/workout.entity'
+
+export interface IWorkoutRepository {
+  save(workout: Workout): Promise<Workout>
+  findByUserId(userId: string): Promise<Workout[]>
+}`,
+  "src/application/use-cases/create-user.use-case.ts": `import { User } from '../../domain/entities/user.entity'
+import { IUserRepository } from '../../domain/repositories/user.repository.interface'
+
+export class CreateUserUseCase {
+  constructor(private userRepository: IUserRepository) {}
+
+  async execute(email: string, name: string): Promise<User> {
+    // Business logic validation
+    if (!email || !name) {
+      throw new Error('Email and name are required')
+    }
+
+    const existingUser = await this.userRepository.findByEmail(email)
+    if (existingUser) {
+      throw new Error('User with this email already exists')
+    }
+
+    const user = User.create(email, name)
+    return await this.userRepository.save(user)
+  }
+}`,
+  "src/application/use-cases/get-user.use-case.ts": `import { User } from '../../domain/entities/user.entity'
+import { IUserRepository } from '../../domain/repositories/user.repository.interface'
+
+export class GetUserUseCase {
+  constructor(private userRepository: IUserRepository) {}
+
+  async execute(id: string): Promise<User | null> {
+    return await this.userRepository.findById(id)
+  }
+}`,
+  "src/application/use-cases/create-workout.use-case.ts": `import { Workout, Exercise } from '../../domain/entities/workout.entity'
+import { IWorkoutRepository } from '../../domain/repositories/workout.repository.interface'
+import { IUserRepository } from '../../domain/repositories/user.repository.interface'
+
+export class CreateWorkoutUseCase {
+  constructor(
+    private workoutRepository: IWorkoutRepository,
+    private userRepository: IUserRepository
+  ) {}
+
+  async execute(userId: string, name: string, exercises: Exercise[]): Promise<Workout> {
+    // Business logic: verify user exists
+    const user = await this.userRepository.findById(userId)
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    const workout = Workout.create(userId, name, exercises)
+    return await this.workoutRepository.save(workout)
+  }
+}`,
+  "src/infrastructure/database/drizzle.config.ts": `import { drizzle } from 'drizzle-orm/node-postgres'
+import { Pool } from 'pg'
+import * as schema from './schema'
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+})
+
+export const db = drizzle(pool, { schema })
+
+export async function connectDatabase() {
+  await pool.connect()
+  console.log('Database connected')
+}
+
+export async function disconnectDatabase() {
+  await pool.end()
+  console.log('Database disconnected')
+}`,
+  "src/infrastructure/database/schema.ts": `import { pgTable, uuid, varchar, timestamp, jsonb } from 'drizzle-orm/pg-core'
+
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  name: varchar('name', { length: 255 }).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
+export const workouts = pgTable('workouts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  exercises: jsonb('exercises').notNull(),
+  date: timestamp('date').defaultNow().notNull(),
+})`,
+  "src/infrastructure/repositories/user.repository.ts": `import { User } from '../../domain/entities/user.entity'
+import { IUserRepository } from '../../domain/repositories/user.repository.interface'
+import { db } from '../database/drizzle.config'
+import { users } from '../database/schema'
+import { eq } from 'drizzle-orm'
+
+export class UserRepository implements IUserRepository {
+  async save(user: User): Promise<User> {
+    const [saved] = await db.insert(users).values({
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    }).returning()
+    
+    return new User(
+      saved.id,
+      saved.email,
+      saved.name,
+      saved.createdAt,
+      saved.updatedAt
+    )
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const [user] = await db.select()
+      .from(users)
+      .where(eq(users.id, id))
+      .limit(1)
+    
+    if (!user) return null
+    
+    return new User(
+      user.id,
+      user.email,
+      user.name,
+      user.createdAt,
+      user.updatedAt
+    )
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const [user] = await db.select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1)
+    
+    if (!user) return null
+    
+    return new User(
+      user.id,
+      user.email,
+      user.name,
+      user.createdAt,
+      user.updatedAt
+    )
+  }
+}`,
+  "src/infrastructure/repositories/workout.repository.ts": `import { Workout } from '../../domain/entities/workout.entity'
+import { IWorkoutRepository } from '../../domain/repositories/workout.repository.interface'
+import { db } from '../database/drizzle.config'
+import { workouts } from '../database/schema'
+import { eq } from 'drizzle-orm'
+
+export class WorkoutRepository implements IWorkoutRepository {
+  async save(workout: Workout): Promise<Workout> {
+    const [saved] = await db.insert(workouts).values({
+      id: workout.id,
+      userId: workout.userId,
+      name: workout.name,
+      exercises: workout.exercises,
+      date: workout.date,
+    }).returning()
+    
+    return new Workout(
+      saved.id,
+      saved.userId,
+      saved.name,
+      saved.exercises as any,
+      saved.date
+    )
+  }
+
+  async findByUserId(userId: string): Promise<Workout[]> {
+    const results = await db.select()
+      .from(workouts)
+      .where(eq(workouts.userId, userId))
+    
+    return results.map(w => new Workout(
+      w.id,
+      w.userId,
+      w.name,
+      w.exercises as any,
+      w.date
+    ))
+  }
+}`,
+  "src/infrastructure/http/express.config.ts": `import express from 'express'
+import cors from 'cors'
+import helmet from 'helmet'
+
+export function createExpressApp() {
+  const app = express()
+  
+  app.use(helmet())
+  app.use(cors())
+  app.use(express.json())
+  
+  return app
+}`,
+  "src/presentation/controllers/user.controller.ts": `import { Request, Response } from 'express'
+import { CreateUserUseCase } from '../../application/use-cases/create-user.use-case'
+import { GetUserUseCase } from '../../application/use-cases/get-user.use-case'
+
+export class UserController {
+  constructor(
+    private createUserUseCase: CreateUserUseCase,
+    private getUserUseCase: GetUserUseCase
+  ) {}
+
+  async create(req: Request, res: Response) {
+    try {
+      const { email, name } = req.body
+      const user = await this.createUserUseCase.execute(email, name)
+      res.status(201).json(user)
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
+
+  async getById(req: Request, res: Response) {
+    try {
+      const { id } = req.params
+      const user = await this.getUserUseCase.execute(id)
+      
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' })
+      }
+      
+      res.json(user)
+    } catch (error: any) {
+      res.status(500).json({ error: error.message })
+    }
+  }
+}`,
+  "src/presentation/routes/user.routes.ts": `import { Router } from 'express'
+import { UserController } from '../controllers/user.controller'
+
+export function createUserRoutes(userController: UserController) {
+  const router = Router()
+  
+  router.post('/', userController.create.bind(userController))
+  router.get('/:id', userController.getById.bind(userController))
+  
+  return router
+}`,
+  "src/main.ts": `import { createExpressApp } from './infrastructure/http/express.config'
+import { connectDatabase, disconnectDatabase } from './infrastructure/database/drizzle.config'
+import { UserRepository } from './infrastructure/repositories/user.repository'
+import { WorkoutRepository } from './infrastructure/repositories/workout.repository'
+import { CreateUserUseCase } from './application/use-cases/create-user.use-case'
+import { GetUserUseCase } from './application/use-cases/get-user.use-case'
+import { CreateWorkoutUseCase } from './application/use-cases/create-workout.use-case'
+import { UserController } from './presentation/controllers/user.controller'
+import { createUserRoutes } from './presentation/routes/user.routes'
+
+async function bootstrap() {
+  const app = createExpressApp()
+  
+  // Connect to database
+  await connectDatabase()
+  
+  // Infrastructure layer: Repositories (implementations)
+  const userRepository = new UserRepository()
+  const workoutRepository = new WorkoutRepository()
+  
+  // Application layer: Use Cases
+  const createUserUseCase = new CreateUserUseCase(userRepository)
+  const getUserUseCase = new GetUserUseCase(userRepository)
+  const createWorkoutUseCase = new CreateWorkoutUseCase(workoutRepository, userRepository)
+  
+  // Presentation layer: Controllers
+  const userController = new UserController(createUserUseCase, getUserUseCase)
+  
+  // Routes
+  app.use('/api/users', createUserRoutes(userController))
+  
+  // Graceful shutdown
+  process.on('SIGINT', async () => {
+    await disconnectDatabase()
+    process.exit(0)
+  })
+  
+  app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000')
+  })
+}
+
+bootstrap()
+`
+}
+
 // Mock Infrastructure Files Content
 const INFRA_FILES = {
   "main.tf": `module "networking" {
@@ -148,7 +497,30 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
     const [selectedFile, setSelectedFile] = useState("main.tf")
     const [openFolders, setOpenFolders] = useState<Record<string, boolean>>({
         "modules": true,
+        "src": true,
+        "src/domain": true,
+        "src/domain/entities": true,
+        "src/domain/repositories": true,
+        "src/application": true,
+        "src/application/use-cases": true,
+        "src/infrastructure": true,
+        "src/infrastructure/database": true,
+        "src/infrastructure/repositories": true,
+        "src/presentation": true,
+        "src/presentation/controllers": true,
     })
+
+    // Reset selected file when active section changes and has a diagram
+    useEffect(() => {
+        if (isModalOpen && sections[activeSection]?.diagram) {
+            const diagram = sections[activeSection].diagram!
+            if (diagram.type === "architecture") {
+                setSelectedFile("src/main.ts")
+            } else if (diagram.type === "terraform" || diagram.type === "iac") {
+                setSelectedFile("main.tf")
+            }
+        }
+    }, [activeSection, isModalOpen, sections])
 
     // Expose openModal method via ref
     useImperativeHandle(ref, () => ({
@@ -374,8 +746,8 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
         children?: TreeItem[]
     }
 
-    // Tree Structure Definition
-    const tree: TreeItem[] = [
+    // Terraform Tree Structure Definition
+    const terraformTree: TreeItem[] = [
         {
             name: "modules",
             path: "modules",
@@ -426,6 +798,116 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
         { name: "providers.tf", path: "providers.tf", type: "file" },
     ]
 
+    // Clean Architecture Tree Structure Definition
+    const architectureTree: TreeItem[] = [
+        {
+            name: "src",
+            path: "src",
+            type: "folder",
+            children: [
+                {
+                    name: "domain",
+                    path: "src/domain",
+                    type: "folder",
+                    children: [
+                        {
+                            name: "entities",
+                            path: "src/domain/entities",
+                            type: "folder",
+                            children: [
+                                { name: "user.entity.ts", path: "src/domain/entities/user.entity.ts", type: "file" },
+                                { name: "workout.entity.ts", path: "src/domain/entities/workout.entity.ts", type: "file" },
+                            ]
+                        },
+                        {
+                            name: "repositories",
+                            path: "src/domain/repositories",
+                            type: "folder",
+                            children: [
+                                { name: "user.repository.interface.ts", path: "src/domain/repositories/user.repository.interface.ts", type: "file" },
+                                { name: "workout.repository.interface.ts", path: "src/domain/repositories/workout.repository.interface.ts", type: "file" },
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "application",
+                    path: "src/application",
+                    type: "folder",
+                    children: [
+                        {
+                            name: "use-cases",
+                            path: "src/application/use-cases",
+                            type: "folder",
+                            children: [
+                                { name: "create-user.use-case.ts", path: "src/application/use-cases/create-user.use-case.ts", type: "file" },
+                                { name: "get-user.use-case.ts", path: "src/application/use-cases/get-user.use-case.ts", type: "file" },
+                                { name: "create-workout.use-case.ts", path: "src/application/use-cases/create-workout.use-case.ts", type: "file" },
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "infrastructure",
+                    path: "src/infrastructure",
+                    type: "folder",
+                    children: [
+                        {
+                            name: "database",
+                            path: "src/infrastructure/database",
+                            type: "folder",
+                            children: [
+                                { name: "drizzle.config.ts", path: "src/infrastructure/database/drizzle.config.ts", type: "file" },
+                                { name: "schema.ts", path: "src/infrastructure/database/schema.ts", type: "file" },
+                            ]
+                        },
+                        {
+                            name: "repositories",
+                            path: "src/infrastructure/repositories",
+                            type: "folder",
+                            children: [
+                                { name: "user.repository.ts", path: "src/infrastructure/repositories/user.repository.ts", type: "file" },
+                                { name: "workout.repository.ts", path: "src/infrastructure/repositories/workout.repository.ts", type: "file" },
+                            ]
+                        },
+                        {
+                            name: "http",
+                            path: "src/infrastructure/http",
+                            type: "folder",
+                            children: [
+                                { name: "express.config.ts", path: "src/infrastructure/http/express.config.ts", type: "file" },
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "presentation",
+                    path: "src/presentation",
+                    type: "folder",
+                    children: [
+                        {
+                            name: "controllers",
+                            path: "src/presentation/controllers",
+                            type: "folder",
+                            children: [
+                                { name: "user.controller.ts", path: "src/presentation/controllers/user.controller.ts", type: "file" },
+                            ]
+                        },
+                        {
+                            name: "routes",
+                            path: "src/presentation/routes",
+                            type: "folder",
+                            children: [
+                                { name: "user.routes.ts", path: "src/presentation/routes/user.routes.ts", type: "file" },
+                            ]
+                        }
+                    ]
+                },
+                { name: "main.ts", path: "src/main.ts", type: "file" },
+            ]
+        }
+    ]
+
     const toggleFolder = (path: string) => {
         setOpenFolders(prev => ({ ...prev, [path]: !prev[path] }))
     }
@@ -460,7 +942,13 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                         className={`flex items-center gap-1.5 py-1 cursor-pointer transition-colors ${isSelected ? "bg-[#37373d] text-white" : "text-zinc-400 hover:bg-[#2a2d2e] hover:text-white"}`}
                         style={{ paddingLeft }}
                     >
-                        <SiTerraform className="text-purple-400 opacity-80" />
+                        {item.path.endsWith('.ts') || item.path.endsWith('.tsx') || item.path.endsWith('.js') ? (
+                            <span className="text-blue-400 opacity-80 text-xs">📄</span>
+                        ) : item.path.endsWith('.tf') ? (
+                            <SiTerraform className="text-purple-400 opacity-80" />
+                        ) : (
+                            <span className="text-blue-400 opacity-80 text-xs">📄</span>
+                        )}
                         <span>{item.name}</span>
                     </div>
                 )
@@ -470,7 +958,39 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
 
     const text = translations[language as keyof typeof translations].fissure_card
 
-    // Diagram component - supports both Terraform browser and image
+    // Code syntax highlighting for TypeScript/JavaScript
+    const highlightCode = (code: string, language: 'terraform' | 'typescript' = 'typescript') => {
+        if (language === 'terraform') {
+            return code.replace(
+                /("[^"]*")|\b(resource|module|provider|data)\b|\b(variable|output|source)\b|([={}[\]])/g,
+                (match, str, purpleKw, blueKw, operator) => {
+                    if (str) return `<span class="text-green-400">${str}</span>`
+                    if (purpleKw) return `<span class="text-purple-400">${purpleKw}</span>`
+                    if (blueKw) return `<span class="text-blue-400">${blueKw}</span>`
+                    if (operator) {
+                        if (operator === "=") return `<span class="text-zinc-500">=</span>`
+                        return `<span class="text-yellow-400">${operator}</span>`
+                    }
+                    return match
+                }
+            )
+        } else {
+            // TypeScript/JavaScript highlighting
+            return code.replace(
+                /(import|export|from|class|interface|type|const|let|var|function|async|await|return|if|else|try|catch|finally|for|while|switch|case|default|break|continue|new|this|super|extends|implements|public|private|protected|static|readonly|abstract|enum|namespace|module|declare|as|typeof|keyof|infer|extends|in|of|instanceof|void|null|undefined|true|false)\b|("[^"]*"|'[^']*'|`[^`]*`)|(\d+\.?\d*)|(\/\/.*|\/\*[\s\S]*?\*\/)|([{}()[\].,;:])/g,
+                (match, keyword, string, number, comment, punctuation) => {
+                    if (keyword) return `<span class="text-purple-400">${match}</span>`
+                    if (string) return `<span class="text-green-400">${match}</span>`
+                    if (number) return `<span class="text-orange-400">${match}</span>`
+                    if (comment) return `<span class="text-zinc-500 italic">${match}</span>`
+                    if (punctuation) return `<span class="text-zinc-400">${match}</span>`
+                    return match
+                }
+            )
+        }
+    }
+
+    // Diagram component - supports Terraform browser, Architecture browser, and image
     const renderDiagram = (diagram: { type: string; description: string | { fr: string; en: string }; imagePath?: string }) => {
         const description = typeof diagram.description === 'string' 
             ? diagram.description 
@@ -498,44 +1018,45 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
             )
         }
 
-        // If it's terraform type, render the Terraform browser
-        if (diagram.type === "terraform" || diagram.type === "iac") {
+        // Determine which tree and files to use based on diagram type
+        const isArchitecture = diagram.type === "architecture"
+        const currentTree = isArchitecture ? architectureTree : terraformTree
+        const currentFiles = isArchitecture ? ARCHITECTURE_FILES : INFRA_FILES
+        const fileLanguage: 'terraform' | 'typescript' = isArchitecture ? 'typescript' : 'terraform'
+        
+        // Set default selected file based on type if not already set
+        const defaultFile = isArchitecture ? "src/main.ts" : "main.tf"
+        const actualSelectedFile = selectedFile || defaultFile
+
+        // If it's terraform or architecture type, render the code browser
+        if (diagram.type === "terraform" || diagram.type === "iac" || diagram.type === "architecture") {
             return (
                 <div className="my-6 md:my-8">
-                    <div className="bg-[#1e1e1e] rounded-xl border border-zinc-700 overflow-hidden flex shadow-2xl">
+                    <div className="bg-[#1e1e1e] rounded-xl border border-zinc-700 overflow-hidden flex shadow-2xl max-h-[600px] flex-col md:flex-row">
                         {/* Sidebar: File Tree */}
-                        <div className="w-[35%] border-r border-zinc-700 bg-[#252526] flex flex-col font-mono text-xs">
-                            <div className="p-3 text-zinc-400 uppercase tracking-wider text-[10px] font-bold">{text.explorer}</div>
-                            <div className="flex-1 overflow-y-auto py-2">
-                                {renderTree(tree)}
+                        <div className="w-full md:w-[35%] border-r border-zinc-700 bg-[#252526] flex flex-col font-mono text-xs max-h-[600px]">
+                            <div className="p-3 text-zinc-400 uppercase tracking-wider text-[10px] font-bold flex-shrink-0">{text.explorer}</div>
+                            <div className="flex-1 overflow-y-auto py-2 custom-scrollbar">
+                                {renderTree(currentTree)}
                             </div>
                         </div>
 
                         {/* Code View */}
-                        <div className="flex-1 bg-[#1e1e1e] flex flex-col font-mono text-xs min-w-0">
+                        <div className="flex-1 bg-[#1e1e1e] flex flex-col font-mono text-xs min-w-0 max-h-[600px]">
                             {/* MacOS Header */}
-                            <div className="h-9 flex items-center px-4 gap-2 bg-[#2d2d2d] border-b border-black/30">
+                            <div className="h-9 flex items-center px-4 gap-2 bg-[#2d2d2d] border-b border-black/30 flex-shrink-0">
                                 <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
                                 <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
                                 <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
-                                <div className="ml-4 text-zinc-400 text-[11px]">{selectedFile}</div>
+                                <div className="ml-4 text-zinc-400 text-[11px]">{actualSelectedFile}</div>
                             </div>
                             {/* Code Editor */}
-                            <div className="flex-1 overflow-x-auto overflow-y-auto p-4 custom-scrollbar min-h-[400px]">
+                            <div className="flex-1 overflow-x-auto overflow-y-auto p-4 custom-scrollbar">
                                 <pre className="text-zinc-300 leading-relaxed font-mono whitespace-pre inline-block min-w-full">
                                     <code dangerouslySetInnerHTML={{
-                                        __html: (INFRA_FILES[selectedFile as keyof typeof INFRA_FILES] || "").replace(
-                                            /("[^"]*")|\b(resource|module|provider|data)\b|\b(variable|output|source)\b|([={}[\]])/g,
-                                            (match, str, purpleKw, blueKw, operator) => {
-                                                if (str) return `<span class="text-green-400">${str}</span>`
-                                                if (purpleKw) return `<span class="text-purple-400">${purpleKw}</span>`
-                                                if (blueKw) return `<span class="text-blue-400">${blueKw}</span>`
-                                                if (operator) {
-                                                    if (operator === "=") return `<span class="text-zinc-500">=</span>`
-                                                    return `<span class="text-yellow-400">${operator}</span>`
-                                                }
-                                                return match
-                                            }
+                                        __html: highlightCode(
+                                            (currentFiles[actualSelectedFile as keyof typeof currentFiles] || ""),
+                                            fileLanguage
                                         )
                                     }} />
                                 </pre>
