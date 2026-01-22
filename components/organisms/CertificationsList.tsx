@@ -92,7 +92,7 @@ export default function CertificationsList() {
                         </div>
 
                         {/* Content */}
-                        <div className="flex flex-col h-[40px] w-[230px]">
+                        <div className="flex flex-col h-auto w-full sm:h-[40px] sm:w-[230px]">
                             <h3 className="text-sm font-medium text-gray-800 dark:text-gray-200 tracking-tight">
                                 {language === "fr" ? cert.name : cert.nameEN}
                             </h3>

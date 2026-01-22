@@ -996,7 +996,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
             return (
                 <div className="my-4 md:my-6">
                     <div className="relative w-full rounded-lg overflow-hidden shadow-2xl">
-                        <div className="absolute top-4 left-4 z-20 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-md border border-white/10">
+                        <div className="absolute top-4 left-4 z-20 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-md border border-white/10 hidden md:block">
                             <h3 className="text-lg font-bold text-white tracking-wide">
                                 {description}
                             </h3>
@@ -1027,9 +1027,9 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
         if (diagram.type === "terraform" || diagram.type === "iac" || diagram.type === "architecture") {
             // Architecture diagrams are smaller and fixed height
             const isArchitectureDiagram = diagram.type === "architecture"
-            const containerHeight = isArchitectureDiagram ? "h-[450px]" : "max-h-[600px]"
-            const sidebarHeight = isArchitectureDiagram ? "h-[450px]" : "max-h-[600px]"
-            const codeViewHeight = isArchitectureDiagram ? "h-[450px]" : "max-h-[600px]"
+            const containerHeight = isArchitectureDiagram ? "h-[320px] sm:h-[450px]" : "max-h-[420px] sm:max-h-[600px]"
+            const sidebarHeight = isArchitectureDiagram ? "h-[320px] sm:h-[450px]" : "max-h-[420px] sm:max-h-[600px]"
+            const codeViewHeight = isArchitectureDiagram ? "h-[320px] sm:h-[450px]" : "max-h-[420px] sm:max-h-[600px]"
             
             return (
                 <div className="my-4 md:my-6">
@@ -1188,10 +1188,10 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                                     damping: 30,
                                     mass: 0.8
                                 }}
-                                className="w-full max-w-6xl max-h-[90vh] overflow-hidden bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-slate-800/50 rounded-2xl shadow-2xl pointer-events-auto flex flex-col relative"
+                                className="w-full max-w-6xl max-h-[100svh] overflow-y-auto md:max-h-[90vh] md:overflow-hidden bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-slate-800/50 rounded-2xl shadow-2xl pointer-events-auto flex flex-col relative"
                             >
                                 {/* Header */}
-                                <div className="relative p-6 border-b border-slate-200 dark:border-slate-800/50 flex-shrink-0">
+                                <div className="relative p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800/50 flex-shrink-0">
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation()
@@ -1226,9 +1226,9 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                                 </div>
 
                                 {/* Content Area */}
-                                <div className="flex-1 overflow-hidden flex">
+                                <div className="flex-1 overflow-visible flex flex-col md:flex-row md:overflow-hidden">
                                     {/* Sidebar Navigation */}
-                                    <div className="w-64 border-r border-slate-200 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-900/50 overflow-y-auto flex-shrink-0">
+                                    <div className="hidden md:block w-64 border-r border-slate-200 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-900/50 overflow-y-auto flex-shrink-0">
                                         <div className="p-4">
                                             <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3 uppercase tracking-wide">
                                                 Sections
@@ -1254,8 +1254,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                                     {/* Main Content - Vertical Carousel */}
                                     <div
                                         ref={contentRef}
-                                        className="flex-1 overflow-y-auto custom-scrollbar relative"
-                                        style={{ scrollSnapType: 'y proximity' }}
+                                        className="flex-1 overflow-visible md:overflow-y-auto custom-scrollbar relative md:[scroll-snap-type:y_proximity]"
                                     >
                                         <div className="space-y-0">
                                             {sections.map((section, idx) => {
@@ -1270,8 +1269,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                                                             }
                                                         }}
                                                         data-section-index={idx}
-                                                        className="flex flex-col justify-center px-8 py-8 md:py-12 scroll-snap-align-start"
-                                                        style={{ scrollSnapAlign: 'start' }}
+                                                        className="flex flex-col justify-center px-5 sm:px-8 py-8 md:py-12 md:[scroll-snap-align:start]"
                                                     >
                                                         {isVisible ? (
                                                             <motion.div
@@ -1291,7 +1289,13 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
 
                                                                 {section.diagram && (
                                                                     <div className="mt-6 md:mt-8">
-                                                                        {renderDiagram(section.diagram)}
+                                                                        {section.diagram.type === "image" ? (
+                                                                            renderDiagram(section.diagram)
+                                                                        ) : (
+                                                                            <div className="hidden md:block">
+                                                                                {renderDiagram(section.diagram)}
+                                                                            </div>
+                                                                        )}
                                                                     </div>
                                                                 )}
                                                             </motion.div>

@@ -105,7 +105,7 @@ export default function SkillsSidebar({ layout = "sidebar" }: { layout?: "sideba
                         <h3 className={`text-xs font-semibold uppercase tracking-wider ${category.color} opacity-90`}>
                             {translations[language].skills[category.id]}
                         </h3>
-                        <div className="grid grid-cols-4 gap-3">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                             {category.items.map((skill, index) => (
                                 <motion.div
                                     key={skill.label}

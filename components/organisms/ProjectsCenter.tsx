@@ -54,14 +54,14 @@ export default function ProjectsCenter() {
             </div>
 
             {/* Projects Grid */}
-            <div className="grid grid-cols-2 gap-6 pb-8 auto-rows-fr">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-8 auto-rows-fr">
                 {sortedProjects.map((project, index) => {
                     const isFeatured = project.projectName === "Fissure ( SaaS )"
 
                     return (
                         <div
                             key={index}
-                            className={isFeatured ? "col-span-2 row-span-2 relative group cursor-pointer" : "relative group"}
+                            className={isFeatured ? "relative group cursor-pointer sm:col-span-2 sm:row-span-2" : "relative group"}
                         >
                             <TiltShineCard
                                 gitLink={project.gitLink}
@@ -95,9 +95,9 @@ export default function ProjectsCenter() {
                                             width={0}
                                             height={0}
                                             sizes="100vw"
-                                            className={`w-full shadow-lg object-cover opacity-90 transition-all duration-700 ${isFeatured ? "h-[370px] group-hover:scale-[1.02]" : "h-auto group-hover:scale-[1.02]"
+                                            className={`w-full shadow-lg object-cover opacity-90 transition-all duration-700 ${isFeatured ? "h-[240px] sm:h-[370px] group-hover:scale-[1.02]" : "h-auto group-hover:scale-[1.02]"
                                                 }`}
-                                            style={{ width: '100%', height: isFeatured ? '370px' : 'auto' }}
+                                            style={{ width: '100%' }}
                                         />
 
                                         {/* Click to Explore Overlay */}

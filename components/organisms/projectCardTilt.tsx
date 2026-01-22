@@ -234,7 +234,7 @@ const InfraBrowser = ({ displayedimg, titre, language }: InfraBrowserProps) => {
     <div className="flex flex-col gap-8">
       {/* Full Width Image with Overlay */}
       <div className="relative w-full rounded-lg overflow-hidden shadow-2xl">
-        <div className="absolute top-4 left-4 z-20 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-md border border-white/10">
+        <div className="absolute top-4 left-4 z-20 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-md border border-white/10 hidden md:block">
           <h3 className="text-lg font-bold text-white tracking-wide">
             {text.infra_diagram}
           </h3>
@@ -244,7 +244,7 @@ const InfraBrowser = ({ displayedimg, titre, language }: InfraBrowserProps) => {
           alt={titre}
           width={800}
           height={600}
-          className="w-3/4 h-auto ml-[20%] object-cover rounded-lg"
+          className="w-full md:w-3/4 h-auto ml-0 md:ml-[20%] object-cover rounded-lg"
         />
       </div>
 
@@ -254,9 +254,9 @@ const InfraBrowser = ({ displayedimg, titre, language }: InfraBrowserProps) => {
           <h3 className="text-2xl font-bold text-orange-600 dark:text-orange-400 flex items-center gap-2">
             {text.aws_cloud}
           </h3>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[450px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-auto lg:h-[450px]">
             {/* Left Column: Explanations */}
-            <div className="bg-white/5 dark:bg-zinc-900/50 p-6 rounded-xl border border-orange-200/20 dark:border-orange-900/30 space-y-4 text-black dark:text-gray-300 overflow-y-auto custom-scrollbar">
+            <div className="bg-white/5 dark:bg-zinc-900/50 p-6 rounded-xl border border-orange-200/20 dark:border-orange-900/30 space-y-4 text-black dark:text-gray-300 overflow-visible lg:overflow-y-auto lg:custom-scrollbar">
               <p><strong className="text-orange-700 dark:text-orange-300">{text.why_choice}</strong><br />
                 {text.why_choice_text}</p>
 
@@ -270,7 +270,7 @@ const InfraBrowser = ({ displayedimg, titre, language }: InfraBrowserProps) => {
             {/* Right Column: Interactive Infra Browser */}
             <div className="bg-[#1e1e1e] rounded-xl border border-zinc-700 overflow-hidden flex shadow-2xl">
               {/* Sidebar: File Tree */}
-              <div className="w-[35%] border-r border-zinc-700 bg-[#252526] flex flex-col font-mono text-xs">
+              <div className="hidden md:flex w-[35%] border-r border-zinc-700 bg-[#252526] flex-col font-mono text-xs">
                 <div className="p-3 text-zinc-400 uppercase tracking-wider text-[10px] font-bold">{text.explorer}</div>
                 <div className="flex-1 overflow-y-auto py-2">
                   {renderTree(tree)}
@@ -287,8 +287,8 @@ const InfraBrowser = ({ displayedimg, titre, language }: InfraBrowserProps) => {
                   <div className="ml-4 text-zinc-400 text-[11px]">{selectedFile}</div>
                 </div>
                 {/* Code Editor */}
-                <div className="flex-1 overflow-x-auto overflow-y-auto p-4 custom-scrollbar">
-                  <pre className="text-zinc-300 leading-relaxed font-mono whitespace-pre inline-block min-w-full">
+                <div className="flex-1 overflow-visible md:overflow-x-auto md:overflow-y-auto p-4 md:custom-scrollbar">
+                  <pre className="text-zinc-300 leading-relaxed font-mono whitespace-pre-wrap md:whitespace-pre inline-block min-w-full">
                     <code dangerouslySetInnerHTML={{
                       __html: (INFRA_FILES[selectedFile as keyof typeof INFRA_FILES] || "").replace(
                         /("[^"]*")|\b(resource|module|provider|data)\b|\b(variable|output|source)\b|([={}[\]])/g,
@@ -600,11 +600,11 @@ export function TiltShineCard({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 max-w-7xl ${titre === "Fissure ( SaaS )" ? "w-[80dvw]" : "w-[90vw] max-w-4xl"
+              className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 max-w-7xl max-h-[100svh] overflow-y-auto md:max-h-none md:overflow-visible ${titre === "Fissure ( SaaS )" ? "w-[80dvw]" : "w-[90vw] max-w-4xl"
                 }`}
             >
               <motion.div
-                className={`relative overflow-hidden rounded-lg border p-8 pt-4 bg-gray-400/80 dark:bg-black/80 shadow-xl ${isFissure ? "overflow-y-auto max-h-[85vh]" : ""}`}
+                className={`relative overflow-hidden rounded-lg border p-5 sm:p-8 pt-4 bg-gray-400/80 dark:bg-black/80 shadow-xl ${isFissure ? "md:overflow-y-auto md:max-h-[85vh]" : ""}`}
                 style={{
                   backgroundImage: sheenGradient,
                 }}
@@ -631,7 +631,7 @@ export function TiltShineCard({
                   </svg>
                 </button>
 
-                <motion.div className="relative z-10 w-full min-h-[50dvh] xl:min-w-[300px]">
+                <motion.div className="relative z-10 w-full min-h-[40dvh] sm:min-h-[50dvh] xl:min-w-[300px]">
                   <h1 className="flex justify-center xl:text-2xl xl:pb-4 font-light tracking-tight text-black dark:text-gray-200">
                     {titre}
                   </h1>

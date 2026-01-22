@@ -56,7 +56,7 @@ export default function ContactForm() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "circOut" }}
-          className="min-w-[35%] flex justify-center"
+          className="w-full xl:min-w-[35%] flex justify-center"
         >
           <h2 className="text-5xl xl:text-6xl relative font-light text-center mb-8 pt-10  tracking-tight text-gray-800  dark:text-gray-200">
             {t.title}
@@ -69,7 +69,7 @@ export default function ContactForm() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "circOut" }}
           ref={formRef}
-          className="min-w-[60%] max-w-2xl p-8 rounded-xl relative z-10 xl:scale-95 2xl:scale-100"
+          className="w-full xl:min-w-[60%] max-w-2xl p-5 sm:p-8 rounded-xl relative z-10 xl:scale-95 2xl:scale-100"
           style={{
             backgroundImage: `linear-gradient(
     55deg,
@@ -79,7 +79,7 @@ export default function ContactForm() {
   )`,
           }}
         >
-          <motion.div className="relative overflow-hidden rounded-lg border p-8 bg-white/80 dark:bg-black/80 shadow-xl">
+          <motion.div className="relative overflow-hidden rounded-lg border p-5 sm:p-8 bg-white/80 dark:bg-black/80 shadow-xl">
             {/* Subtle glow effect */}
             <div className="absolute inset-0 z-0 rounded-lg bg-gradient-to-b from-[#1A1A1A]/20 to-transparent" />
 
