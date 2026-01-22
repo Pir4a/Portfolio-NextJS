@@ -63,6 +63,18 @@ export const translations = {
       frontend_title: "Front-End (React Native)",
       frontend_text: "Nous avons choisi React Native avec Expo pour une stratégie \"Write Once, Run Anywhere\".",
     },
+    blog: {
+      title: "Blog",
+      subtitle: "Réflexions sur l'ingénierie logicielle, l'infrastructure cloud et la beauté chaotique des stacks techniques modernes.",
+      journeys_title: "Parcours & Projets",
+      journeys_description: (count: number) => count === 1 
+        ? "Histoire détaillée sur mon projet, décisions d'architecture et parcours technique."
+        : `Histoires détaillées sur mes ${count} projets, décisions d'architecture et parcours techniques.`,
+      certifications_title: "Certifications & Retours d'expérience",
+      certifications_description: (count: number) => count === 1
+        ? "Mon retour d'expérience sur une certification ou technologie."
+        : `Mes réflexions et expériences sur ${count} certifications et technologies.`,
+    },
   },
   en: {
     menu: {
@@ -127,6 +139,18 @@ export const translations = {
       backend_text: "The backend is built with ExpressJS and TypeScript following Clean Architecture principles.",
       frontend_title: "Front-End (React Native)",
       frontend_text: "We chose React Native with Expo for a \"Write Once, Run Anywhere\" strategy.",
+    },
+    blog: {
+      title: "Blog",
+      subtitle: "Thoughts on software engineering, cloud infrastructure, and the chaotic beauty of modern tech stacks.",
+      journeys_title: "Journeys & Projects",
+      journeys_description: (count: number) => count === 1
+        ? "Detailed story about my project, architecture decisions, and technical journey."
+        : `Detailed stories about my ${count} projects, architecture decisions, and technical journeys.`,
+      certifications_title: "Certifications & Feedback",
+      certifications_description: (count: number) => count === 1
+        ? "My feedback on a certification or technology."
+        : `My thoughts and experiences with ${count} certifications and technologies.`,
     },
   },
 } as const

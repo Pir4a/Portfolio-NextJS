@@ -75,17 +75,23 @@ export function BlogCard({
                 key={`card-${index}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: isModalOpen ? 0 : 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.3 }}
                 className={`relative group perspective-1000 ${className}`}
             >
                 <motion.div
-                    layoutId={`card-${index}`}
                     ref={cardRef}
                     style={{
-                        rotateX,
-                        rotateY,
+                        rotateX: isModalOpen ? 0 : rotateX,
+                        rotateY: isModalOpen ? 0 : rotateY,
                         transformStyle: "preserve-3d",
                         backgroundImage: sheenGradient,
+                    }}
+                    animate={{
+                        scale: isModalOpen ? 0.95 : 1,
+                    }}
+                    transition={{
+                        duration: 0.2,
+                        ease: "easeOut"
                     }}
                     onMouseMove={handleMouseMove}
                     onMouseLeave={handleMouseLeave}
@@ -132,20 +138,29 @@ export function BlogCard({
             </motion.div>
 
             {/* Modal */}
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {isModalOpen && (
                     <>
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
                             className="fixed inset-0 bg-black/60 z-50 backdrop-blur-sm"
                             onClick={() => setIsModalOpen(false)}
                         />
 
                         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
                             <motion.div
-                                layoutId={`card-${index}`}
+                                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 300,
+                                    damping: 30,
+                                    mass: 0.8
+                                }}
                                 className="w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-slate-800/50 rounded-2xl shadow-2xl pointer-events-auto custom-scrollbar"
                             >
                                 <div className="relative p-8">
