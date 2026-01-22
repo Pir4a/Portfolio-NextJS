@@ -13,6 +13,7 @@ interface Certification {
     status: "completed" | "in-progress"
     Icon: React.ComponentType<{ className?: string }>
     color: string
+    credlyLink?: string
 }
 
 const certifications: Certification[] = [
@@ -24,6 +25,7 @@ const certifications: Certification[] = [
         status: "completed",
         Icon: FaAws,
         color: "from-orange-400 to-orange-600",
+        credlyLink: "https://www.credly.com/badges/393932de-9587-40b5-96c7-9cdc582aebe1",
     },
     {
         name: "HashiCorp Terraform Associate",
@@ -33,6 +35,7 @@ const certifications: Certification[] = [
         status: "completed",
         Icon: SiTerraform,
         color: "from-purple-400 to-purple-600",
+        credlyLink: "", // TODO: Add Credly link
     },
     {
         name: "Certified Kubernetes Administrator",
@@ -50,9 +53,20 @@ export default function CertificationsList() {
 
     return (
         <div className="flex flex-col gap-4 w-full">
-            {certifications.map((cert, index) => (
-                <motion.div
+            {certifications.map((cert, index) => {
+                const Component = cert.credlyLink && cert.status === "completed" ? motion.a : motion.div
+                const componentProps = cert.credlyLink && cert.status === "completed" 
+                    ? { 
+                        href: cert.credlyLink, 
+                        target: "_blank", 
+                        rel: "noopener noreferrer" 
+                    } 
+                    : {}
+                
+                return (
+                <Component
                     key={cert.name}
+                    {...componentProps}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{
@@ -60,7 +74,7 @@ export default function CertificationsList() {
                         ease: "easeOut",
                         delay: 0.3 + index * 0.15,
                     }}
-                    className="group relative overflow-hidden rounded-xl border border-pink-300/30 dark:border-pink-500/20 bg-white/50 dark:bg-black/40 backdrop-blur-md p-3 shadow-sm hover:shadow-lg hover:shadow-pink-500/10 transition-all duration-300 hover:scale-[1.02]"
+                    className={`group relative overflow-hidden rounded-xl border border-pink-300/30 dark:border-pink-500/20 bg-white/50 dark:bg-black/40 backdrop-blur-md p-3 shadow-sm hover:shadow-lg hover:shadow-pink-500/10 transition-all duration-300 hover:scale-[1.02] ${cert.credlyLink && cert.status === "completed" ? "cursor-pointer" : ""}`}
                 >
                     {/* Gradient background glow */}
                     <div
@@ -97,8 +111,8 @@ export default function CertificationsList() {
                     <div
                         className={`absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r ${cert.color} opacity-0 group-hover:opacity-60 transition-opacity duration-300`}
                     />
-                </motion.div>
-            ))}
+                </Component>
+            )})}
         </div>
     )
 }
