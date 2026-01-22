@@ -75,7 +75,7 @@ export default function BlogPage() {
                             <div className="h-px w-20 bg-violet-500 mt-4" />
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {journeys.map((journey, index) => (
                                 <JourneyCard
                                     key={journey.id}

@@ -315,7 +315,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                     onMouseMove={handleMouseMove}
                     onMouseLeave={handleMouseLeave}
                     onClick={() => setIsModalOpen(true)}
-                    className="relative h-full overflow-hidden rounded-xl border p-6 
+                    className="relative h-full overflow-hidden rounded-xl border p-8 
         bg-white/10 dark:bg-[#0A0A0A]/20 
         border-slate-200/50 dark:border-slate-800/50
         shadow-sm hover:shadow-xl dark:shadow-none
@@ -335,11 +335,11 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                             </span>
                         </div>
 
-                        <div className="space-y-2">
-                            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+                        <div className="space-y-3">
+                            <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
                                 {title}
                             </h3>
-                            <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                                 {excerpt}
                             </p>
                         </div>

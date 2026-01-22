@@ -23,7 +23,7 @@
     "journeys": [
         {
             "id": "histoire-fissure",
-            "title": "Fissure : Architecture Cloud et Infrastructure",
+            "title": "Fissure : D'un déploiement catastrophique à une architecture cloud moderne",
             "date": "Janvier 2026",
             "category": "Cloud, DevOps, Architecture, FullStack",
             "readTime": "8 min read",
