@@ -733,11 +733,6 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
         }
     }
 
-    const scrollToNext = () => {
-        if (activeSection < sections.length - 1) {
-            scrollToSection(activeSection + 1)
-        }
-    }
 
     interface TreeItem {
         name: string
@@ -999,7 +994,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
         // If it's an image type, render the image
         if (diagram.type === "image" && diagram.imagePath) {
             return (
-                <div className="my-6 md:my-8">
+                <div className="my-4 md:my-6">
                     <div className="relative w-full rounded-lg overflow-hidden shadow-2xl">
                         <div className="absolute top-4 left-4 z-20 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-md border border-white/10">
                             <h3 className="text-lg font-bold text-white tracking-wide">
@@ -1030,11 +1025,17 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
 
         // If it's terraform or architecture type, render the code browser
         if (diagram.type === "terraform" || diagram.type === "iac" || diagram.type === "architecture") {
+            // Architecture diagrams are smaller and fixed height
+            const isArchitectureDiagram = diagram.type === "architecture"
+            const containerHeight = isArchitectureDiagram ? "h-[450px]" : "max-h-[600px]"
+            const sidebarHeight = isArchitectureDiagram ? "h-[450px]" : "max-h-[600px]"
+            const codeViewHeight = isArchitectureDiagram ? "h-[450px]" : "max-h-[600px]"
+            
             return (
-                <div className="my-6 md:my-8">
-                    <div className="bg-[#1e1e1e] rounded-xl border border-zinc-700 overflow-hidden flex shadow-2xl max-h-[600px] flex-col md:flex-row">
+                <div className="my-4 md:my-6">
+                    <div className={`bg-[#1e1e1e] rounded-xl border border-zinc-700 overflow-hidden flex shadow-2xl ${containerHeight} flex-col md:flex-row`}>
                         {/* Sidebar: File Tree */}
-                        <div className="w-full md:w-[35%] border-r border-zinc-700 bg-[#252526] flex flex-col font-mono text-xs max-h-[600px]">
+                        <div className={`w-full md:w-[35%] border-r border-zinc-700 bg-[#252526] flex flex-col font-mono text-xs ${sidebarHeight}`}>
                             <div className="p-3 text-zinc-400 uppercase tracking-wider text-[10px] font-bold flex-shrink-0">{text.explorer}</div>
                             <div className="flex-1 overflow-y-auto py-2 custom-scrollbar">
                                 {renderTree(currentTree)}
@@ -1042,7 +1043,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                         </div>
 
                         {/* Code View */}
-                        <div className="flex-1 bg-[#1e1e1e] flex flex-col font-mono text-xs min-w-0 max-h-[600px]">
+                        <div className={`flex-1 bg-[#1e1e1e] flex flex-col font-mono text-xs min-w-0 ${codeViewHeight}`}>
                             {/* MacOS Header */}
                             <div className="h-9 flex items-center px-4 gap-2 bg-[#2d2d2d] border-b border-black/30 flex-shrink-0">
                                 <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
@@ -1073,8 +1074,8 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
             : (diagram.description[language as 'fr' | 'en'] || diagram.description.fr || diagram.description.en)
         
         return (
-            <div className="my-6 md:my-8 p-4 md:p-6 bg-gradient-to-br from-violet-50 to-fuchsia-50 dark:from-slate-900 dark:to-slate-800 rounded-xl border border-violet-200 dark:border-slate-700">
-                <div className="text-center mb-3 md:mb-4">
+            <div className="my-4 md:my-6 p-4 md:p-6 bg-gradient-to-br from-violet-50 to-fuchsia-50 dark:from-slate-900 dark:to-slate-800 rounded-xl border border-violet-200 dark:border-slate-700">
+                <div className="text-center mb-2 md:mb-3">
                     <p className="text-sm font-medium text-violet-700 dark:text-violet-300 mb-1 md:mb-2">
                         {defaultDescription}
                     </p>
@@ -1269,8 +1270,8 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                                                             }
                                                         }}
                                                         data-section-index={idx}
-                                                        className="flex flex-col justify-center px-8 py-12 md:py-20 scroll-snap-align-start"
-                                                        style={{ scrollSnapAlign: 'start', minHeight: '60vh' }}
+                                                        className="flex flex-col justify-center px-8 py-8 md:py-12 scroll-snap-align-start"
+                                                        style={{ scrollSnapAlign: 'start' }}
                                                     >
                                                         {isVisible ? (
                                                             <motion.div
@@ -1279,12 +1280,12 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                                                                 transition={{ duration: 0.4, delay: 0.1 }}
                                                                 className="max-w-3xl mx-auto w-full"
                                                             >
-                                                                <h3 className="text-3xl font-bold text-violet-600 dark:text-violet-400 mb-6 md:mb-8">
+                                                                <h3 className="text-3xl font-bold text-violet-600 dark:text-violet-400 mb-4 md:mb-6">
                                                                     {section.title}
                                                                 </h3>
 
                                                                 <div
-                                                                    className="prose prose-slate dark:prose-invert max-w-none prose-lg prose-headings:mt-6 prose-headings:mb-4 prose-p:my-4 prose-ul:my-4 prose-ol:my-4 prose-li:my-2"
+                                                                    className="prose prose-slate dark:prose-invert max-w-none prose-lg prose-headings:mt-4 prose-headings:mb-3 prose-p:my-3 prose-ul:my-3 prose-ol:my-3 prose-li:my-1.5"
                                                                     dangerouslySetInnerHTML={{ __html: section.content }}
                                                                 />
 
@@ -1312,23 +1313,6 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                                     </div>
 
                                     {/* Fixed Bottom Navigation Button */}
-                                    {activeSection < sections.length - 1 && (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 pointer-events-none"
-                                        >
-                                            <button
-                                                onClick={scrollToNext}
-                                                className="pointer-events-auto px-6 py-3 rounded-full bg-violet-600 dark:bg-violet-500 text-white shadow-lg hover:bg-violet-700 dark:hover:bg-violet-600 transition-all hover:scale-105 flex items-center gap-2"
-                                            >
-                                                <span>Next Section</span>
-                                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                                </svg>
-                                            </button>
-                                        </motion.div>
-                                    )}
                                 </div>
                             </motion.div>
                         </div>
