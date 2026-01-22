@@ -14,6 +14,7 @@ import { IconType } from "react-icons"
 import { FaFolder, FaFolderOpen } from "react-icons/fa"
 import { toast } from "sonner"
 import { SiTerraform } from "react-icons/si"
+import Link from "next/link"
 
 // Mock Infrastructure Files Content
 const INFRA_FILES = {
@@ -309,6 +310,53 @@ const InfraBrowser = ({ displayedimg, titre, language }: InfraBrowserProps) => {
             </div>
           </div>
         </div>
+
+        {/* Blog Post CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="p-6 bg-gradient-to-br from-violet-50/50 via-purple-50/50 to-fuchsia-50/50 dark:from-violet-900/20 dark:via-purple-900/20 dark:to-fuchsia-900/20 rounded-xl border-2 border-violet-200/50 dark:border-violet-700/50 shadow-lg backdrop-blur-md"
+        >
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="flex-1">
+              <h3 className="text-2xl font-bold text-violet-700 dark:text-violet-300 mb-2">
+                {language === "en" ? "Want to know more?" : "En savoir plus ?"}
+              </h3>
+              <p className="text-slate-700 dark:text-slate-300 mb-4">
+                {language === "en" 
+                  ? "Discover the complete story behind Fissure's infrastructure: from the first catastrophic deployment to the final architecture, including lessons learned and cost optimizations."
+                  : "Découvrez l'histoire complète de l'infrastructure de Fissure : du premier déploiement catastrophique à l'architecture finale, en passant par les leçons apprises et les optimisations de coûts."}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 text-xs font-medium rounded-full bg-violet-200 dark:bg-violet-800 text-violet-800 dark:text-violet-200">
+                  {language === "en" ? "Cloud Architecture" : "Architecture Cloud"}
+                </span>
+                <span className="px-3 py-1 text-xs font-medium rounded-full bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200">
+                  {language === "en" ? "DevOps Journey" : "Parcours DevOps"}
+                </span>
+                <span className="px-3 py-1 text-xs font-medium rounded-full bg-fuchsia-200 dark:bg-fuchsia-800 text-fuchsia-800 dark:text-fuchsia-200">
+                  {language === "en" ? "Lessons Learned" : "Leçons Apprises"}
+                </span>
+              </div>
+            </div>
+            <Link
+              href="/blog#histoire-fissure"
+              className="group relative px-8 py-4 bg-gradient-to-r from-violet-500/20 to-purple-500/20 dark:from-violet-500/15 dark:to-purple-500/15 backdrop-blur-xl border-2 border-violet-300/80 dark:border-violet-400/80 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3"
+            >
+              <span>{language === "en" ? "Read the Blog Post" : "Lire l'article"}</span>
+              <svg 
+                className="w-5 h-5 group-hover:translate-x-1 transition-transform" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-400/20 to-purple-400/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl"></div>
+            </Link>
+          </div>
+        </motion.div>
 
         {/* IaC Section */}
         <div className="space-y-4">
