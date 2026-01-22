@@ -13,8 +13,57 @@ import blogData from "../../../datas/blogposts.json"
 
 export default function BlogPage() {
     const { language } = useLanguage()
-    const certifications = blogData.certifications || []
-    const journeys = blogData.journeys || []
+    const lang = language === 'en' ? 'en' : 'fr'
+    
+    // Transform certifications to use the correct language
+    const certifications = (blogData.certifications || []).map((cert: any) => {
+        const langData = cert[lang] || cert.fr || {}
+        return {
+            id: cert.id,
+            title: langData.title || cert.title || '',
+            excerpt: langData.excerpt || cert.excerpt || '',
+            content: langData.content || cert.content || '',
+            date: cert.date || '',
+            category: cert.category || '',
+            readTime: cert.readTime || '',
+            icon: cert.icon || '',
+        }
+    })
+    
+    // Transform journeys to use the correct language
+    const journeys = (blogData.journeys || []).map((journey: any) => {
+        const langData = journey[lang] || journey.fr || {}
+        return {
+            id: journey.id,
+            title: langData.title || journey.title || '',
+            excerpt: langData.excerpt || journey.excerpt || '',
+            date: journey.date || '',
+            category: journey.category || '',
+            readTime: journey.readTime || '',
+            sections: (journey.sections || []).map((section: any) => {
+                const sectionLangData = section[lang] || section.fr || {}
+                const diagram = section.diagram || sectionLangData.diagram
+                
+                // Handle bilingual diagram descriptions
+                let processedDiagram = diagram
+                if (diagram && diagram.description) {
+                    if (typeof diagram.description === 'object' && (diagram.description.fr || diagram.description.en)) {
+                        processedDiagram = {
+                            ...diagram,
+                            description: diagram.description[lang] || diagram.description.fr || diagram.description.en || diagram.description
+                        }
+                    }
+                }
+                
+                return {
+                    title: sectionLangData.title || section.title || '',
+                    content: sectionLangData.content || section.content || '',
+                    diagram: processedDiagram,
+                }
+            })
+        }
+    })
+    
     const journeyCardRefs = useRef<{ [key: string]: JourneyCardRef | null }>({})
     
     const t = translations[language].blog

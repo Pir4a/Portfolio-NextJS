@@ -3,13 +3,19 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from "react"
 import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
+import { FaFolder, FaFolderOpen } from "react-icons/fa"
+import { SiTerraform } from "react-icons/si"
+import { useLanguage } from "../../contexts/LanguageContext"
+import { translations } from "../../translations"
+import Image from "next/image"
 
 interface JourneySection {
     title: string
     content: string
     diagram?: {
         type: string
-        description: string
+        description: string | { fr: string; en: string }
+        imagePath?: string
     }
 }
 
@@ -29,6 +35,99 @@ export interface JourneyCardRef {
     openModal: () => void
 }
 
+// Mock Infrastructure Files Content
+const INFRA_FILES = {
+  "main.tf": `module "networking" {
+  source = "./modules/networking"
+}
+module "storage" {
+  source = "./modules/storage"
+}
+module "database" {
+  source                = "./modules/database"
+  private_subnet_ids    = module.networking.private_subnet_ids
+  rds_security_group_id = module.networking.rds_security_group_id
+  db_password           = "********"
+}
+module "compute" {
+  source                 = "./modules/compute"
+  vpc_id                 = module.networking.vpc_id
+  public_subnet_ids      = module.networking.public_subnet_ids
+}`,
+  "variables.tf": `variable "app_name" {
+  default = "fissure"
+}
+variable "aws_region" {
+  default = "eu-west-1"
+}`,
+  "providers.tf": `provider "aws" {
+  region = "eu-west-1"
+}`,
+  "modules/compute/main.tf": `resource "aws_lb" "fissure_lb" {
+  name = "fissure-alb"
+  load_balancer_type = "application"
+}
+
+resource "aws_ecs_cluster" "ecs_cluster" {
+  name = "fissure-cluster"
+}
+
+resource "aws_ecs_service" "ecs_service" {
+  name            = "fissure-service"
+  launch_type     = "FARGATE"
+  desired_count   = 1
+}`,
+  "modules/compute/variables.tf": `variable "vpc_id" {}
+variable "public_subnet_ids" {}
+variable "instance_count" {
+  default = 1
+}`,
+  "modules/compute/iam.tf": `resource "aws_iam_role" "ecs_execution" {
+  name = "fissure_ecs_execution_role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{ Action = "sts:AssumeRole", Effect = "Allow", Principal = { Service = "ecs-tasks.amazonaws.com" } }]
+  })
+}`,
+  "modules/compute/outputs.tf": `output "lb_dns_name" {
+  value = aws_lb.fissure_lb.dns_name
+}`,
+  "modules/networking/main.tf": `resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+
+resource "aws_subnet" "public_1" {
+  cidr_block = "10.0.1.0/24"
+}
+
+resource "aws_nat_gateway" "main" {
+  subnet_id = aws_subnet.public_1.id
+}`,
+  "modules/networking/variables.tf": `variable "vpc_cidr" {
+  default = "10.0.0.0/16"
+}`,
+  "modules/networking/outputs.tf": `output "vpc_id" {
+  value = aws_vpc.main.id
+}
+output "public_subnet_ids" {
+  value = [aws_subnet.public_1.id]
+}`,
+  "modules/database/main.tf": `resource "aws_db_instance" "rds" {
+  engine         = "postgres"
+  engine_version = "16"
+  instance_class = "db.t3.micro"
+  allocated_storage = 20
+}`,
+  "modules/database/variables.tf": `variable "db_password" {}`,
+  "modules/storage/main.tf": `resource "aws_ecr_repository" "ecr" {
+  name = "fissure-backend"
+  image_tag_mutability = "MUTABLE"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}`
+}
+
 export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
     title,
     date,
@@ -39,12 +138,17 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
     className,
     index,
 }, ref) => {
+    const { language } = useLanguage()
     const cardRef = useRef<HTMLDivElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
     const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [activeSection, setActiveSection] = useState(0)
     const [visibleSections, setVisibleSections] = useState<Set<number>>(new Set([0]))
+    const [selectedFile, setSelectedFile] = useState("main.tf")
+    const [openFolders, setOpenFolders] = useState<Record<string, boolean>>({
+        "modules": true,
+    })
 
     // Expose openModal method via ref
     useImperativeHandle(ref, () => ({
@@ -263,13 +367,195 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
         }
     }
 
-    // Mock diagram component
-    const renderDiagram = (diagram: { type: string; description: string }) => {
+    interface TreeItem {
+        name: string
+        path: string
+        type: "folder" | "file"
+        children?: TreeItem[]
+    }
+
+    // Tree Structure Definition
+    const tree: TreeItem[] = [
+        {
+            name: "modules",
+            path: "modules",
+            type: "folder",
+            children: [
+                {
+                    name: "compute",
+                    path: "modules/compute",
+                    type: "folder",
+                    children: [
+                        { name: "main.tf", path: "modules/compute/main.tf", type: "file" },
+                        { name: "variables.tf", path: "modules/compute/variables.tf", type: "file" },
+                        { name: "iam.tf", path: "modules/compute/iam.tf", type: "file" },
+                        { name: "outputs.tf", path: "modules/compute/outputs.tf", type: "file" },
+                    ]
+                },
+                {
+                    name: "networking",
+                    path: "modules/networking",
+                    type: "folder",
+                    children: [
+                        { name: "main.tf", path: "modules/networking/main.tf", type: "file" },
+                        { name: "variables.tf", path: "modules/networking/variables.tf", type: "file" },
+                        { name: "outputs.tf", path: "modules/networking/outputs.tf", type: "file" },
+                    ]
+                },
+                {
+                    name: "database",
+                    path: "modules/database",
+                    type: "folder",
+                    children: [
+                        { name: "main.tf", path: "modules/database/main.tf", type: "file" },
+                        { name: "variables.tf", path: "modules/database/variables.tf", type: "file" },
+                    ]
+                },
+                {
+                    name: "storage",
+                    path: "modules/storage",
+                    type: "folder",
+                    children: [
+                        { name: "main.tf", path: "modules/storage/main.tf", type: "file" },
+                    ]
+                }
+            ]
+        },
+        { name: "main.tf", path: "main.tf", type: "file" },
+        { name: "variables.tf", path: "variables.tf", type: "file" },
+        { name: "providers.tf", path: "providers.tf", type: "file" },
+    ]
+
+    const toggleFolder = (path: string) => {
+        setOpenFolders(prev => ({ ...prev, [path]: !prev[path] }))
+    }
+
+    const renderTree = (items: TreeItem[], depth = 0) => {
+        return items.map((item) => {
+            const isOpen = openFolders[item.path]
+            const isSelected = selectedFile === item.path
+            const paddingLeft = `${depth * 12 + 12}px`
+
+            if (item.type === "folder") {
+                return (
+                    <div key={item.path}>
+                        <div
+                            onClick={() => toggleFolder(item.path)}
+                            className="flex items-center gap-1.5 py-1 text-zinc-300 hover:bg-[#2a2d2e] cursor-pointer"
+                            style={{ paddingLeft }}
+                        >
+                            {isOpen ? <FaFolderOpen className="text-yellow-500" /> : <FaFolder className="text-yellow-500" />}
+                            <span>{item.name}</span>
+                        </div>
+                        {isOpen && item.children && (
+                            <div>{renderTree(item.children, depth + 1)}</div>
+                        )}
+                    </div>
+                )
+            } else {
+                return (
+                    <div
+                        key={item.path}
+                        onClick={() => setSelectedFile(item.path)}
+                        className={`flex items-center gap-1.5 py-1 cursor-pointer transition-colors ${isSelected ? "bg-[#37373d] text-white" : "text-zinc-400 hover:bg-[#2a2d2e] hover:text-white"}`}
+                        style={{ paddingLeft }}
+                    >
+                        <SiTerraform className="text-purple-400 opacity-80" />
+                        <span>{item.name}</span>
+                    </div>
+                )
+            }
+        })
+    }
+
+    const text = translations[language as keyof typeof translations].fissure_card
+
+    // Diagram component - supports both Terraform browser and image
+    const renderDiagram = (diagram: { type: string; description: string | { fr: string; en: string }; imagePath?: string }) => {
+        const description = typeof diagram.description === 'string' 
+            ? diagram.description 
+            : (diagram.description[language as 'fr' | 'en'] || diagram.description.fr || diagram.description.en)
+        
+        // If it's an image type, render the image
+        if (diagram.type === "image" && diagram.imagePath) {
+            return (
+                <div className="my-6 md:my-8">
+                    <div className="relative w-full rounded-lg overflow-hidden shadow-2xl">
+                        <div className="absolute top-4 left-4 z-20 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-md border border-white/10">
+                            <h3 className="text-lg font-bold text-white tracking-wide">
+                                {description}
+                            </h3>
+                        </div>
+                        <Image
+                            src={diagram.imagePath}
+                            alt={description}
+                            width={800}
+                            height={600}
+                            className="w-full h-auto object-cover rounded-lg"
+                        />
+                    </div>
+                </div>
+            )
+        }
+
+        // If it's terraform type, render the Terraform browser
+        if (diagram.type === "terraform" || diagram.type === "iac") {
+            return (
+                <div className="my-6 md:my-8">
+                    <div className="bg-[#1e1e1e] rounded-xl border border-zinc-700 overflow-hidden flex shadow-2xl">
+                        {/* Sidebar: File Tree */}
+                        <div className="w-[35%] border-r border-zinc-700 bg-[#252526] flex flex-col font-mono text-xs">
+                            <div className="p-3 text-zinc-400 uppercase tracking-wider text-[10px] font-bold">{text.explorer}</div>
+                            <div className="flex-1 overflow-y-auto py-2">
+                                {renderTree(tree)}
+                            </div>
+                        </div>
+
+                        {/* Code View */}
+                        <div className="flex-1 bg-[#1e1e1e] flex flex-col font-mono text-xs min-w-0">
+                            {/* MacOS Header */}
+                            <div className="h-9 flex items-center px-4 gap-2 bg-[#2d2d2d] border-b border-black/30">
+                                <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                                <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                                <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                                <div className="ml-4 text-zinc-400 text-[11px]">{selectedFile}</div>
+                            </div>
+                            {/* Code Editor */}
+                            <div className="flex-1 overflow-x-auto overflow-y-auto p-4 custom-scrollbar min-h-[400px]">
+                                <pre className="text-zinc-300 leading-relaxed font-mono whitespace-pre inline-block min-w-full">
+                                    <code dangerouslySetInnerHTML={{
+                                        __html: (INFRA_FILES[selectedFile as keyof typeof INFRA_FILES] || "").replace(
+                                            /("[^"]*")|\b(resource|module|provider|data)\b|\b(variable|output|source)\b|([={}[\]])/g,
+                                            (match, str, purpleKw, blueKw, operator) => {
+                                                if (str) return `<span class="text-green-400">${str}</span>`
+                                                if (purpleKw) return `<span class="text-purple-400">${purpleKw}</span>`
+                                                if (blueKw) return `<span class="text-blue-400">${blueKw}</span>`
+                                                if (operator) {
+                                                    if (operator === "=") return `<span class="text-zinc-500">=</span>`
+                                                    return `<span class="text-yellow-400">${operator}</span>`
+                                                }
+                                                return match
+                                            }
+                                        )
+                                    }} />
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+
+        // Default placeholder for other types
+        const defaultDescription = typeof diagram.description === 'string' 
+            ? diagram.description 
+            : (diagram.description[language as 'fr' | 'en'] || diagram.description.fr || diagram.description.en)
+        
         return (
             <div className="my-6 md:my-8 p-4 md:p-6 bg-gradient-to-br from-violet-50 to-fuchsia-50 dark:from-slate-900 dark:to-slate-800 rounded-xl border border-violet-200 dark:border-slate-700">
                 <div className="text-center mb-3 md:mb-4">
                     <p className="text-sm font-medium text-violet-700 dark:text-violet-300 mb-1 md:mb-2">
-                        {diagram.description}
+                        {defaultDescription}
                     </p>
                     <p className="text-xs text-slate-500 dark:text-slate-400">
                         Type: {diagram.type}
