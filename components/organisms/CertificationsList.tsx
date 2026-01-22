@@ -101,7 +101,9 @@ export default function CertificationsList() {
                                     {cert.issuer}
                                 </span>
                                 <span className="font-medium text-pink-500 dark:text-pink-400">
-                                    {cert.year}
+                                    {cert.status === "in-progress" 
+                                        ? (language === "fr" ? "[en cours]" : "[in progress]")
+                                        : cert.year}
                                 </span>
                             </div>
                         </div>
