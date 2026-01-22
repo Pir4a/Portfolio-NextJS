@@ -6,13 +6,18 @@ import CursorGlow from "../../../components/atoms/CursorGlow"
 import { BlogCard } from "../../../components/organisms/BlogCard"
 import { JourneyCard, JourneyCardRef } from "../../../components/organisms/JourneyCard"
 import { motion } from "framer-motion"
+import { useLanguage } from "../../../contexts/LanguageContext"
+import { translations } from "../../../translations"
 
 import blogData from "../../../datas/blogposts.json"
 
 export default function BlogPage() {
+    const { language } = useLanguage()
     const certifications = blogData.certifications || []
     const journeys = blogData.journeys || []
     const journeyCardRefs = useRef<{ [key: string]: JourneyCardRef | null }>({})
+    
+    const t = translations[language].blog
 
     useEffect(() => {
         // Check if there's a hash in the URL
@@ -49,10 +54,10 @@ export default function BlogPage() {
                     className="mb-12"
                 >
                     <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-                        Blog
+                        {t.title}
                     </h1>
                     <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
-                        Thoughts on software engineering, cloud infrastructure, and the chaotic beauty of modern tech stacks.
+                        {t.subtitle}
                     </p>
                     <div className="h-px w-24 bg-violet-500 mt-6" />
                 </motion.div>
@@ -67,10 +72,12 @@ export default function BlogPage() {
                     >
                         <div className="mb-8">
                             <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-                                Journeys & Projects
+                                {t.journeys_title}
                             </h2>
                             <p className="text-slate-600 dark:text-slate-400">
-                                Detailed stories about my projects, architecture decisions, and technical journeys.
+                                {typeof t.journeys_description === 'function' 
+                                    ? t.journeys_description(journeys.length)
+                                    : t.journeys_description}
                             </p>
                             <div className="h-px w-20 bg-violet-500 mt-4" />
                         </div>
@@ -102,10 +109,12 @@ export default function BlogPage() {
                     >
                         <div className="mb-8">
                             <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-                                Certifications & Feedback
+                                {t.certifications_title}
                             </h2>
                             <p className="text-slate-600 dark:text-slate-400">
-                                My thoughts and experiences with certifications and technologies.
+                                {typeof t.certifications_description === 'function'
+                                    ? t.certifications_description(certifications.length)
+                                    : t.certifications_description}
                             </p>
                             <div className="h-px w-20 bg-violet-500 mt-4" />
                         </div>
