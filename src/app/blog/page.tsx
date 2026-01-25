@@ -16,7 +16,42 @@ export default function BlogPage() {
     const lang = language === 'en' ? 'en' : 'fr'
 
     // Transform certifications to use the correct language
-    const certifications = (blogData.certifications || []).map((cert: any) => {
+    interface BlogSection {
+        title?: string
+        content?: string
+        fr?: { title?: string; content?: string; diagram?: any } // eslint-disable-line @typescript-eslint/no-explicit-any
+        en?: { title?: string; content?: string; diagram?: any } // eslint-disable-line @typescript-eslint/no-explicit-any
+        [key: string]: any // eslint-disable-line @typescript-eslint/no-explicit-any
+    }
+
+    interface BlogJourney {
+        id: string
+        title?: string
+        excerpt?: string
+        date?: string
+        category?: string
+        readTime?: string
+        fr?: { title?: string; excerpt?: string }
+        en?: { title?: string; excerpt?: string }
+        sections?: BlogSection[]
+        [key: string]: unknown
+    }
+
+    interface BlogCertification {
+        id: string
+        title?: string
+        excerpt?: string
+        content?: string
+        date?: string
+        category?: string
+        readTime?: string
+        icon?: string
+        fr?: { title?: string; excerpt?: string; content?: string }
+        en?: { title?: string; excerpt?: string; content?: string }
+        [key: string]: unknown
+    }
+
+    const certifications = (blogData.certifications || []).map((cert: BlogCertification) => {
         const langData = cert[lang] || cert.fr || {}
         return {
             id: cert.id,
@@ -31,7 +66,7 @@ export default function BlogPage() {
     })
 
     // Transform journeys to use the correct language
-    const journeys = (blogData.journeys || []).map((journey: any) => {
+    const journeys = (blogData.journeys || []).map((journey: BlogJourney) => {
         const langData = journey[lang] || journey.fr || {}
         return {
             id: journey.id,
@@ -40,9 +75,9 @@ export default function BlogPage() {
             date: journey.date || '',
             category: journey.category || '',
             readTime: journey.readTime || '',
-            sections: (journey.sections || []).map((section: any) => {
+            sections: (journey.sections || []).map((section: BlogSection) => {
                 const sectionLangData = section[lang] || section.fr || {}
-                const diagram = section.diagram || sectionLangData.diagram
+                const diagram: any = section.diagram || sectionLangData.diagram // eslint-disable-line @typescript-eslint/no-explicit-any
 
                 // Handle bilingual diagram descriptions
                 let processedDiagram = diagram

@@ -2,7 +2,6 @@
 
 import { useState, useRef, forwardRef, useImperativeHandle } from "react"
 import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion"
-import { useTheme } from "next-themes"
 import { SiAmazonwebservices } from "react-icons/si"
 
 interface BlogCardProps {
@@ -75,7 +74,7 @@ export const BlogCard = forwardRef<BlogCardRef, BlogCardProps>(({
         diagonalMovement.set(0)
     }
 
-    const { theme } = useTheme()
+
 
     return (
         <>

@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from "react"
 import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion"
-import { useTheme } from "next-themes"
 import { FaFolder, FaFolderOpen } from "react-icons/fa"
 import { SiTerraform } from "react-icons/si"
 import { useLanguage } from "../../contexts/LanguageContext"
@@ -37,7 +36,7 @@ export interface JourneyCardRef {
 
 // Clean Architecture Files Content
 const ARCHITECTURE_FILES = {
-  "src/domain/entities/user.entity.ts": `export class User {
+    "src/domain/entities/user.entity.ts": `export class User {
   constructor(
     public readonly id: string,
     public readonly email: string,
@@ -56,7 +55,7 @@ const ARCHITECTURE_FILES = {
     )
   }
 }`,
-  "src/domain/entities/workout.entity.ts": `export interface Exercise {
+    "src/domain/entities/workout.entity.ts": `export interface Exercise {
   name: string
   sets: number
   reps: number
@@ -82,20 +81,20 @@ export class Workout {
     )
   }
 }`,
-  "src/domain/repositories/user.repository.interface.ts": `import { User } from '../entities/user.entity'
+    "src/domain/repositories/user.repository.interface.ts": `import { User } from '../entities/user.entity'
 
 export interface IUserRepository {
   save(user: User): Promise<User>
   findById(id: string): Promise<User | null>
   findByEmail(email: string): Promise<User | null>
 }`,
-  "src/domain/repositories/workout.repository.interface.ts": `import { Workout } from '../entities/workout.entity'
+    "src/domain/repositories/workout.repository.interface.ts": `import { Workout } from '../entities/workout.entity'
 
 export interface IWorkoutRepository {
   save(workout: Workout): Promise<Workout>
   findByUserId(userId: string): Promise<Workout[]>
 }`,
-  "src/application/use-cases/create-user.use-case.ts": `import { User } from '../../domain/entities/user.entity'
+    "src/application/use-cases/create-user.use-case.ts": `import { User } from '../../domain/entities/user.entity'
 import { IUserRepository } from '../../domain/repositories/user.repository.interface'
 
 export class CreateUserUseCase {
@@ -116,7 +115,7 @@ export class CreateUserUseCase {
     return await this.userRepository.save(user)
   }
 }`,
-  "src/application/use-cases/get-user.use-case.ts": `import { User } from '../../domain/entities/user.entity'
+    "src/application/use-cases/get-user.use-case.ts": `import { User } from '../../domain/entities/user.entity'
 import { IUserRepository } from '../../domain/repositories/user.repository.interface'
 
 export class GetUserUseCase {
@@ -126,7 +125,7 @@ export class GetUserUseCase {
     return await this.userRepository.findById(id)
   }
 }`,
-  "src/application/use-cases/create-workout.use-case.ts": `import { Workout, Exercise } from '../../domain/entities/workout.entity'
+    "src/application/use-cases/create-workout.use-case.ts": `import { Workout, Exercise } from '../../domain/entities/workout.entity'
 import { IWorkoutRepository } from '../../domain/repositories/workout.repository.interface'
 import { IUserRepository } from '../../domain/repositories/user.repository.interface'
 
@@ -147,7 +146,7 @@ export class CreateWorkoutUseCase {
     return await this.workoutRepository.save(workout)
   }
 }`,
-  "src/infrastructure/database/drizzle.config.ts": `import { drizzle } from 'drizzle-orm/node-postgres'
+    "src/infrastructure/database/drizzle.config.ts": `import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
 import * as schema from './schema'
 
@@ -166,7 +165,7 @@ export async function disconnectDatabase() {
   await pool.end()
   console.log('Database disconnected')
 }`,
-  "src/infrastructure/database/schema.ts": `import { pgTable, uuid, varchar, timestamp, jsonb } from 'drizzle-orm/pg-core'
+    "src/infrastructure/database/schema.ts": `import { pgTable, uuid, varchar, timestamp, jsonb } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -183,7 +182,7 @@ export const workouts = pgTable('workouts', {
   exercises: jsonb('exercises').notNull(),
   date: timestamp('date').defaultNow().notNull(),
 })`,
-  "src/infrastructure/repositories/user.repository.ts": `import { User } from '../../domain/entities/user.entity'
+    "src/infrastructure/repositories/user.repository.ts": `import { User } from '../../domain/entities/user.entity'
 import { IUserRepository } from '../../domain/repositories/user.repository.interface'
 import { db } from '../database/drizzle.config'
 import { users } from '../database/schema'
@@ -240,7 +239,7 @@ export class UserRepository implements IUserRepository {
     )
   }
 }`,
-  "src/infrastructure/repositories/workout.repository.ts": `import { Workout } from '../../domain/entities/workout.entity'
+    "src/infrastructure/repositories/workout.repository.ts": `import { Workout } from '../../domain/entities/workout.entity'
 import { IWorkoutRepository } from '../../domain/repositories/workout.repository.interface'
 import { db } from '../database/drizzle.config'
 import { workouts } from '../database/schema'
@@ -279,7 +278,7 @@ export class WorkoutRepository implements IWorkoutRepository {
     ))
   }
 }`,
-  "src/infrastructure/http/express.config.ts": `import express from 'express'
+    "src/infrastructure/http/express.config.ts": `import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 
@@ -292,7 +291,7 @@ export function createExpressApp() {
   
   return app
 }`,
-  "src/presentation/controllers/user.controller.ts": `import { Request, Response } from 'express'
+    "src/presentation/controllers/user.controller.ts": `import { Request, Response } from 'express'
 import { CreateUserUseCase } from '../../application/use-cases/create-user.use-case'
 import { GetUserUseCase } from '../../application/use-cases/get-user.use-case'
 
@@ -327,7 +326,7 @@ export class UserController {
     }
   }
 }`,
-  "src/presentation/routes/user.routes.ts": `import { Router } from 'express'
+    "src/presentation/routes/user.routes.ts": `import { Router } from 'express'
 import { UserController } from '../controllers/user.controller'
 
 export function createUserRoutes(userController: UserController) {
@@ -338,7 +337,7 @@ export function createUserRoutes(userController: UserController) {
   
   return router
 }`,
-  "src/main.ts": `import { createExpressApp } from './infrastructure/http/express.config'
+    "src/main.ts": `import { createExpressApp } from './infrastructure/http/express.config'
 import { connectDatabase, disconnectDatabase } from './infrastructure/database/drizzle.config'
 import { UserRepository } from './infrastructure/repositories/user.repository'
 import { WorkoutRepository } from './infrastructure/repositories/workout.repository'
@@ -386,7 +385,7 @@ bootstrap()
 
 // Mock Infrastructure Files Content
 const INFRA_FILES = {
-  "main.tf": `module "networking" {
+    "main.tf": `module "networking" {
   source = "./modules/networking"
 }
 module "storage" {
@@ -403,16 +402,16 @@ module "compute" {
   vpc_id                 = module.networking.vpc_id
   public_subnet_ids      = module.networking.public_subnet_ids
 }`,
-  "variables.tf": `variable "app_name" {
+    "variables.tf": `variable "app_name" {
   default = "fissure"
 }
 variable "aws_region" {
   default = "eu-west-1"
 }`,
-  "providers.tf": `provider "aws" {
+    "providers.tf": `provider "aws" {
   region = "eu-west-1"
 }`,
-  "modules/compute/main.tf": `resource "aws_lb" "fissure_lb" {
+    "modules/compute/main.tf": `resource "aws_lb" "fissure_lb" {
   name = "fissure-alb"
   load_balancer_type = "application"
 }
@@ -426,22 +425,22 @@ resource "aws_ecs_service" "ecs_service" {
   launch_type     = "FARGATE"
   desired_count   = 1
 }`,
-  "modules/compute/variables.tf": `variable "vpc_id" {}
+    "modules/compute/variables.tf": `variable "vpc_id" {}
 variable "public_subnet_ids" {}
 variable "instance_count" {
   default = 1
 }`,
-  "modules/compute/iam.tf": `resource "aws_iam_role" "ecs_execution" {
+    "modules/compute/iam.tf": `resource "aws_iam_role" "ecs_execution" {
   name = "fissure_ecs_execution_role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{ Action = "sts:AssumeRole", Effect = "Allow", Principal = { Service = "ecs-tasks.amazonaws.com" } }]
   })
 }`,
-  "modules/compute/outputs.tf": `output "lb_dns_name" {
+    "modules/compute/outputs.tf": `output "lb_dns_name" {
   value = aws_lb.fissure_lb.dns_name
 }`,
-  "modules/networking/main.tf": `resource "aws_vpc" "main" {
+    "modules/networking/main.tf": `resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 }
 
@@ -452,23 +451,23 @@ resource "aws_subnet" "public_1" {
 resource "aws_nat_gateway" "main" {
   subnet_id = aws_subnet.public_1.id
 }`,
-  "modules/networking/variables.tf": `variable "vpc_cidr" {
+    "modules/networking/variables.tf": `variable "vpc_cidr" {
   default = "10.0.0.0/16"
 }`,
-  "modules/networking/outputs.tf": `output "vpc_id" {
+    "modules/networking/outputs.tf": `output "vpc_id" {
   value = aws_vpc.main.id
 }
 output "public_subnet_ids" {
   value = [aws_subnet.public_1.id]
 }`,
-  "modules/database/main.tf": `resource "aws_db_instance" "rds" {
+    "modules/database/main.tf": `resource "aws_db_instance" "rds" {
   engine         = "postgres"
   engine_version = "16"
   instance_class = "db.t3.micro"
   allocated_storage = 20
 }`,
-  "modules/database/variables.tf": `variable "db_password" {}`,
-  "modules/storage/main.tf": `resource "aws_ecr_repository" "ecr" {
+    "modules/database/variables.tf": `variable "db_password" {}`,
+    "modules/storage/main.tf": `resource "aws_ecr_repository" "ecr" {
   name = "fissure-backend"
   image_tag_mutability = "MUTABLE"
   image_scanning_configuration {
@@ -583,7 +582,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
         diagonalMovement.set(0)
     }
 
-    const { theme } = useTheme()
+
 
     // Intersection Observer for lazy loading
     useEffect(() => {
@@ -596,7 +595,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
             observer = new IntersectionObserver(
                 (entries) => {
                     const sectionsToAdd = new Set<number>()
-                    
+
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
                             const index = parseInt(entry.target.getAttribute('data-section-index') || '0')
@@ -657,7 +656,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
 
             rafId = requestAnimationFrame(() => {
                 rafId = null
-                
+
                 const scrollTop = contentRef.current!.scrollTop
                 const containerHeight = contentRef.current!.clientHeight
                 const viewportCenter = scrollTop + containerHeight / 2
@@ -987,10 +986,10 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
 
     // Diagram component - supports Terraform browser, Architecture browser, and image
     const renderDiagram = (diagram: { type: string; description: string | { fr: string; en: string }; imagePath?: string }) => {
-        const description = typeof diagram.description === 'string' 
-            ? diagram.description 
+        const description = typeof diagram.description === 'string'
+            ? diagram.description
             : (diagram.description[language as 'fr' | 'en'] || diagram.description.fr || diagram.description.en)
-        
+
         // If it's an image type, render the image
         if (diagram.type === "image" && diagram.imagePath) {
             return (
@@ -1018,7 +1017,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
         const currentTree = isArchitecture ? architectureTree : terraformTree
         const currentFiles = isArchitecture ? ARCHITECTURE_FILES : INFRA_FILES
         const fileLanguage: 'terraform' | 'typescript' = isArchitecture ? 'typescript' : 'terraform'
-        
+
         // Set default selected file based on type if not already set
         const defaultFile = isArchitecture ? "src/main.ts" : "main.tf"
         const actualSelectedFile = selectedFile || defaultFile
@@ -1030,7 +1029,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
             const containerHeight = isArchitectureDiagram ? "h-[320px] sm:h-[450px]" : "max-h-[420px] sm:max-h-[600px]"
             const sidebarHeight = isArchitectureDiagram ? "h-[320px] sm:h-[450px]" : "max-h-[420px] sm:max-h-[600px]"
             const codeViewHeight = isArchitectureDiagram ? "h-[320px] sm:h-[450px]" : "max-h-[420px] sm:max-h-[600px]"
-            
+
             return (
                 <div className="my-4 md:my-6">
                     <div className={`bg-[#1e1e1e] rounded-xl border border-zinc-700 overflow-hidden flex shadow-2xl ${containerHeight} flex-col md:flex-row`}>
@@ -1069,10 +1068,10 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
         }
 
         // Default placeholder for other types
-        const defaultDescription = typeof diagram.description === 'string' 
-            ? diagram.description 
+        const defaultDescription = typeof diagram.description === 'string'
+            ? diagram.description
             : (diagram.description[language as 'fr' | 'en'] || diagram.description.fr || diagram.description.en)
-        
+
         return (
             <div className="my-4 md:my-6 p-4 md:p-6 bg-gradient-to-br from-violet-50 to-fuchsia-50 dark:from-slate-900 dark:to-slate-800 rounded-xl border border-violet-200 dark:border-slate-700">
                 <div className="text-center mb-2 md:mb-3">
@@ -1238,11 +1237,10 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                                                     <button
                                                         key={idx}
                                                         onClick={() => scrollToSection(idx)}
-                                                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                                                            activeSection === idx
-                                                                ? "bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 font-medium"
-                                                                : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
-                                                        }`}
+                                                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${activeSection === idx
+                                                            ? "bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 font-medium"
+                                                            : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                                                            }`}
                                                     >
                                                         {section.title}
                                                     </button>
@@ -1259,7 +1257,7 @@ export const JourneyCard = forwardRef<JourneyCardRef, JourneyCardProps>(({
                                         <div className="space-y-0">
                                             {sections.map((section, idx) => {
                                                 const isVisible = visibleSections.has(idx)
-                                                
+
                                                 return (
                                                     <div
                                                         key={idx}
