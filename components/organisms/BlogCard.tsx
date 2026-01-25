@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, forwardRef, useImperativeHandle } from "react"
 import { motion, useMotionTemplate, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
 import { SiAmazonwebservices } from "react-icons/si"
@@ -17,7 +17,11 @@ interface BlogCardProps {
     index: number
 }
 
-export function BlogCard({
+export interface BlogCardRef {
+    openModal: () => void
+}
+
+export const BlogCard = forwardRef<BlogCardRef, BlogCardProps>(({
     title,
     date,
     category,
@@ -27,9 +31,13 @@ export function BlogCard({
     className,
     icon,
     index,
-}: BlogCardProps) {
+}, ref) => {
     const cardRef = useRef<HTMLDivElement>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+
+    useImperativeHandle(ref, () => ({
+        openModal: () => setIsModalOpen(true)
+    }))
 
     // Spring physics
     const springConfig = { damping: 15, stiffness: 15 }
@@ -202,4 +210,6 @@ export function BlogCard({
             </AnimatePresence>
         </>
     )
-}
+})
+
+BlogCard.displayName = "BlogCard"

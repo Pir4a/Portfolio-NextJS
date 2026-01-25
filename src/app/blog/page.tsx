@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 import Header from "../../../components/organisms/Header"
 import CursorGlow from "../../../components/atoms/CursorGlow"
-import { BlogCard } from "../../../components/organisms/BlogCard"
+import { BlogCard, BlogCardRef } from "../../../components/organisms/BlogCard"
 import { JourneyCard, JourneyCardRef } from "../../../components/organisms/JourneyCard"
 import { motion } from "framer-motion"
 import { useLanguage } from "../../../contexts/LanguageContext"
@@ -14,7 +14,7 @@ import blogData from "../../../datas/blogposts.json"
 export default function BlogPage() {
     const { language } = useLanguage()
     const lang = language === 'en' ? 'en' : 'fr'
-    
+
     // Transform certifications to use the correct language
     const certifications = (blogData.certifications || []).map((cert: any) => {
         const langData = cert[lang] || cert.fr || {}
@@ -29,7 +29,7 @@ export default function BlogPage() {
             icon: cert.icon || '',
         }
     })
-    
+
     // Transform journeys to use the correct language
     const journeys = (blogData.journeys || []).map((journey: any) => {
         const langData = journey[lang] || journey.fr || {}
@@ -43,7 +43,7 @@ export default function BlogPage() {
             sections: (journey.sections || []).map((section: any) => {
                 const sectionLangData = section[lang] || section.fr || {}
                 const diagram = section.diagram || sectionLangData.diagram
-                
+
                 // Handle bilingual diagram descriptions
                 let processedDiagram = diagram
                 if (diagram && diagram.description) {
@@ -54,7 +54,7 @@ export default function BlogPage() {
                         }
                     }
                 }
-                
+
                 return {
                     title: sectionLangData.title || section.title || '',
                     content: sectionLangData.content || section.content || '',
@@ -63,26 +63,33 @@ export default function BlogPage() {
             })
         }
     })
-    
+
     const journeyCardRefs = useRef<{ [key: string]: JourneyCardRef | null }>({})
-    
+    const certificateCardRefs = useRef<{ [key: string]: BlogCardRef | null }>({})
+
     const t = translations[language].blog
 
     useEffect(() => {
         // Check if there's a hash in the URL
         const hash = window.location.hash.slice(1) // Remove the #
-        
+
         if (hash) {
             // Delay to ensure page is fully loaded and rendered before opening modal
             const timer = setTimeout(() => {
-                const cardRef = journeyCardRefs.current[hash]
-                if (cardRef) {
-                    cardRef.openModal()
+                const journeyRef = journeyCardRefs.current[hash]
+                const certificateRef = certificateCardRefs.current[hash]
+
+                if (journeyRef) {
+                    journeyRef.openModal()
+                    // Remove hash from URL after opening
+                    window.history.replaceState(null, '', '/blog')
+                } else if (certificateRef) {
+                    certificateRef.openModal()
                     // Remove hash from URL after opening
                     window.history.replaceState(null, '', '/blog')
                 }
             }, 600) // Increased delay for better UX
-            
+
             return () => clearTimeout(timer)
         }
     }, [])
@@ -124,7 +131,7 @@ export default function BlogPage() {
                                 {t.journeys_title}
                             </h2>
                             <p className="text-slate-600 dark:text-slate-400">
-                                {typeof t.journeys_description === 'function' 
+                                {typeof t.journeys_description === 'function'
                                     ? t.journeys_description(journeys.length)
                                     : t.journeys_description}
                             </p>
@@ -175,6 +182,11 @@ export default function BlogPage() {
                                     index={index}
                                     {...post}
                                     className="h-full"
+                                    ref={(ref) => {
+                                        if (ref) {
+                                            certificateCardRefs.current[post.id] = ref
+                                        }
+                                    }}
                                 />
                             ))}
                         </div>
