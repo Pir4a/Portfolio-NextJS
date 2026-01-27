@@ -3,7 +3,6 @@
 import { motion } from "framer-motion"
 import { useLanguage } from "../../../contexts/LanguageContext"
 import { BsGithub, BsLinkedin } from "react-icons/bs"
-import { HiOutlineDocumentDownload } from "react-icons/hi"
 import Header from "../../../components/organisms/Header"
 import CursorGlow from "../../../components/atoms/CursorGlow"
 import CertificationsList from "../../../components/organisms/CertificationsList"
@@ -25,121 +24,70 @@ export default function ProfilePage() {
         },
     }
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.15,
-                delayChildren: 0.1
-            }
-        }
-    }
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 30 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-    }
-
     return (
         <>
             <CursorGlow />
             <Header />
-            <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-slate-100 dark:from-slate-950 dark:via-black dark:to-slate-900 px-4 xl:px-[8%] py-24 md:py-32">
+            <div className="min-h-screen bg-cyan-100 dark:bg-black px-4 xl:px-[8%] py-32">
                 <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
                     className="max-w-7xl mx-auto"
                 >
-                    {/* Hero Header Section */}
-                    <motion.div variants={itemVariants} className="mb-16 md:mb-24">
-                        <div className="relative">
-                            {/* Decorative element */}
-                            <div className="absolute -left-4 top-0 w-1 h-24 bg-gradient-to-b from-cyan-500 to-transparent rounded-full hidden md:block" />
+                    {/* Header Section */}
+                    <div className="mb-16">
+                        <h1 className="text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+                            Stéphane DEDU
+                        </h1>
+                        <p className="text-2xl font-medium text-slate-700 dark:text-slate-300 mb-6">
+                            {profileText[language].role}
+                        </p>
 
-                            <div className="md:pl-8">
-                                <motion.span
-                                    className="text-sm font-mono text-cyan-600 dark:text-cyan-400 mb-4 block tracking-wider"
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.2 }}
-                                >
-                                    // {language === 'fr' ? 'À propos' : 'About'}
-                                </motion.span>
-
-                                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 dark:text-slate-100 mb-4 tracking-tight">
-                                    Stéphane <span className="bg-gradient-to-r from-cyan-500 to-teal-400 bg-clip-text text-transparent">DEDU</span>
-                                </h1>
-
-                                <p className="text-xl md:text-2xl font-medium text-slate-600 dark:text-slate-400 mb-8">
-                                    {profileText[language].role}
-                                </p>
-
-                                {/* Social Links - Enhanced */}
-                                <div className="flex items-center gap-4">
-                                    <a
-                                        href="https://github.com/Pir4a"
-                                        target="_blank"
-                                        className="group flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300"
-                                    >
-                                        <BsGithub className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                        <span className="text-sm font-medium hidden sm:inline">GitHub</span>
-                                    </a>
-                                    <a
-                                        href="https://www.linkedin.com/in/st%C3%A9phane-dedu-14579a266/"
-                                        target="_blank"
-                                        className="group flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300"
-                                    >
-                                        <BsLinkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                        <span className="text-sm font-medium hidden sm:inline">LinkedIn</span>
-                                    </a>
-                                    <a
-                                        href="/cv.pdf"
-                                        target="_blank"
-                                        className="group flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-500/20 dark:hover:bg-cyan-500/30 transition-all duration-300"
-                                    >
-                                        <HiOutlineDocumentDownload className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                        <span className="text-sm font-medium">CV</span>
-                                    </a>
-                                </div>
-                            </div>
+                        <div className="flex items-center gap-6 mb-8">
+                            <a href="https://github.com/Pir4a" target="_blank" className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors">
+                                <BsGithub className="w-7 h-7" />
+                            </a>
+                            <a
+                                href="https://www.linkedin.com/in/st%C3%A9phane-dedu-14579a266/"
+                                target="_blank"
+                                className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
+                            >
+                                <BsLinkedin className="w-7 h-7" />
+                            </a>
                         </div>
-                    </motion.div>
+                        <div className="h-px bg-slate-200 dark:bg-slate-700 w-full" />
+                    </div>
 
-                    {/* Bio Section - Card style */}
-                    <motion.div variants={itemVariants} className="mb-20">
-                        <div className="relative p-6 md:p-8 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-xl shadow-slate-200/20 dark:shadow-black/20">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-400/20 to-transparent rounded-bl-full pointer-events-none" />
-                            <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-line max-w-4xl">
-                                {profileText[language].bio}
-                            </p>
-                        </div>
-                    </motion.div>
+                    {/* Bio */}
+                    <div className="mb-16 max-w-4xl">
+                        <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-line">
+                            {profileText[language].bio}
+                        </p>
+                    </div>
 
                     {/* Main Content: 2 Columns for timelines */}
-                    <div className="flex flex-col xl:flex-row gap-12 xl:gap-20">
+                    <div className="flex flex-col xl:flex-row gap-16">
                         {/* Left Column: Professional Experience & Skills */}
-                        <motion.div variants={itemVariants} className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0">
                             <Experience />
 
                             <div className="mt-16">
                                 <SkillsSidebar layout="grid-2" />
                             </div>
-                        </motion.div>
+                        </div>
 
                         {/* Right Column: Self-Taught & Certifications */}
-                        <motion.div variants={itemVariants} className="w-full xl:w-[380px] flex-shrink-0 space-y-12">
+                        <div className="w-full xl:w-[380px] flex-shrink-0 space-y-12">
                             <SelfTaught />
 
-                            <div className="p-6 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50">
-                                <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6 flex items-center gap-3">
-                                    <span className="w-2 h-2 rounded-full bg-pink-400" />
+                            <div>
+                                <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6">
                                     Certifications
                                 </h2>
                                 <CertificationsList />
                             </div>
-                        </motion.div>
+                        </div>
                     </div>
                 </motion.div>
             </div>

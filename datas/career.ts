@@ -26,7 +26,7 @@ export const careerData = {
     selfTaught: [
         {
             title: "Fissure - Mobile Fullstack App",
-            period: "2024 - 2025",
+            period: "2025 - 2026",
             description:
                 "Application de tracking de fitness boostée par IA.\nInfrastructure AWS HA (ECS, RDS, S3, ALB) gérée via Terraform.\nStack: React Native, ExpressJS, Drizzle ORM.",
             tags: ["React Native", "AWS", "Terraform"]

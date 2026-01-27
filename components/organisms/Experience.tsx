@@ -17,7 +17,7 @@ export default function Experience() {
         <section className="relative w-full">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-slate-900 dark:text-slate-100 flex items-center gap-3">
                 <span className="w-2 h-2 rounded-full bg-cyan-500" />
-                My career <span className="font-light text-cyan-600 dark:text-cyan-400">&</span> experience
+                Parcours <span className="font-light text-cyan-600 dark:text-cyan-400">&</span> Expérience
             </h2>
 
             <div className="relative pl-8">
@@ -35,11 +35,11 @@ export default function Experience() {
                             className="relative group"
                         >
                             {/* Node on the line */}
-                            <div className="absolute -left-8 top-1 w-3 h-3 bg-white dark:bg-black border-2 border-cyan-500 rounded-full z-10 group-hover:scale-125 group-hover:border-cyan-400 transition-all" />
+                            <div className="absolute -left-8 top-1 w-3 h-3 bg-white dark:bg-black border-2 border-cyan-500 rounded-full z-10 group-hover:scale-125 transition-transform" />
 
-                            <div className="p-5 rounded-xl bg-white/50 dark:bg-slate-900/30 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 hover:border-cyan-500/30 transition-colors">
+                            <div>
                                 <div className="flex items-center justify-between mb-2">
-                                    <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 px-2 py-0.5 rounded-full bg-cyan-500/10">
+                                    <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400">
                                         {getDisplayYear(exp.period)}
                                     </span>
                                 </div>

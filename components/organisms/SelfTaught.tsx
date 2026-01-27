@@ -14,15 +14,15 @@ export default function SelfTaught() {
     }
 
     return (
-        <div className="p-6 rounded-2xl bg-white/60 dark:bg-slate-900/40 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50">
+        <div>
             <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-8 flex items-center gap-3">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                Self-Taught Journey
+                Apprentissage Autonome
             </h3>
 
-            <div className="space-y-6 relative">
+            <div className="space-y-6 relative pl-8">
                 {/* Dashed line for independent path */}
-                <div className="absolute left-[5px] top-4 bottom-4 w-0.5 border-l-2 border-dashed border-slate-300 dark:border-slate-700" />
+                <div className="absolute left-[5px] top-2 bottom-2 w-0.5 border-l-2 border-dashed border-slate-300 dark:border-slate-700" />
 
                 {careerData.selfTaught.map((item, index) => (
                     <motion.div
@@ -30,16 +30,16 @@ export default function SelfTaught() {
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 * index }}
-                        className="relative pl-8 group"
+                        className="relative group"
                     >
                         {/* Node on the line */}
-                        <div className="absolute left-0 top-1.5 w-3 h-3 bg-white dark:bg-slate-900 border-2 border-cyan-500 rounded-full z-10 group-hover:scale-125 transition-transform" />
+                        <div className="absolute -left-8 top-1.5 w-3 h-3 bg-white dark:bg-slate-900 border-2 border-cyan-500 rounded-full z-10 group-hover:scale-125 transition-transform" />
 
                         <div className="flex items-center justify-between mb-1">
                             <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 block">
                                 {item.period}
                             </span>
-                            <div className="text-lg opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div className="text-lg opacity-80">
                                 {getIcon(item.title)}
                             </div>
                         </div>
